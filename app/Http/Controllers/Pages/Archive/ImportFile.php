@@ -18,8 +18,6 @@
                 $file       =   $request->file('file');
                 $legacyType =   intval($request->input('legacy_type',1));
 
-                Archive::where('id_archive','>=',1)->delete();
-
                 if($request->hasFile('file')) {
                     $repository =   'public';
 

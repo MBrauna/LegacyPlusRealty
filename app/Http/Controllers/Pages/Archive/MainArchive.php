@@ -14,11 +14,20 @@
     {
         public function index(Request $request) {
 
-            $archive    =   Archive::get();
+            $archive        =   Archive::where('id_user',Auth::user()->id)->get();
+            $contentGroup   =   [];
+
+            foreach (user_group(Auth::user()->id) as $group) {
+                $tmpContent             =   $group;
+                $tmpContent['archive']  =   Archive::where('id_group',$group->id_users_group)->get();
+
+                array_push($contentGroup,(object)$tmpContent);
+            } // foreach (user_group(Auth::user()-id) as $group) { ... }
 
             return view('pages.archive.list',[
                 // Lista de arquivos atribuidos ao usuário
                 'archives'  =>  $archive,
+                'groups'    =>  $contentGroup,
             ]);
         }
     }

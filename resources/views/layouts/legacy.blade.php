@@ -26,7 +26,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
                     <!--<div class="sidebar-brand-icon rotate-n-15">
@@ -49,41 +49,96 @@
                     Main
                 </div>
 
-                <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsedDashboard" aria-expanded="true" aria-controls="collapsedDashboard">
+                    <a class="nav-link" href="{{ route('dashboard.home') }}">
                         <i class="fas fa-chart-pie"></i>
                         <span>Dashboard</span>
                     </a>
-                    <div id="collapsedDashboard" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('dashboard.home') }}">
-                                <i class="fas fa-chart-area"></i>
-                                <i>Graphics</i>
-                            </a>
-                            <a class="collapse-item d-flex justify-content-between" href="#">
-                                <i class="fas fa-file-signature"></i>
-                                <i>Contracts</i>
-                            </a>
-                        </div>
-                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('dashboard.home') }}">
+                        <i class="fas fa-file-signature"></i>
+                        <span>Contracts</span>
+                    </a>
+                </li>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArchive" aria-expanded="true" aria-controls="collapseArchive">
                         <i class="fas fa-file-contract"></i>
                         <span>Quick access</span>
                     </a>
                     <div id="collapseArchive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-primary py-2 collapse-inner">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">
+                                <i class="fas fa-folder-open"></i>
+                                <i>Links</i>
+                            </a>
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('archive.list') }}">
                                 <i class="fas fa-file-contract"></i>
                                 <i>Files</i>
                             </a>
+                        </div>
+                    </div>
+                </li>
+
+
+                @if(Auth::user()->admin)
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Menu principal -->
+                <div class="sidebar-heading">
+                    Admin
+                </div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                    <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-primary py-2 collapse-inner">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.users.list') }}">
+                                <i class="fas fa-user-alt"></i>
+                                <i>User</i>
+                            </a>
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">
-                                <i class="fas fa-folder-open"></i>
-                                <i>Quick links</i>
+                                <i class="fas fa-users-cog"></i>
+                                <i>Group</i>
                             </a>
                         </div>
                     </div>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('dashboard.home') }}">
+                        <i class="fas fa-file-signature"></i>
+                        <span>Comission</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
+                        <i class="fas fa-users"></i>
+                        <span>Parameters</span>
+                    </a>
+                    <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-primary py-2 collapse-inner">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('archive.list') }}">
+                                <i class="fas fa-user-alt"></i>
+                                <i>Files</i>
+                            </a>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">
+                                <i class="fas fa-users-cog"></i>
+                                <i>Courses</i>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                @endif
 
                 
 

@@ -30,4 +30,12 @@
             // [archive.import]
             Route::any('/import','ImportFile@index')->name('import');
         }); // Route::prefix('archive')->name('archive.')->namespace('Archive')->group(function(){ ... });
+
+        Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function(){
+            // [admin.users]
+            Route::name('users.')->prefix('users')->group(function(){
+                // [admin.users.list]
+                Route::any('/list','MainUsers@list')->name('list');
+            }); // Route::name('users')->group(function(){ ... }
+        }); // Route::prefix('admin')->name('admin')->namespace('Admin')->group(function(){ ... }
     });

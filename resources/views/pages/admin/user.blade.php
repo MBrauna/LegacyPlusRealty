@@ -1,6 +1,6 @@
 @extends('layouts.legacy')
 
-@section('pageName','Quick Access')
+@section('pageName','User list')
 
 @section('body')
     <!-- Content Row -->
