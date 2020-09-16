@@ -13,8 +13,6 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-        @livewireStyles
-
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
     </head>
@@ -28,21 +26,20 @@
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
                                 <a href="/dashboard">
-                                    <x-jet-application-mark class="block h-9 w-auto" />
                                 </a>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <x-jet-nav-link href="/dashboard" :active="request()->routeIs('dashboard')">
+                                <nav href="/dashboard" :active="request()->routeIs('dashboard')">
                                     {{ __('Dashboard') }}
-                                </x-jet-nav-link>
+                                </nav>
                             </div>
                         </div>
 
                         <!-- Settings Dropdown -->
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <x-jet-dropdown align="right" width="48">
+                            <a align="right" width="48">
                                 <x-slot name="trigger">
                                     <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
                                         <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
