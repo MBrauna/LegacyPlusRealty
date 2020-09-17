@@ -105,7 +105,7 @@
                                 <i class="fas fa-user-alt"></i>
                                 <i>User</i>
                             </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.groups.list') }}">
                                 <i class="fas fa-users-cog"></i>
                                 <i>Group</i>
                             </a>
@@ -114,21 +114,14 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard.home') }}">
-                        <i class="fas fa-file-signature"></i>
-                        <span>Comission</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParameters" aria-expanded="true" aria-controls="collapseParameters">
                         <i class="fas fa-users"></i>
                         <span>Parameters</span>
                     </a>
-                    <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseParameters" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-primary py-2 collapse-inner">
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('archive.list') }}">
-                                <i class="fas fa-user-alt"></i>
+                                <i class="fas fa-photo-video"></i>
                                 <i>Files</i>
                             </a>
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">

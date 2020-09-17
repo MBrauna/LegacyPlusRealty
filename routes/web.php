@@ -3,7 +3,7 @@
     use Illuminate\Support\Facades\Route;
 
     Auth::routes([
-        //'register' => false,
+        'register' => false,
     ]);
 
     // Rotas protegidas pelo Sanctum
@@ -31,11 +31,47 @@
             Route::any('/import','ImportFile@index')->name('import');
         }); // Route::prefix('archive')->name('archive.')->namespace('Archive')->group(function(){ ... });
 
-        Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function(){
+
+
+
+        Route::middleware('admin')->prefix('admin')->name('admin.')->namespace('Admin')->group(function(){
+            // [admin.home]
+            Route::any('/',function(){ return redirect()->route('admin.users.list'); })->name('home');
+
             // [admin.users]
             Route::name('users.')->prefix('users')->group(function(){
+                // [admin.users.home]
+                Route::any('/',function(){ return redirect()->route('admin.users.list'); })->name('home');
+
                 // [admin.users.list]
                 Route::any('/list','MainUsers@list')->name('list');
+                // [admin.users.group]
+                Route::any('/group','MainGroup@userGroups')->name('group');
+
+                // [admin.users.save]
+                Route::post('/save','MainUsers@save')->name('save');
+                // [admin.users.update]
+                Route::post('/update','MainUsers@update')->name('update');
+                // [admin.users.addGroup]
+                Route::post('/addGroup','MainGroup@addGroupUser')->name('addGroup');
+                // [admin.users.removeGroup]
+                Route::post('/removeGroup','MainGroup@removeGroupUser')->name('removeGroup');
             }); // Route::name('users')->group(function(){ ... }
+
+            // [admin.groups]
+            Route::name('groups.')->prefix('groups')->group(function(){
+                // [admin.users.home]
+                Route::any('/',function(){ return redirect()->route('admin.groups.list'); })->name('home');
+
+                // [admin.groups.list]
+                Route::any('/list','MainGroup@list')->name('list');
+                // [admin.groups.user]
+                Route::any('/user','MainGroup@groupUsers')->name('user');
+
+                // [admin.groups.save]
+                Route::post('/save','MainGroup@save')->name('save');
+                // [admin.groups.update]
+                Route::post('/update','MainGroup@update')->name('update');
+            }); // Route::name('groups.')->prefix('groups')-group(function(){ ... }
         }); // Route::prefix('admin')->name('admin')->namespace('Admin')->group(function(){ ... }
     });

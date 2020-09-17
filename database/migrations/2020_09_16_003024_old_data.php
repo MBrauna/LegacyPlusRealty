@@ -47,13 +47,15 @@ class OldData extends Migration
 
         Schema::create('users_group',function(Blueprint $table){
             $table->increments('id_users_group');
-            $table->text('description');
+            $table->integer('id_responsible')->nullable();
+            $table->text('name');
             $table->text('icon')->default('fas fa-users');
             $table->boolean('status')->default(true);
             $table->timestamps();
 
-            $table->index(['description']);
+            $table->index(['name']);
             $table->index(['status']);
+            $table->index(['id_responsible']);
         }); // Schema::create('archive',function(Blueprint $table){ .... });
 
         Schema::create('users_group_user',function(Blueprint $table){

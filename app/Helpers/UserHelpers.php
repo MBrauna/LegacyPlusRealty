@@ -11,6 +11,7 @@
                             ->select([
                                 'users_group.*',
                             ])
+                            ->orderBy('users_group.name','asc')
                             ->distinct()
                             ->get()
                             ;

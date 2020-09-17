@@ -14,12 +14,12 @@
     {
         public function index(Request $request) {
 
-            $archive        =   Archive::where('id_user',Auth::user()->id)->get();
+            $archive        =   Archive::where('id_user',Auth::user()->id)->orderBy('name_file','asc')->get();
             $contentGroup   =   [];
 
             foreach (user_group(Auth::user()->id) as $group) {
                 $tmpContent             =   $group;
-                $tmpContent['archive']  =   Archive::where('id_group',$group->id_users_group)->get();
+                $tmpContent->archive    =   Archive::where('id_group',$group->id_users_group)->orderBy('name_file','asc')->get();
 
                 array_push($contentGroup,(object)$tmpContent);
             } // foreach (user_group(Auth::user()-id) as $group) { ... }

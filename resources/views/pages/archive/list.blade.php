@@ -23,7 +23,7 @@
                         <a class="nav-link active" id="v-pills-archive-tab" data-toggle="pill" href="#v-pills-archive" role="tab" aria-controls="v-pills-archive" aria-selected="true">Files for {{ explode(' ',Auth::user()->name)[0] }}</a>
 
                         @foreach ($groups as $group)
-                            <a class="nav-link" id="v-pills-{{ $group->id_users_group }}-tab" data-toggle="pill" href="#v-pills-{{ $group->id_users_group }}" role="tab" aria-controls="v-pills-{{ $group->id_users_group }}" aria-selected="true">{{ $group->description }}</a>
+                            <a class="nav-link" id="v-pills-{{ $group->id_users_group }}-tab" data-toggle="pill" href="#v-pills-{{ $group->id_users_group }}" role="tab" aria-controls="v-pills-{{ $group->id_users_group }}" aria-selected="true">{{ $group->name }}</a>
                         @endforeach
                     </div>
                 </div>
