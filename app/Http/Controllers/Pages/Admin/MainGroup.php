@@ -31,11 +31,11 @@
             try {
                 $idUser     =   $request->input('idUser');
                 $existGroup =   UsersGroupUser::where('id_user',intval($idUser))->select('id_users_group');
-                $groupsUser =   UsersGroup::whereIn('id_users_group',$existGroup)->get();
+                $groupsUser =   UsersGroup::whereIn('id_users_group',$existGroup)->orderBy('name','asc')->get();
 
 
                 $existGroup =   UsersGroupUser::where('id_user',intval($idUser))->select('id_users_group');
-                $group      =   UsersGroup::whereNotIn('id_users_group',$existGroup)->get();
+                $group      =   UsersGroup::whereNotIn('id_users_group',$existGroup)->orderBy('name','asc')->get();
 
                 if(is_null($idUser)) return redirect()->route('admin.users.list');
 
@@ -57,11 +57,11 @@
                 if(is_null($idGroup)) return redirect()->route('admin.groups.list');
 
                 $existGroup =   UsersGroupUser::where('id_users_group',intval($idGroup))->select('id_user');
-                $groupsUser =   User::whereIn('id',$existGroup)->get();
+                $groupsUser =   User::whereIn('id',$existGroup)->orderBy('name','asc')->get();
 
 
                 $existGroup =   UsersGroupUser::where('id_users_group',intval($idGroup))->select('id_user');
-                $group      =   User::whereNotIn('id',$existGroup)->get();
+                $group      =   User::whereNotIn('id',$existGroup)->orderBy('name','asc')->get();
 
                 return view('pages.admin.groupUser',[
                     'UsersGroup'=>  $groupsUser,

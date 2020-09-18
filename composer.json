@@ -42,7 +42,8 @@
             "database/factories"
         ],
         "files": [
-            "app/Helpers/UserHelpers.php"
+            "app/Helpers/UserHelpers.php",
+            "app/Helpers/RenderHelpers.php"
         ]
     },
     "autoload-dev": {

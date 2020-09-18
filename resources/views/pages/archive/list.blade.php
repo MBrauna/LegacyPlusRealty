@@ -137,12 +137,8 @@
             parallelUploads:10,
             dictDefaultMessage: "Drop files here to upload on Legacy Plus Realty",
             success: function(file, response) {
+                location.reload();
             },
-            uploadprogress: function(file, progress, bytesSent) {
-                if(progress === 100) {
-                    alert(file);
-                }
-            }
         };
     </script>
 @endsection

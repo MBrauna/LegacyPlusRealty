@@ -56,13 +56,6 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard.home') }}">
-                        <i class="fas fa-file-signature"></i>
-                        <span>Contracts</span>
-                    </a>
-                </li>
-
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArchive" aria-expanded="true" aria-controls="collapseArchive">
@@ -73,11 +66,11 @@
                         <div class="bg-primary py-2 collapse-inner">
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">
                                 <i class="fas fa-folder-open"></i>
-                                <i>Links</i>
+                                <span>Links</span>
                             </a>
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('archive.list') }}">
                                 <i class="fas fa-file-contract"></i>
-                                <i>Files</i>
+                                <span>Files</span>
                             </a>
                         </div>
                     </div>
@@ -103,14 +96,21 @@
                         <div class="bg-primary py-2 collapse-inner">
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.users.list') }}">
                                 <i class="fas fa-user-alt"></i>
-                                <i>User</i>
+                                <span>User</span>
                             </a>
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.groups.list') }}">
                                 <i class="fas fa-users-cog"></i>
-                                <i>Group</i>
+                                <span>Group</span>
                             </a>
                         </div>
                     </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('dashboard.home') }}">
+                        <i class="fas fa-comments-dollar"></i>
+                        <span>Contract</span>
+                    </a>
                 </li>
 
                 <li class="nav-item">
@@ -120,13 +120,17 @@
                     </a>
                     <div id="collapseParameters" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('archive.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.archive.list') }}">
                                 <i class="fas fa-photo-video"></i>
-                                <i>Files</i>
+                                <span>Files</span>
                             </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">
-                                <i class="fas fa-users-cog"></i>
-                                <i>Courses</i>
+                            <a class="collapse-item d-flex justify-content-between" href="#">
+                                <i class="fas fa-link"></i>
+                                <span>Links</span>
+                            </a>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.tree.list') }}">
+                                <i class="fas fa-handshake"></i>
+                                <span>Commission tree</span>
                             </a>
                         </div>
                     </div>
@@ -231,20 +235,13 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="#">
-                            <i class="fas fa-user fa-sm fa-fw mr-2 text-primary"></i>
-                            Profile
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-primary"></i>
+                                Profile
                             </a>
-                            <a class="dropdown-item" href="#">
-                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-primary"></i>
-                            Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                            <i class="fas fa-list fa-sm fa-fw mr-2 text-primary"></i>
-                            Activity Log
-                            </a>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item bg-danger text-white" href="#" data-toggle="modal" data-target="#logoutModal">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
                                 Logout
                             </a>
                         </div>

@@ -23,8 +23,8 @@
                     <thead>
                         <tr class="bg-primary text-white">
                             <th text-center>ID</th>
-                            <th>Icon</th>
                             <th>Name</th>
+                            <th>Icon</th>
                             <th>Status</th>
                             <th>Users in</th>
                             <th>Created at</th>
@@ -34,8 +34,8 @@
                     <tfoot class="bg-primary text-white">
                         <tr class="bg-primary text-white">
                             <th text-center>ID</th>
-                            <th>Icon</th>
                             <th>Name</th>
+                            <th>Icon</th>
                             <th>Status</th>
                             <th>Users in</th>
                             <th>Created at</th>
@@ -46,8 +46,8 @@
                     @forelse ($groups as $group)
                         <tr>
                             <td class="text-white text-center bg-primary" style="min-width: 5vw;"><small>#{{ $group->id_users_group }}</small></td>
-                            <td class="text-primary"><small><i class="{{ $group->icon }}"></i> - {{$group->icon}}</small></td>
                             <td class="text-primary" style="min-width: 15vw;"><small>{{ $group->name }}</small></td>
+                            <td class="text-primary"><small><i class="{{ $group->icon }}"></i> - {{$group->icon}}</small></td>
                             <td class="text-primary"><small>{{ $group->status ? 'Active' : 'Inactive' }}</small></td>
                             <td class="text-primary"><small>{{ count($group->users_in) }} users</small></td>
                             <td class="text-primary"><small>{{ $group->created_at }}</small></td>

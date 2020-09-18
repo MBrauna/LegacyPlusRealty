@@ -3,7 +3,7 @@
     use Illuminate\Support\Facades\Route;
 
     Auth::routes([
-        'register' => false,
+        //'register' => false,
     ]);
 
     // Rotas protegidas pelo Sanctum
@@ -73,5 +73,40 @@
                 // [admin.groups.update]
                 Route::post('/update','MainGroup@update')->name('update');
             }); // Route::name('groups.')->prefix('groups')-group(function(){ ... }
+
+            // [admin.tree]
+            Route::name('tree.')->prefix('tree')->group(function(){
+                // [admin.tree.home]
+                Route::any('/',function(){ return redirect()->route('admin.tree.list'); })->name('home');
+
+                // [admin.tree.list]
+                Route::any('/list','MainTree@list')->name('list');
+                // [admin.tree.add]
+                Route::any('/add','MainTree@add')->name('add');
+                // [admin.tree.remove]
+                Route::any('/remove','MainTree@remove')->name('remove');
+            }); // Route::name('groups.')->prefix('groups')-group(function(){ ... });
+
+            // [admin.archive]
+            Route::name('archive.')->prefix('archive')->group(function(){
+                // [admin.archive.home]
+                Route::any('/',function(){ return redirect()->route('admin.archive.list'); })->name('home');
+
+                // [admin.archive.list]
+                Route::any('/list','MainArchive@list')->name('list');
+            }); // Route::name('archive.')->prefix('archive')->group(function(){ ... }
+
+            // [admin.link]
+            Route::name('link.')->prefix('link')->group(function(){
+                // [admin.link.home]
+                Route::any('/',function(){ return redirect()->route('admin.link.list'); })->name('home');
+
+                // [admin.link.list]
+                Route::any('/list','MainLink@list')->name('list');
+                // [admin.link.add]
+                Route::any('/add','MainLink@add')->name('add');
+                // [admin.link.remove]
+                Route::any('/remove','MainLink@remove')->name('remove');
+            }); // Route::name('link.')->prefix('link')->group(function(){ ... }
         }); // Route::prefix('admin')->name('admin')->namespace('Admin')->group(function(){ ... }
     });
