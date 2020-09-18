@@ -24,9 +24,10 @@
         <div class="card-body">
             <div class="table-responsible">
                 <table class="table table-hover table-borderless table-sm tree">
-                    <tr class="treegrid-0">
+                    <tr class="treegrid-0 bg-primary text-white">
                         <td><small>Root node</small></td>
-                        <td><small>Actions</small></td>
+                        <td><small>Percentual</small></td>
+                        <td class="text-center"><small>Actions</small></td>
                     </tr>
                     @foreach ($tree as $item)
                         {{ render_tree($item) }}
@@ -67,8 +68,8 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-12 col-12 col-md-12">
-                            <label for="idUser">Percentual comission:</label>
-                            <input type="number" class="form-control form-control-sm" step="0.01" name="percentual" id="percentual">
+                            <label for="percentual">Percentual comission:</label>
+                            <input type="number" class="form-control form-control-sm" min="0" max="100" step="0.01" name="percentual" id="percentual" value="0.00">
                         </div>
                     </div>
                 </div>

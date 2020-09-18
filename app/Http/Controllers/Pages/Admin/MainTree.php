@@ -64,9 +64,9 @@
             try {
                 $idPrevNode =   $request->input('idPrevNode');
                 $idUser     =   $request->input('idUser');
-                $percent    =   $request->input('percent',0);
+                $percent    =   str_replace('.',',',$request->input('percentual',0));
 
-                if(is_null($idUser)) return redirect()->route('admin.tree.list');
+                if(is_null($idUser) || is_null($percent)) return redirect()->route('admin.tree.list');
 
                 $tree                           =   new TreeComission;
                 $tree->id_tree_comission_prev   =   is_null($idPrevNode) ? null : intval($idPrevNode);

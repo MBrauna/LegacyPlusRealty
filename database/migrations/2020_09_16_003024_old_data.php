@@ -50,6 +50,7 @@ class OldData extends Migration
             $table->integer('id_responsible')->nullable();
             $table->text('name');
             $table->text('icon')->default('fas fa-users');
+            $table->double('percent',8,2);
             $table->boolean('status')->default(true);
             $table->timestamps();
 

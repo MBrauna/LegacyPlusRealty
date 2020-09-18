@@ -80,15 +80,17 @@
             try {
                 $name   =   $request->input('nameForm');
                 $icon   =   $request->input('iconForm');
+                $percent=   $request->input('percentual',0);
                 $status =   (intval($request->input('statusForm',0)) == 1) ? true : false;
 
                 if(is_null($name) || is_null($status)) return redirect()->route('admin.groups.list');
 
                 $usersGroup         =   new UsersGroup;
-                
+
                 $usersGroup->name   =   $name;
                 $usersGroup->icon   =   is_null($icon) ? 'fas fa-users' : $icon;
                 $usersGroup->status =   $status;
+                $usersGroup->percent=   str_replace('.',',',$percent);
 
                 $usersGroup->save();
 

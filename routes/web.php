@@ -102,11 +102,11 @@
                 Route::any('/',function(){ return redirect()->route('admin.link.list'); })->name('home');
 
                 // [admin.link.list]
-                Route::any('/list','MainLink@list')->name('list');
+                Route::any('/list','MainLinks@list')->name('list');
                 // [admin.link.add]
-                Route::any('/add','MainLink@add')->name('add');
+                Route::any('/add','MainLinks@add')->name('add');
                 // [admin.link.remove]
-                Route::any('/remove','MainLink@remove')->name('remove');
+                Route::any('/remove','MainLinks@remove')->name('remove');
             }); // Route::name('link.')->prefix('link')->group(function(){ ... }
         }); // Route::prefix('admin')->name('admin')->namespace('Admin')->group(function(){ ... }
     });

@@ -33,7 +33,7 @@
                         <i class="fas fa-laugh-wink"></i>
                     </div>-->
                     <div class="sidebar-brand-icon">
-                        <img width="100px" src="/image/logo.png">
+                        <img width="90px" src="/image/logo.png">
                     </div>
                     <!--<div class="sidebar-brand-text mx-3">
                         {{ config('app.name', 'Laravel') }}
@@ -55,26 +55,19 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-
-                <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArchive" aria-expanded="true" aria-controls="collapseArchive">
-                        <i class="fas fa-file-contract"></i>
-                        <span>Quick access</span>
+                    <a class="nav-link" href="{{ route('quickAccess.list') }}">
+                        <i class="fas fa-link"></i>
+                        <span>Links</span>
                     </a>
-                    <div id="collapseArchive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">
-                                <i class="fas fa-folder-open"></i>
-                                <span>Links</span>
-                            </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('archive.list') }}">
-                                <i class="fas fa-file-contract"></i>
-                                <span>Files</span>
-                            </a>
-                        </div>
-                    </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('archive.list') }}">
+                        <i class="fas fa-folder-open"></i>
+                        <span>Files</span>
+                    </a>
+                </li>
+
 
 
                 @if(Auth::user()->admin)
@@ -86,24 +79,25 @@
                     Admin
                 </div>
 
-                <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
-                        <i class="fas fa-users"></i>
-                        <span>Users</span>
+                    <a class="nav-link" href="{{ route('admin.users.list') }}">
+                        <i class="fas fa-user-alt"></i>
+                        <span>User</span>
                     </a>
-                    <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.users.list') }}">
-                                <i class="fas fa-user-alt"></i>
-                                <span>User</span>
-                            </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.groups.list') }}">
-                                <i class="fas fa-users-cog"></i>
-                                <span>Group</span>
-                            </a>
-                        </div>
-                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.tree.list') }}">
+                        <i class="fas fa-handshake"></i>
+                        <span>Commission tree</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.groups.list') }}">
+                        <i class="fas fa-users-cog"></i>
+                        <span>Group</span>
+                    </a>
                 </li>
 
                 <li class="nav-item">
@@ -124,13 +118,9 @@
                                 <i class="fas fa-photo-video"></i>
                                 <span>Files</span>
                             </a>
-                            <a class="collapse-item d-flex justify-content-between" href="#">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.link.list') }}">
                                 <i class="fas fa-link"></i>
                                 <span>Links</span>
-                            </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.tree.list') }}">
-                                <i class="fas fa-handshake"></i>
-                                <span>Commission tree</span>
                             </a>
                         </div>
                     </div>
@@ -195,13 +185,12 @@
                         </li>
 
                         <!-- Nav Item - Messages -->
+                        <!--
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw text-primary"></i>
-                                <!-- Counter - Messages -->
                                 <span class="badge badge-danger badge-counter"></span>
                             </a>
-                            <!-- Dropdown - Messages -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
                                     Message Center
@@ -219,7 +208,7 @@
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
-                        </li>
+                        </li>-->
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
