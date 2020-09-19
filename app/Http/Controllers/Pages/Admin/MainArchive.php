@@ -10,8 +10,7 @@
     use App\Models\UsersGroup;
     use App\Models\Archive;
 
-    class MainArchive extends Controller
-    {
+    class MainArchive extends Controller {
         public function list(Request $request) {
             try {
                 $users          =   User::all();

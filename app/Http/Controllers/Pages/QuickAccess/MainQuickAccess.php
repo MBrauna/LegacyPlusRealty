@@ -10,8 +10,7 @@
     class MainQuickAccess extends Controller {
         public function index(Request $request) {
             try {
-                $dataQuickAccess    =   QuickAccess::where('status',true)
-                                        ->orderBy('description','asc')
+                $dataQuickAccess    =   QuickAccess::orderBy('description','asc')
                                         ->orderBy('url','asc')
                                         ->get();
 

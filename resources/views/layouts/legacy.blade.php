@@ -86,15 +86,15 @@
                     </a>
                     <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.users.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="#">
                                 <i class="fas fa-user-alt"></i>
                                 <span>User</span>
                             </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.groups.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="#">
                                 <i class="fas fa-users-cog"></i>
                                 <span>Group</span>
                             </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.tree.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="#">
                                 <i class="fas fa-handshake"></i>
                                 <span>Commission tree</span>
                             </a>
@@ -102,26 +102,6 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.contract.list') }}">
-                        <i class="fas fa-comments-dollar"></i>
-                        <span>Contract</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.archive.list') }}">
-                        <i class="fas fa-photo-video"></i>
-                        <span>Files</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.link.list') }}">
-                        <i class="fas fa-link"></i>
-                        <span>Links</span>
-                    </a>
-                </li>
                 
                 @endif
 
