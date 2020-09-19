@@ -106,6 +106,19 @@ class OldData extends Migration {
             $table->index(['status']);
         }); // Schema::create('archive',function(Blueprint $table){ .... });
 
+        Schema::create('group_user',function(Blueprint $table){
+            $table->increments('id_group_user');
+            $table->integer('id_group');
+            $table->integer('id_user');
+            $table->timestamps();
+
+            $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_group')->references('id_group')->on('group')->onUpdate('cascade')->onDelete('cascade');
+
+            $table->index(['id_group']);
+            $table->index(['id_user']);
+        }); // Schema::create('archive',function(Blueprint $table){ .... });
+
         Schema::create('contract',function(Blueprint $table){
             $table->increments('id_contract');
             $table->integer('type')->default(0); // [0] - Venda, [1] - Aluguel
@@ -192,6 +205,7 @@ class OldData extends Migration {
         Schema::dropIfExists('archive');
         Schema::dropIfExists('quick_access');
         Schema::dropIfExists('group');
+        Schema::dropIfExists('group_user');
         Schema::dropIfExists('contract');
         Schema::dropIfExists('contract_address');
         Schema::dropIfExists('contract_phone');
