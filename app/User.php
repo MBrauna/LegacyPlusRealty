@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'admin','broker','realtor','photo'];
+    protected $fillable = ['name', 'email', 'photo','license','id_user_recommend','admin', 'broker','realtor','percent'];
     protected $hidden = ['password', 'remember_token'];
     protected $casts = ['email_verified_at' => 'datetime'];
 }

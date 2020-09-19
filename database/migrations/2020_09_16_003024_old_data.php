@@ -83,7 +83,6 @@ class OldData extends Migration {
             $table->index(['length']);
         }); // Schema::create('archive',function(Blueprint $table){ .... });
 
-
         Schema::create('quick_access',function(Blueprint $table){
             $table->increments('id_quick_access');
             $table->text('description');
@@ -182,10 +181,8 @@ class OldData extends Migration {
             $table->integer('id_contract');
             $table->integer('id_user');
             $table->double('value',12,2)->default(0);
-            $table->double('value_aditional',12,2)->default(0);
             $table->double('comission',8,2)->default(0);
-            $table->double('percent_group',8,2)->default(0);
-            $table->double('percent_tree',8,2)->default(0);
+            $table->double('comission_additional',8,2)->default(0);
             $table->dateTime('payment_date');
             $table->timestamps();
 
