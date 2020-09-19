@@ -27,7 +27,7 @@
                             <th>Icon</th>
                             <th>Status</th>
                             <th>Users in</th>
-                            <th>Created at</th>
+                            <th>Comission %</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -38,7 +38,7 @@
                             <th>Icon</th>
                             <th>Status</th>
                             <th>Users in</th>
-                            <th>Created at</th>
+                            <th>Comission %</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -50,7 +50,7 @@
                             <td class="text-primary"><small><i class="{{ $group->icon }}"></i> - {{$group->icon}}</small></td>
                             <td class="text-primary"><small>{{ $group->status ? 'Active' : 'Inactive' }}</small></td>
                             <td class="text-primary"><small>{{ count($group->users_in) }} users</small></td>
-                            <td class="text-primary"><small>{{ $group->created_at }}</small></td>
+                            <td class="text-primary"><small>{{ number_format($group->percent, 2, ',', ' ') }} %</small></td>
                             <td>
                                 <div class="row d-flex justify-content-center">
                                     <form class="col-12 col-sm-6 col-md-6" method="POST" action="{{ route('admin.groups.user') }}">
@@ -100,11 +100,15 @@
                             <label for="nameForm">Name:</label>
                             <input type="text" minlength="5" maxlength="350" class="form-control form-control-sm" id="nameForm" name="nameForm" value="" required>
                         </div>
-                        <div class="form-group col-sm-12 col-6 col-md-6">
+                        <div class="form-group col-sm-12 col-12 col-md-6">
                             <label for="iconForm">Icon (<a href="https://fontawesome.com/icons?d=gallery" target="_blank">FontAwesome</a>):</label>
                             <input type="text" minlength="5" maxlength="350" class="form-control form-control-sm" id="iconForm" name="iconForm" value="">
                         </div>
-                        <div class="form-group col-sm-12 col-6 col-md-6">
+                        <div class="form-group col-sm-12 col-12 col-md-6">
+                            <label for="percentual">Comission percentual:</label>
+                            <input type="number" min="0" max="100" step="0.01" class="form-control form-control-sm" id="percentual" name="percentual" value="0.00">
+                        </div>
+                        <div class="form-group col-sm-12 col-12 col-md-12">
                             <label for="statusForm">Status:</label>
                             <select class="form-control form-control-sm" id="statusForm" name="statusForm" required>
                                 <option value="1" selected>Active</option>
@@ -139,11 +143,15 @@
                                 <label for="nameForm">Name:</label>
                                 <input type="text" minlength="5" maxlength="350" class="form-control form-control-sm" id="nameForm" name="nameForm" value="{{ $group->name }}" required>
                             </div>
-                            <div class="form-group col-sm-12 col-6 col-md-6">
+                            <div class="form-group col-sm-12 col-12 col-md-6">
                                 <label for="iconForm">Icon (<a href="https://fontawesome.com/icons?d=gallery" target="_blank">FontAwesome</a>):</label>
                                 <input type="text" minlength="5" maxlength="350" class="form-control form-control-sm" id="iconForm" name="iconForm" value="{{ $group->icon }}">
                             </div>
-                            <div class="form-group col-sm-12 col-6 col-md-6">
+                            <div class="form-group col-sm-12 col-12 col-md-6">
+                                <label for="percentual">Comission percentual:</label>
+                                <input type="number" min="0" max="100" step="0.01" class="form-control form-control-sm" id="percentual" name="percentual" value="0.00">
+                            </div>
+                            <div class="form-group col-sm-12 col-12 col-md-12">
                                 <label for="statusForm">Status:</label>
                                 <select class="form-control form-control-sm" id="statusForm" name="statusForm" required>
                                     @if($group->status)

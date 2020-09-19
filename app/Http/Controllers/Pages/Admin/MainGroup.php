@@ -80,7 +80,7 @@
             try {
                 $name   =   $request->input('nameForm');
                 $icon   =   $request->input('iconForm');
-                $percent=   $request->input('percentual',0);
+                $percent=   str_replace(',','.',$request->input('percentual',0));
                 $status =   (intval($request->input('statusForm',0)) == 1) ? true : false;
 
                 if(is_null($name) || is_null($status)) return redirect()->route('admin.groups.list');
@@ -90,7 +90,7 @@
                 $usersGroup->name   =   $name;
                 $usersGroup->icon   =   is_null($icon) ? 'fas fa-users' : $icon;
                 $usersGroup->status =   $status;
-                $usersGroup->percent=   str_replace('.',',',$percent);
+                $usersGroup->percent=   doubleval($percent);
 
                 $usersGroup->save();
 
@@ -107,14 +107,16 @@
                 $idForm =   intval($request->input('idGroupForm'));
                 $name   =   $request->input('nameForm');
                 $icon   =   $request->input('iconForm');
+                $percent=   str_replace(',','.',$request->input('percentual',0));
                 $status =   (intval($request->input('statusForm',0)) == 1) ? true : false;
 
                 if(is_null($idForm) || is_null($name) || is_null($status)) return redirect()->route('admin.groups.list');
 
                 UsersGroup::find($idForm)->update([
-                    'name'  =>  $name,
-                    'icon'  =>  $icon,
-                    'status'=>  $status,
+                    'name'      =>  $name,
+                    'icon'      =>  $icon,
+                    'status'    =>  $status,
+                    'percent'   =>  doubleval($percent)
                 ]);
 
                 return redirect()->route('admin.groups.list');

@@ -30,7 +30,6 @@
                             <th>Contract date</th>
                             <th>Payment date</th>
                             <th>Payment</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot class="bg-primary text-white rounded">
@@ -43,7 +42,6 @@
                             <th>Contract date</th>
                             <th>Payment date</th>
                             <th>Comission</th>
-                            <th>Action</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -57,6 +55,7 @@
                             <td style="min-width: 20vw;">{{ $contract->contract_date }}</td>
                             <td style="min-width: 20vw;">{{ $contract->payment_date }}</td>
                             <td>{{ $contract->payment ? 'Paid' : 'Unpaid' }}</td>
+                            <!--
                             <td style="min-width: 10vw">
                                 <div class="row d-flex justify-content-center">
                                     @if(!$contract->payment)
@@ -75,6 +74,7 @@
                                     @endif
                                 </div>
                             </td>
+                            -->
                         </tr>
                     @empty
                         <tr>
