@@ -48,7 +48,7 @@ class OldData extends Migration {
             $table->integer('type')->default(0); // [1] - Sales, [2] - Rental
             $table->double('percentual',12,2)->default(0);
             $table->dateTime('init_date');
-            $table->deteTime('end_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
@@ -134,9 +134,10 @@ class OldData extends Migration {
             $table->foreign('id_user_seller')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 
             $table->index(['type']);
-            $table->index(['contract_date']);
+            $table->index(['start_contract']);
+            $table->index(['end_contract']);
             $table->index(['payment_date']);
-            $table->index(['payment']);
+            $table->index(['payment_exec']);
             $table->index(['id_user_seller']);
         });
 
@@ -162,7 +163,7 @@ class OldData extends Migration {
 
         Schema::create('contract_phone',function(Blueprint $table){
             $table->increments('id_users_phone');
-            $table->integer('id_user');
+            $table->integer('id_contract');
             $table->integer('ddi')->default(1);
             $table->integer('ddd')->nullable();
             $table->integer('phone');
