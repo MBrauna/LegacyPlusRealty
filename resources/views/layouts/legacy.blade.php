@@ -80,51 +80,49 @@
                 </div>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.users.list') }}">
-                        <i class="fas fa-user-alt"></i>
-                        <span>User</span>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
+                        <i class="fas fa-users"></i>
+                        <span>User parameters</span>
                     </a>
+                    <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-primary py-2 collapse-inner">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.users.list') }}">
+                                <i class="fas fa-user-alt"></i>
+                                <span>User</span>
+                            </a>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.groups.list') }}">
+                                <i class="fas fa-users-cog"></i>
+                                <span>Group</span>
+                            </a>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.tree.list') }}">
+                                <i class="fas fa-handshake"></i>
+                                <span>Commission tree</span>
+                            </a>
+                        </div>
+                    </div>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.tree.list') }}">
-                        <i class="fas fa-handshake"></i>
-                        <span>Commission tree</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.groups.list') }}">
-                        <i class="fas fa-users-cog"></i>
-                        <span>Group</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard.home') }}">
+                    <a class="nav-link" href="{{ route('admin.contract.list') }}">
                         <i class="fas fa-comments-dollar"></i>
                         <span>Contract</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseParameters" aria-expanded="true" aria-controls="collapseParameters">
-                        <i class="fas fa-users"></i>
-                        <span>Parameters</span>
+                    <a class="nav-link" href="{{ route('admin.archive.list') }}">
+                        <i class="fas fa-photo-video"></i>
+                        <span>Files</span>
                     </a>
-                    <div id="collapseParameters" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.archive.list') }}">
-                                <i class="fas fa-photo-video"></i>
-                                <span>Files</span>
-                            </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.link.list') }}">
-                                <i class="fas fa-link"></i>
-                                <span>Links</span>
-                            </a>
-                        </div>
-                    </div>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.link.list') }}">
+                        <i class="fas fa-link"></i>
+                        <span>Links</span>
+                    </a>
+                </li>
+                
                 @endif
 
                 

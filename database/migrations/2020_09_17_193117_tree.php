@@ -25,16 +25,18 @@
                 $table->dateTime('contract_date');
                 $table->dateTime('payment_date');
                 $table->boolean('payment')->default(false);
-                $table->double('value',8,2)->default(0);
-                $table->integer('id_user_sale');
+                $table->double('value',12,2)->default(0);
+                $table->integer('id_user_seller');
                 $table->integer('id_housing')->nullable();
                 $table->text('address')->nullable();
+                $table->text('description')->nullable();
+                $table->timestamps();
 
                 $table->index(['type']);
                 $table->index(['contract_date']);
                 $table->index(['payment_date']);
                 $table->index(['payment']);
-                $table->index(['id_user_sale']);
+                $table->index(['id_user_seller']);
                 $table->index(['id_housing']);
             });
 
@@ -43,12 +45,13 @@
                 $table->increments('id_payment');
                 $table->integer('id_contract');
                 $table->integer('id_user');
-                $table->double('value',8,2)->default(0);
-                $table->double('value_aditional',8,2)->default(0);
+                $table->double('value',12,2)->default(0);
+                $table->double('value_aditional',12,2)->default(0);
                 $table->double('comission',8,2)->default(0);
                 $table->double('percent_group',8,2)->default(0);
                 $table->double('percent_tree',8,2)->default(0);
                 $table->dateTime('payment_date');
+                $table->timestamps();
 
                 $table->index(['id_contract']);
                 $table->index(['id_user']);

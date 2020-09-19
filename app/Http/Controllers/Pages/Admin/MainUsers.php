@@ -58,7 +58,7 @@
                 $name       =   $request->input('nameForm');
                 $email      =   $request->input('emailForm');
                 $password   =   $request->input('passwordForm');
-                $admin      =   (intval($request->input('adminForm',0)) == 1) ? true : false;
+                $admin      =   (intval($request->adminForm) == 1) ? true : false;
 
                 if(is_null($id) || is_null($name) || is_null($email)) return redirect()->route('admin.users.list');
 

@@ -82,9 +82,9 @@
                 // [admin.tree.list]
                 Route::any('/list','MainTree@list')->name('list');
                 // [admin.tree.add]
-                Route::any('/add','MainTree@add')->name('add');
+                Route::post('/add','MainTree@add')->name('add');
                 // [admin.tree.remove]
-                Route::any('/remove','MainTree@remove')->name('remove');
+                Route::post('/remove','MainTree@remove')->name('remove');
             }); // Route::name('groups.')->prefix('groups')-group(function(){ ... });
 
             // [admin.archive]
@@ -104,9 +104,19 @@
                 // [admin.link.list]
                 Route::any('/list','MainLinks@list')->name('list');
                 // [admin.link.add]
-                Route::any('/add','MainLinks@add')->name('add');
+                Route::post('/add','MainLinks@add')->name('add');
                 // [admin.link.remove]
-                Route::any('/remove','MainLinks@remove')->name('remove');
+                Route::post('/remove','MainLinks@remove')->name('remove');
             }); // Route::name('link.')->prefix('link')->group(function(){ ... }
+
+            Route::name('contract.')->prefix('contract')->group(function(){
+                // [admin.contract.home]
+                Route::any('/',function(){ return redirect()->route('admin.contract.list'); })->name('home');
+
+                // [admin.contract.list]
+                Route::any('/list','MainContract@list')->name('list');
+                // [admin.contract.add]
+                Route::post('/add','MainContract@add')->name('add');
+            }); // Route::name('contract.')->prefix('contract')->group(function(){ .. });
         }); // Route::prefix('admin')->name('admin')->namespace('Admin')->group(function(){ ... }
     });

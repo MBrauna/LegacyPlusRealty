@@ -13,7 +13,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $monthSum ?? '0' }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -30,7 +30,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $yearSum ?? '0' }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -48,31 +48,31 @@
             <thead class="text-white bg-primary">
                 <tr>
                     <th>Closing date</th>
-                    <th>Sales</th>
                     <th>Comission</th>
+                    <th>Comission aditional</th>
                 </tr>
             </thead>
             <tfoot class="text-white bg-primary">
                 <tr>
                     <th>Closing date</th>
-                    <th>Sales</th>
                     <th>Comission</th>
+                    <th>Comission aditional</th>
                 </tr>
             </tfoot>
             <tbody>
                 @forelse ($contracts as $item)
 
                     <tr>
-                        <th>{{ $item->date_contract }}</th>
-                        <th>{{ $item->value }}</th>
+                        <th>{{ $item->payment_date }}</th>
                         <th>{{ $item->comission }}</th>
+                        <th>{{ $item->value_aditional }}</th>
                     </tr>
                 @empty
 
                     <tr>
                         <td colspan="5">
                             <h6 class="text-center text-primary">
-                                <b>No content available</b><br/>
+                                <b>No comission available</b><br/>
                                 <i class="fas fa-frown"></i>
                             </h6>
                         </td>
