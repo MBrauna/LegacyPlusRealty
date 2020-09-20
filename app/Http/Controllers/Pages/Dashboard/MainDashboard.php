@@ -6,20 +6,47 @@
     use Illuminate\Http\Request;
 
     use Auth;
+    use DB;
+
     use Carbon\Carbon;
     use App\Models\Payment;
 
     class MainDashboard extends Controller {
         public function index(Request $request) {
-            $dataContract   =   [];
+            $dataContract   =   Payment::where('payment_date','>=',Carbon::now()->subMonths(12))
+                                ->where('payment_date','<=',Carbon::now())
+                                ->where('id_user',Auth::user()->id)
+                                ->groupByRaw("date_trunc('month', payment.payment_date)")
+                                ->select(
+                                    DB::raw('count(payment.id_payment) as count_comission'),
+                                    DB::raw('sum(payment.comission) as sum_comission'),
+                                    DB::raw("date_trunc('month', payment.payment_date) as month_date"),
+                                )
+                                ->get();
+            
+            foreach ($dataContract as $key => $value) {
+                $dataContract[$key]->desc_date  =   Carbon::parse($value->month_date)->format('m/Y');
+                $dataContract[$key]->value      =   'US$ '.number_format($value->sum_comission,2,',','.');
+            } // foreach ($dataContract as $key => $value) { ... }
 
-            $sumMonth       =   0;
-            $sumYear        =   0;
+            $sumMonth       =   Payment::where('payment_date','>=',Carbon::now()->subMonths(1))->where('id_user',Auth::user()->id)->where('payment_date','<=',Carbon::now())->sum('payment.comission');
+            $sumYear        =   Payment::where('payment_date','>=',Carbon::now()->subMonths(1))->where('id_user',Auth::user()->id)->where('payment_date','<=',Carbon::now())->sum('payment.comission');
+
+            $monthMin       =   Carbon::now()->subMonths(1)->format('m/d/Y');
+            $monthMax       =   Carbon::now()->format('m/d/Y');
+
+            $yearMin        =   Carbon::now()->subMonths(12)->format('m/d/Y');
+            $yearMax        =   Carbon::now()->format('m/d/Y');
 
             return view('pages.dashboard.dashboard',[
                 'contracts' =>  $dataContract,
                 'monthSum'  =>  $sumMonth,
                 'yearSum'   =>  $sumYear,
+                // -------------------- //
+                'monthMin'  =>  $monthMin,
+                'monthMax'  =>  $monthMax,
+                'yearMin'   =>  $yearMin,
+                'yearMax'   =>  $yearMax,
             ]);
         } // public function index(Request $request) { ... }
     } // class MainDashboard extends Controller { ... }

@@ -38,6 +38,43 @@
             // [admin.home]
             Route::any('/',function(){ return redirect()->route('admin.users.list'); })->name('home');
 
-            
+            // [admin.contract]
+            Route::namespace('Contract')->prefix('contract')->name('contract.')->group(function(){
+                // [admin.contract.list]
+                Route::any('/','MainContract@list')->name('list');
+                // [admin.contract.create]
+                Route::any('/create','MainContract@createPage')->name('create');
+                // [admin.contract.idList]
+                Route::any('/id',function(){ return redirect()->route('admin.contract.list'); })->name('idList');
+                // [admin.contract.id]
+                Route::any('/id/{id_contract}','MainContract@id')->name('id');
+                // [admin.contract.add]
+                Route::post('/add','MainContract@add')->name('add');
+            }); // Route::namespace('Contract')->prefix('contract')->name('contract.')->group(function(){ ... });
+
+            // [admin.financial]
+            Route::namespace('Financial')->prefix('financial')->name('financial.')->group(function(){
+                // [admin.financial.home]
+                Route::any('/',function(){ return redirect()->route('admin.financial.list'); });
+
+                // [admin.financial.list]
+                Route::any('/list','MainFinancial@list')->name('list');
+            }); // Route::namespace('Financial')->prefix('financial')->name('financial.')->group(function(){ ... });
+
+            // [admin.utilities]
+            Route::namespace('Utilities')->prefix('utilities')->name('utilities.')->group(function(){
+                // [admin.financial.home]
+                Route::any('/',function(){ return redirect()->route('dashboard.home'); })->name('home');
+
+                // [admin.utilities.file]
+                Route::any('/file','MainArchive@list')->name('file');
+
+                // [admin.utilities.link]
+                Route::any('/link','MainLink@list')->name('link');
+                // [admin.utilities.linkAdd]
+                Route::any('/linkAdd','MainLink@add')->name('linkAdd');
+                // [admin.utilities.linkRemove]
+                Route::any('/linkRemove','MainLink@remove')->name('linkRemove');
+            }); // Route::namespace('Utilities')->prefix('utilities')->name('utilities.')->group(function(){ ... }
         }); // Route::prefix('admin')->name('admin')->namespace('Admin')->group(function(){ ... }
     });

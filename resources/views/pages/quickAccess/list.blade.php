@@ -3,43 +3,36 @@
 @section('pageName','Quick Access')
 
 @section('body')
-    <!-- Content Row -->
-    
-    <div class="table-responsive rounded">
-        <table class="table table-hover table-striped table-borderless table-sm border-left-primary " id="dataTable" cellspacing="0">
-            <thead>
-                <tr class="bg-primary text-white">
-                    <th>Description</th>
-                    <th>Url</th>
-                </tr>
-            </thead>
-            <tfoot class="bg-primary text-white">
-                <tr>
-                    <th>Description</th>
-                    <th>Url</th>
-                </tr>
-            </tfoot>
-            <tbody>
-
-            @forelse ($quickAccess as $item)
-
-                <tr>
-                    <td><a target="_blank" href="{{ $item->url }}">{{ $item->description }}</a></td>
-                    <td><a target="_blank" href="{{ $item->url }}">{{ $item->url }}</a></td>
-                </tr>
-            @empty
-
-                <tr>
-                    <td colspan="2">
-                        <h6 class="text-center text-primary">
-                            <b>No content available</b><br/>
-                            <i class="fas fa-frown"></i>
-                        </h6>
-                    </td>
-                </tr>
-            @endforelse
-            </tbody>
-        </table>
+    <div class="card border-primary">
+        <div class="card-header bg-primary text-white text-center">
+            Quick Access
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                @forelse ($quickAccess as $item)
+                    <li class="list-group-item text-primary border-primary">
+                        <div class="d-flex w-100 justify-content-between">
+                            <i class="fas fa-link"></i>
+                            <h6 class="mb-1 mt-1 text-center">
+                                <a href="{{ $item->url }}" target="_blank">
+                                    {{ $item->description }}<br/>
+                                    <small class="text-muted">{{ $item->url}}</small>
+                                </a>
+                            </h6>
+                            <i class="fas fa-link"></i>
+                        </div>
+                    </li>
+                @empty
+                    <li class="list-group-item text-primary border-primary">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6><i class="fas fa-frown-open"></i></h6>
+                            <h6 class="mb-1">No quick links</h6>
+                            <h6><i class="fas fa-frown-open"></i></h6>
+                        </div>
+                    </li>
+                @endforelse
+            </ul>
+        </div>
     </div>
 @endsection
 

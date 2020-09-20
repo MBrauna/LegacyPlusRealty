@@ -24,7 +24,7 @@
                             <h6 class="mb-1 mt-1">
                                 <a href="{{ $item->url }}" target="_blank">{{ $item->description }}</a>
                             </h6>
-                            <form method="POST" action="{{ route('admin.link.remove') }}">
+                            <form method="POST" action="{{ route('admin.utilities.linkRemove') }}">
                                 @csrf
                                 <input type="hidden" name="idQuickAccess" value="{{ $item->id_quick_access }}">
                                 <button type="submit" class="btn btn-block btn-outline-primary btn-sm">
@@ -48,7 +48,7 @@
 
     <div class="modal fade" id="addLinks" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="POST" action="{{ route('admin.link.add') }}" class="modal-content was-validated" autocomplete="off">
+            <form method="POST" action="{{ route('admin.utilities.linkAdd') }}" class="modal-content was-validated" autocomplete="off">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="staticBackdropLabel">Add quick link</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

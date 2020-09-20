@@ -12,7 +12,10 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Earnings (Monthly)<br/>
+                                <small class="text-muted"> between {{ $monthMin }} and {{ $monthMax }}</small>
+                            </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $monthSum ?? '0' }}</div>
                         </div>
                         <div class="col-auto">
@@ -29,7 +32,10 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Earnings (Annual)<br/>
+                                <small class="text-muted"> between {{ $yearMin }} and {{ $yearMax }}</small>
+                            </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $yearSum ?? '0' }}</div>
                         </div>
                         <div class="col-auto">
@@ -44,28 +50,20 @@
 
     <!-- Content Row -->
     <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <thead class="text-white bg-primary">
+        <table class="table table-sm table-hover table-striped" id="dataTable" width="100%" cellspacing="0">
+            <thead class="bg-primary text-white">
                 <tr>
-                    <th>Closing date</th>
-                    <th>Comission</th>
-                    <th>Comission aditional</th>
+                    <th class="text-center">Month</th>
+                    <th class="text-left">Contracts</th>
+                    <th class="text-right">Comission US$</th>
                 </tr>
             </thead>
-            <tfoot class="text-white bg-primary">
-                <tr>
-                    <th>Closing date</th>
-                    <th>Comission</th>
-                    <th>Comission aditional</th>
-                </tr>
-            </tfoot>
             <tbody>
                 @forelse ($contracts as $item)
-
-                    <tr>
-                        <th>{{ $item->payment_date }}</th>
-                        <th>{{ $item->comission }}</th>
-                        <th>{{ $item->value_aditional }}</th>
+                    <tr class="text-primary">
+                        <th style="min-width: 20vw;" class="text-center">{{ $item->desc_date }}</th>
+                        <th style="min-width: 20vw;" class="text-left">{{ $item->count_comission }} contracts</th>
+                        <th style="min-width: 20vw;" class="text-right">{{ $item->value }}</th>
                     </tr>
                 @empty
 

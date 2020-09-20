@@ -26,7 +26,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
                     <!--<div class="sidebar-brand-icon rotate-n-15">
@@ -79,30 +79,39 @@
                     Admin
                 </div>
 
+
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
-                        <i class="fas fa-users"></i>
-                        <span>User parameters</span>
+                    <a class="nav-link" href="{{ route('admin.contract.list') }}">
+                        <i class="fas fa-comments-dollar"></i>
+                        <span>Contract</span>
                     </a>
-                    <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.financial.list') }}">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Financial</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-cogs"></i>
+                        <span>Utilities</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="#">
-                                <i class="fas fa-user-alt"></i>
-                                <span>User</span>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.utilities.file') }}">
+                                <i class="fas fa-file-upload"></i>
+                                <span>File upload</span>
                             </a>
-                            <a class="collapse-item d-flex justify-content-between" href="#">
-                                <i class="fas fa-users-cog"></i>
-                                <span>Group</span>
-                            </a>
-                            <a class="collapse-item d-flex justify-content-between" href="#">
-                                <i class="fas fa-handshake"></i>
-                                <span>Commission tree</span>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.utilities.link') }}">
+                                <i class="fas fa-link"></i>
+                                <span>Quick access</span>
                             </a>
                         </div>
                     </div>
                 </li>
-
-                
                 @endif
 
                 

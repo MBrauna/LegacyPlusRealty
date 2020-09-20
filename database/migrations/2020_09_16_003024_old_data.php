@@ -123,7 +123,7 @@ class OldData extends Migration {
             $table->integer('type')->default(0); // [0] - Venda, [1] - Aluguel
             $table->dateTime('start_contract');
             $table->dateTime('end_contract')->nullable();
-            $table->dateTime('payment_date');
+            $table->dateTime('payment_date')->nullable();
             $table->boolean('payment_exec')->default(false);
             $table->double('value',12,2)->default(0);
             $table->integer('id_user_seller');
@@ -143,11 +143,11 @@ class OldData extends Migration {
         Schema::create('contract_address',function(Blueprint $table){
             $table->increments('id_contract_address');
             $table->integer('id_contract');
-            $table->string('address',150);
-            $table->string('city',150);
-            $table->string('state',150);
-            $table->string('country',150);
-            $table->integer('postal_code');
+            $table->string('address',150)->nullable();
+            $table->string('city',150)->nullable();
+            $table->string('state',150)->nullable();
+            $table->string('country',150)->nullable();
+            $table->integer('postal_code')->nullable();
             $table->timestamps();
 
             $table->foreign('id_contract')->references('id_contract')->on('contract')->onUpdate('cascade')->onDelete('cascade');
@@ -161,11 +161,11 @@ class OldData extends Migration {
         });
 
         Schema::create('contract_phone',function(Blueprint $table){
-            $table->increments('id_users_phone');
+            $table->increments('id_contract_phone');
             $table->integer('id_contract');
             $table->integer('ddi')->default(1);
             $table->integer('ddd')->nullable();
-            $table->integer('phone');
+            $table->integer('phone')->nullable();
             $table->timestamps();
 
             $table->foreign('id_contract')->references('id_contract')->on('contract')->onUpdate('cascade')->onDelete('cascade');
@@ -179,10 +179,10 @@ class OldData extends Migration {
         Schema::create('payment',function(Blueprint $table){
             $table->increments('id_payment');
             $table->integer('id_contract');
-            $table->integer('id_user');
+            $table->integer('id_user')->nullable();
             $table->double('value',12,2)->default(0);
             $table->double('comission',8,2)->default(0);
-            $table->double('comission_additional',8,2)->default(0);
+            $table->double('percent',8,2)->default(0);
             $table->dateTime('payment_date');
             $table->timestamps();
 

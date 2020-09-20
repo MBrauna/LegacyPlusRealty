@@ -9,10 +9,7 @@
             <a class="nav-link active" id="pills-user-tab" data-toggle="pill" href="#pills-user" role="tab" aria-controls="pills-user" aria-selected="true">User</a>
         </li>
         <li class="nav-item" role="presentation">
-        <a class="nav-link" id="pills-group-tab" data-toggle="pill" href="#pills-group" role="tab" aria-controls="pills-group" aria-selected="false">Group</a>
-        </li>
-        <li class="nav-item" role="presentation">
-        <a class="nav-link" id="pills-contract-tab" data-toggle="pill" href="#pills-contract" role="tab" aria-controls="pills-contract" aria-selected="false">Contract</a>
+            <a class="nav-link" id="pills-group-tab" data-toggle="pill" href="#pills-group" role="tab" aria-controls="pills-group" aria-selected="false">Group</a>
         </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
@@ -142,63 +139,6 @@
                 </div>
             @endif
         </div>
-        <div class="tab-pane fade" id="pills-contract" role="tabpanel" aria-labelledby="pills-contract-tab">
-            <form method="POST" action="{{ route('archive.import') }}" enctype="multipart/form-data" class="dropzone border-primary was-validated" id="dropzone">
-                <input type="hidden" name="legacy_type" value="3">
-                <div class="row">
-                    <div class="form-group col-sm-12 col-12 col-md-12 text-primary">
-                        <label for="idContract">Contract:</label>
-                        <select class="form-control form-control-sm" id="idContract" name="idContract" required>
-                            <option value="" selected>Empty contact</option>
-                        </select>
-                    </div>
-                </div>
-                @csrf
-                <div class="fallback">
-                    <input name="fileToUpload[]" type="file" multiple />
-                </div>
-            </form>
-
-            @if(count($archiveC) <= 0)
-                <h6 class="text-center text-primary">
-                    No file to the user<br/>
-                    <i class="fas fa-frown-open"></i>
-                </h6>
-            @else
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped table-borderless table-sm">
-                        <thead>
-                            <tr class="bg-primary text-white">
-                                <th>Name</th>
-                                <th>Extension</th>
-                                <th>Length</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr class="bg-primary text-white">
-                                <th>Name</th>
-                                <th>Extension</th>
-                                <th>Length</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            @foreach ($archiveC as $archive)
-                                <tr>
-                                    <td class="text-primary">
-                                        <small>
-                                            <a href="{{ Storage::url($archive->repository.'/'.$archive->name_server) }}"><i class="fas fa-download"></i></a>
-                                            <a href="{{ Storage::url($archive->repository.'/'.$archive->name_server) }}">{{ $archive->name_file }}</a>
-                                        </small>
-                                    </td>
-                                    <td><small>{{ $archive->extension }}</small></td>
-                                    <td><small>{{ $archive->length }}</small></td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endif
-        </div>
     </div>
 
 @endsection
@@ -213,13 +153,14 @@
 
         Dropzone.options.dropzone = {
             maxFilesize: 12,
-            addRemoveLinks: true,
-            timeout: 5000,
             parallelUploads:10,
             dictDefaultMessage: "Drop files here to upload on Legacy Plus Realty",
-            success: function(file, response) {
-                location.reload();
-            },
+            totaluploadprogress: function(progress){
+                if(progress == 100) {
+                    sleep(1000);
+                    location.reload();
+                }
+            }
         };
     </script>
 @endsection

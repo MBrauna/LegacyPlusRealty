@@ -6,10 +6,8 @@ use Illuminate\Console\Command;
 use Carbon\Carbon;
 
 use App\Models\Contract;
-use App\Models\UsersGroup;
-use App\Models\UsersGroupUser;
-use App\Models\TreeComission;
 use App\Models\Payment as PaymentModel;
+use App\User;
 
 class payment extends Command
 {
@@ -44,82 +42,118 @@ class payment extends Command
      */
     public function handle()
     {
-        $listContracts  =   Contract::where('payment_date','<=',Carbon::now()->subDays(1))
-                            ->where('payment',false)
-                            ->get();
+        try {
+            $listContracts  =   Contract::where('payment_exec',false)
+                                ->whereNull('payment_date')
+                                ->get();
 
-        foreach ($listContracts as $key => $value) {
-            try {
+
+            foreach($listContracts as $key => $value) {
                 $this->info("Executando {{ $value->id_contract}}");
-
-                // Coleta o grupo com maior percentual do usuário
-                $tmpGroup   =   UsersGroupUser::where('id_user',$value->id_user_seller)->get();
-                $tmpTree    =   TreeComission::where('id_user',$value->id_user_seller)->get();
-                $group      =   null;
-                $tree       =   null;
-
-                foreach ($tmpGroup as $keyGroup => $valueGroup) {
-                    if(is_null($group)) {
-                        $group  =   $valueGroup;
-                    } // if(is_null($group)) { ... }
-                    else {
-                        if($group->percent < $valueGroup->percent) {
-                            $group  =   $valueGroup;
-                        } // if($group->percent < $valueGroup->percent) { ... }
-                    } // else { ... }
-                } // foreach ($tmpGroup as $keyGroup => $valueGroup) { ... }
-
-                foreach ($tmpTree as $keyTree => $valueTree) {
-                    if(is_null($tree)) {
-                        $tree  =   $valueTree;
-                    } // if(is_null($group)) { ... }
-                    else {
-                        if($tree->percent < $valueTree->percent) {
-                            $tree  =   $valueTree;
-                        } // if($group->percent < $valueGroup->percent) { ... }
-                    } // else { ... }
-                } // foreach ($tmpGroup as $keyGroup => $valueGroup) { ... }
-
-                // first value - Comission to user
-                if(is_null($group)) {
-                    $first  =   0;
-                }
+                // Limpa os dados do contrato que foram gerados.
+                PaymentModel::where('id_contract',$value->id_contract)->delete();
+                
+                // Coleta o valor para o vendedor
+                $user   =   User::find($value->id_user_seller);
+                
+                // Comissão de árvore para segundo comissionamento
+                if(is_null($user->id_user_recommend)) {
+                    $userSec    =   null;
+                } // if(is_null($user->id_user_recommend)) { ... }
                 else {
-                    $group  =   UsersGroup::find($group->id_users_group);
-                    $first  =   round((($value->value/100)*$group->percent),2);
-                }
-
-                if(is_null($tree) || $first ==  0) {
-                    $firstAdditional    =   0;
-                } // if(is_null($tree) || $first ==  0) { ... }
+                    $userSec    =   User::find($user->id_user_recommend);
+                } // else { ... }
+                // Comissão de árvore para terceiro comissionamento
+                if(is_null($userSec) || is_null($userSec->id_user_recommend)) {
+                    $userFinal  =   null;
+                } // if(is_null($userSec) || is_null($userSec->id_user_recommend)) { ... }
                 else {
-                    $firstAdditional    =   round((($value->value/100)*$tree->percent),2);
-                }
+                    $userFinal  =   User::find($userSec->id_user_recommend);
+                } // else { ... }
 
-                $payment    =   new PaymentModel;
 
-                $payment->id_contract       =   $value->id_contract;
-                $payment->id_user           =   $value->id_user_seller;
-                $payment->value             =   $value->value;
-                $payment->value_aditional   =   $firstAdditional;
-                $payment->comission         =   $first;
-                $payment->percent_group     =   $group->percent ?? 0;
-                $payment->percent_tree      =   $tree->percent ?? 0;
-                $payment->payment_date      =   Carbon::now();
+                // Coleta o valor do contrato
+                $valueLegacy=   (($value->value/100)*10);
 
-                $payment->save();
+                if(is_null($user->percent) || $user->percent == 0) {
+                    $valueMain  =   0;
+                } // if(is_null($user->percent) || $user->percent == 0) { ... }
+                else {
+                    $valueMain  =   round(((($value->value - $valueLegacy)/100)*$user->percent),2);
+                } // else { ... }
 
+                if(isset($user->id) && !is_null($user) && $valueMain > 0) {
+                    $payment    =   new PaymentModel;
+
+                    $payment->id_contract   =   $value->id_contract;
+                    $payment->id_user       =   $user->id;
+                    $payment->value         =   $value->value;
+                    $payment->comission     =   $valueMain;
+                    $payment->percent       =   $user->percent ?? 0;
+                    $payment->payment_date  =   Carbon::now();
+
+                    $payment->save();
+
+                } // if(!is_null($user) || !is_null($user->id)) { ... }
+
+                if(is_null($userSec) || is_null($userSec->percent) || $userSec->percent == 0) {
+                    $valueSec   =   0;
+                } // if(is_null($user->percent) || $user->percent == 0) { ... }
+                else {
+                    $valueSec   =   round((($valueLegacy/100)*$userSec->percent),2);
+                    $valueLegacy=   $valueLegacy - $valueSec;
+                } // else { ... }
+
+
+                if(isset($userSec) && !is_null($userSec) && $valueSec > 0) {
+                    $payment    =   new PaymentModel;
+
+                    $payment->id_contract   =   $value->id_contract;
+                    $payment->id_user       =   $userSec->id;
+                    $payment->value         =   $valueLegacy;
+                    $payment->comission     =   $valueSec;
+                    $payment->percent       =   $userSec->percent ?? 0;
+                    $payment->payment_date  =   Carbon::now();
+
+                    $payment->save();
+                } // if(isset($userSec) && !is_null($userSec) && $valueSec > 0) { ... }
+
+
+                if($valueLegacy <= 0) {
+                    $valueLegacy = 0;
+                } // if($valueLegacy <= 0) { ... }
+                
+                if(is_null($userFinal) || is_null($userFinal->percent) || $userFinal->percent == 0 || $valueLegacy <= 0) {
+                    $valueFinal   =   0;
+                } // if(is_null($user->percent) || $user->percent == 0) { ... }
+                else {
+                    $valueFinal =   round((($valueLegacy/100)*$userFinal->percent),2);
+                    $valueLegacy=   $valueLegacy - $valueFinal;
+                } // else { ... }
+
+                if(isset($userFinal) && !is_null($userFinal) && $valueFinal > 0) {
+                    $payment    =   new PaymentModel;
+
+                    $payment->id_contract   =   $value->id_contract;
+                    $payment->id_user       =   $userFinal->id;
+                    $payment->value         =   $valueLegacy;
+                    $payment->comission     =   $valueFinal;
+                    $payment->percent       =   $userFinal->percent ?? 0;
+                    $payment->payment_date  =   Carbon::now();
+
+                    $payment->save();
+                } // if(isset($userFinal) && !is_null($userFinal) && $valueFinal > 0) { ... }
 
                 Contract::where('id_contract',$value->id_contract)->update([
-                    'payment'   =>  true,
+                    'payment_exec'  =>  true,
+                    'payment_date'  =>  Carbon::now(),
                 ]);
-            }
-            catch(Exception $error) {
-                $this->info("Error {{ $error }}");
-            }
-
-        } // foreach ($listContracts as $key => $value) { ... }
-
+            } // foreach($listContracts as $key => $value) { ... }
+        }
+        catch(Exception $error) {
+            $this->info("Executando {{ $error }}");
+            return 1;
+        }
         return 0;
     }
 }
