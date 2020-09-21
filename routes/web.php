@@ -81,9 +81,28 @@
                 // [admin.utilities.link]
                 Route::any('/link','MainLink@list')->name('link');
                 // [admin.utilities.linkAdd]
-                Route::any('/linkAdd','MainLink@add')->name('linkAdd');
+                Route::post('/linkAdd','MainLink@add')->name('linkAdd');
                 // [admin.utilities.linkRemove]
-                Route::any('/linkRemove','MainLink@remove')->name('linkRemove');
+                Route::post('/linkRemove','MainLink@remove')->name('linkRemove');
             }); // Route::namespace('Utilities')->prefix('utilities')->name('utilities.')->group(function(){ ... }
+
+            // [admin.group]
+            Route::namespace('Group')->name('group.')->prefix('group')->group(function(){
+                // [admin.group.home]
+                Route::any('/',function(){ return redirect()->route('dashboard.home'); })->name('home');
+
+                // [admin.group.list]
+                Route::any('/list','MainGroup@list')->name('list');
+                // [admin.group.save]
+                Route::post('/save','MainGroup@save')->name('save');
+                // [admin.group.update]
+                Route::post('/update','MainGroup@update')->name('update');
+                // [admin.group.user]
+                Route::any('/user','MainGroup@groupUsers')->name('user');
+                // [admin.group.addGroup]
+                Route::post('/addGroup','MainGroup@addGroupUser')->name('addGroup');
+                // [admin.group.removeGroup]
+                Route::post('/removeGroup','MainGroup@removeGroupUser')->name('removeGroup');
+            }); // Route::namespace('Group')->name('group.')->prefix('group')->group(function(){ ... });
         }); // Route::prefix('admin')->name('admin')->namespace('Admin')->group(function(){ ... }
     });

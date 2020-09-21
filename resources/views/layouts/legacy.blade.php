@@ -65,15 +65,15 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtil" aria-expanded="true" aria-controls="collapseUtil">
                         <i class="fas fa-tags"></i>
                         <span>Utilities</span>
                     </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseUtil" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-primary py-2 collapse-inner">
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('archive.list') }}">
                                 <i class="fas fa-folder-open"></i>
-                                <span>File upload</span>
+                                <span>Files</span>
                             </a>
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">
                                 <i class="fas fa-link"></i>
@@ -94,6 +94,25 @@
                 <div class="sidebar-heading">
                     Admin
                 </div>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true" aria-controls="collapseUsers">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                    <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-primary py-2 collapse-inner">
+                            <a class="collapse-item d-flex justify-content-between" href="#">
+                                <i class="fas fa-user"></i>
+                                <span>Users</span>
+                            </a>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.group.list') }}">
+                                <i class="fas fa-link"></i>
+                                <span>Group</span>
+                            </a>
+                        </div>
+                    </div>
+                </li>
 
 
                 <li class="nav-item">
