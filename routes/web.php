@@ -10,6 +10,8 @@
     Route::middleware(['auth'])->namespace('Pages')->group(function(){
         // [home] - Rota para tela principal
         Route::any('/',function(){ return redirect()->route('dashboard.home'); })->name('home');
+        // [profile]
+        Route::any('/profile','Profile\Profile@profile')->name('profile');
         
         // Dados para dashboard - MainDashboard
         Route::prefix('dashboard')->name('dashboard.')->namespace('Dashboard')->group(function(){
@@ -30,6 +32,13 @@
             // [archive.import]
             Route::any('/import','ImportFile@index')->name('import');
         }); // Route::prefix('archive')->name('archive.')->namespace('Archive')->group(function(){ ... });
+
+        Route::prefix('contract')->name('contract.')->namespace('Contract')->group(function(){
+            // [contract.list]
+            Route::any('/','MainContract@list')->name('list');
+            // [contract.id]
+            Route::any('/{id_contract}','MainContract@id')->name('id');
+        });
 
 
 

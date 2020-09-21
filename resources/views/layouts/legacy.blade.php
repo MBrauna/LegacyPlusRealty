@@ -55,19 +55,35 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('quickAccess.list') }}">
-                        <i class="fas fa-link"></i>
-                        <span>Links</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('archive.list') }}">
-                        <i class="fas fa-folder-open"></i>
-                        <span>Files</span>
+                    <a class="nav-link" href="{{ route('contract.list') }}">
+                        <i class="fas fa-comments-dollar"></i>
+                        <span>Contract</span>
                     </a>
                 </li>
 
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-tags"></i>
+                        <span>Utilities</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-primary py-2 collapse-inner">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('archive.list') }}">
+                                <i class="fas fa-folder-open"></i>
+                                <span>File upload</span>
+                            </a>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">
+                                <i class="fas fa-link"></i>
+                                <span>Quick access</span>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                
 
 
                 @if(Auth::user()->admin)
@@ -210,7 +226,7 @@
 
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{{ route('profile') }}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-primary"></i>
                                 Profile
                             </a>
