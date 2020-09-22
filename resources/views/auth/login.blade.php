@@ -77,7 +77,7 @@
                     </form>
                   <hr>
                   <div class="text-center">
-                    <a class="text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                    <a class="text-sm text-gray-600 hover:text-gray-900" href="#"> <!--href="'password.request'"> -->
                         {{ __('Forgot your password?') }}
                     </a>
                   </div>
