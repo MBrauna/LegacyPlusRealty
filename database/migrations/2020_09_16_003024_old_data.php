@@ -9,10 +9,10 @@ class OldData extends Migration {
         Schema::create('user_address',function(Blueprint $table){
             $table->increments('id_users_address');
             $table->integer('id_user');
-            $table->string('address',150);
-            $table->string('city',150);
-            $table->string('state',150);
-            $table->string('country',150);
+            $table->text('address');
+            $table->text('city');
+            $table->text('state');
+            $table->text('country');
             $table->integer('postal_code');
             $table->timestamps();
 
@@ -29,6 +29,7 @@ class OldData extends Migration {
         Schema::create('user_phone',function(Blueprint $table){
             $table->increments('id_users_phone');
             $table->integer('id_user');
+            $table->text('reference');
             $table->integer('ddi')->default(1);
             $table->integer('ddd')->nullable();
             $table->integer('phone');
@@ -143,10 +144,10 @@ class OldData extends Migration {
         Schema::create('contract_address',function(Blueprint $table){
             $table->increments('id_contract_address');
             $table->integer('id_contract');
-            $table->string('address',150)->nullable();
-            $table->string('city',150)->nullable();
-            $table->string('state',150)->nullable();
-            $table->string('country',150)->nullable();
+            $table->text('address')->nullable();
+            $table->text('city')->nullable();
+            $table->text('state')->nullable();
+            $table->text('country')->nullable();
             $table->integer('postal_code')->nullable();
             $table->timestamps();
 

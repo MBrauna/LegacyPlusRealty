@@ -104,5 +104,15 @@
                 // [admin.group.removeGroup]
                 Route::post('/removeGroup','MainGroup@removeGroupUser')->name('removeGroup');
             }); // Route::namespace('Group')->name('group.')->prefix('group')->group(function(){ ... });
+
+            Route::namespace('User')->name('user.')->prefix('user')->group(function(){
+                // [admin.user.home]
+                Route::any('/',function(){ return redirect()->route('dashboard.home'); })->name('home');
+
+                // [admin.user.list]
+                Route::any('/list','MainUser@list')->name('list');
+                // [admin.user.pageAdd]
+                Route::any('/add','MainUser@pageAdd')->name('pageAdd');
+            });
         }); // Route::prefix('admin')->name('admin')->namespace('Admin')->group(function(){ ... }
     });

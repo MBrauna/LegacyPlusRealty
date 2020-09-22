@@ -214,6 +214,11 @@
             var country         =   document.getElementById('countryAdd').value;
             var postal_code     =   document.getElementById('postal_codeAdd').value;
 
+            if(address == '' || city == '' || state == '' || country == '' || postal_code == null) {
+                alert('Fill out the form correctly!');
+                return false;
+            } // if(address == '' || city == '' || state == '' || country == '' || postal_code == null) {
+
             // Clear data form
             document.getElementById('addressAdd').value     =   null;
             document.getElementById('cityAdd').value        =   null;

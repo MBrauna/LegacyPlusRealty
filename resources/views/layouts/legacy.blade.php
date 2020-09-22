@@ -102,7 +102,7 @@
                     </a>
                     <div id="collapseUsers" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="#">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.user.list') }}">
                                 <i class="fas fa-user"></i>
                                 <span>Users</span>
                             </a>
