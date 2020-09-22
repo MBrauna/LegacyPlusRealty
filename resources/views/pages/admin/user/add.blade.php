@@ -1,10 +1,11 @@
 @extends('layouts.legacy')
 
-@section('pageName','User list')
+@section('pageName','Register user')
 
 @section('body')
 
-    <form action="#" method="POST" class="card was-validated shadow-sm">
+    <form action="{{ route('admin.user.save') }}" method="POST" class="card was-validated shadow-sm" autocomplete="off">
+        @csrf
         <div class="card-header bg-primary text-white d-flex justify-content-between">
             <div style="min-width: 10vw;">
                 <a href="{{ route('admin.user.list') }}" class="btn btn-outline-light btn-sm btn-block">
@@ -78,7 +79,7 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
-                                <label for="id_user_recommend" class="text-primary">Recommended by</label>
+                                <label for="id_user_recommend" class="text-primary">Indicated by</label>
                                 <select id="id_user_recommend" name="id_user_recommend" class="form-control form-control-sm">
                                     <option value="" selected>No recommendation</option>
                                     @foreach ($users as $item)
@@ -89,15 +90,81 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-3">
                             <div class="form-group">
-                                <label for="percent" class="text-primary">Percentage by indication</label>
-                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="0.00" required>
+                                <label for="percent" class="text-primary">Percentage indication</label>
+                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="0.00" required>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="mt-3"></div>
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-comments-dollar"></i>
+                    <small>Comission</small>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="name" class="text-primary">Sale %</label>
+                                <input type="number" min="0" max="100" step="0.01" value="0.00" class="form-control form-control-sm" id="perc_sale" name="perc_sale" aria-describedby="Sale" placeholder="For sale" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="name" class="text-primary">Rent %</label>
+                                <input type="number" min="0" max="100" step="0.01" value="0.00" class="form-control form-control-sm" id="perc_rent" name="perc_rent" aria-describedby="Rent" placeholder="For rent" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="mt-3"></div>
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-users"></i>
+                    <small>Group</small>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="id_groupAdd">Group</label>
+                                <select id="id_groupAdd" class="form-control form-control-sm">
+                                  <option value="">Choose ...</option>
+                                  @foreach ($groups as $item)
+                                  <option value="{{ $item->id_group }}">{{ $item->name }}</option>
+                                  @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12">
+                            <button class="btn btn-block btn-sm btn-primary" type="button" onclick="addGroup();">
+                                Add group
+                            </button>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover" id="tableGroup">
+                                    <thead>
+                                        <tr>
+                                            <th><small>Group</small></th>
+                                            <th style="width: 10vw;"><small>Action</small></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="mt-3"></div>
             <div class="card border-primary">
@@ -110,31 +177,31 @@
                         <div class="col-12 col-sm-12 col-md-8">
                             <div class="form-group">
                                 <label for="addressAdd" class="text-primary">Address</label>
-                                <input type="text" minlength="5" maxlength="150" class="form-control form-control-sm" id="addressAdd" name="addressAdd" aria-describedby="addressAdd" placeholder="Enter the user's address">
+                                <input type="text" minlength="5" maxlength="150" class="form-control form-control-sm" id="addressAdd" aria-describedby="addressAdd" placeholder="Enter the user's address">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="postal_codeAdd" class="text-primary">Postal Code</label>
-                                <input type="number" min="0" max="99999999" class="form-control form-control-sm" id="postal_codeAdd" name="postal_codeAdd" aria-describedby="postal_code" placeholder="Postal code">
+                                <input type="number" min="0" max="99999999" class="form-control form-control-sm" id="postal_codeAdd"  aria-describedby="postal_code" placeholder="Postal code">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="cityAdd" class="text-primary">City</label>
-                                <input type="text" minlength="3" maxlength="150" class="form-control form-control-sm" id="cityAdd" name="cityAdd" aria-describedby="city" placeholder="City">
+                                <input type="text" minlength="3" maxlength="150" class="form-control form-control-sm" id="cityAdd" aria-describedby="city" placeholder="City">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="stateAdd" class="text-primary">State</label>
-                                <input type="text" minlength="3" maxlength="150" class="form-control form-control-sm" id="stateAdd" name="stateAdd" aria-describedby="state" placeholder="State">
+                                <input type="text" minlength="3" maxlength="150" class="form-control form-control-sm" id="stateAdd" aria-describedby="state" placeholder="State">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="countryAdd" class="text-primary">Country</label>
-                                <input type="text" minlength="3" maxlength="150" class="form-control form-control-sm" id="countryAdd" name="countryAdd" aria-describedby="country" placeholder="Country" value="USA">
+                                <input type="text" minlength="3" maxlength="150" class="form-control form-control-sm" id="countryAdd" aria-describedby="country" placeholder="Country" value="USA">
                             </div>
                         </div>
 
@@ -175,25 +242,25 @@
                         <div class="col-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <label for="referenceAdd" class="text-primary">Reference</label>
-                                <input type="text" minlength="0" maxlength="150" class="form-control form-control-sm" id="referenceAdd" name="referenceAdd" aria-describedby="Reference" placeholder="Who will be communicated">
+                                <input type="text" minlength="0" maxlength="150" class="form-control form-control-sm" id="referenceAdd" aria-describedby="Reference" placeholder="Who will be communicated">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-2">
                             <div class="form-group">
                                 <label for="ddiAdd" class="text-primary">DDI</label>
-                                <input type="number" min="0" max="999" class="form-control form-control-sm" id="ddiAdd" name="ddiAdd" aria-describedby="DDI" placeholder="DDI" value="1">
+                                <input type="number" min="0" max="999" class="form-control form-control-sm" id="ddiAdd" aria-describedby="DDI" placeholder="DDI" value="1">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-2">
                             <div class="form-group">
                                 <label for="dddAdd" class="text-primary">DDD</label>
-                                <input type="number" min="0" max="999" class="form-control form-control-sm" id="dddAdd" name="dddAdd" aria-describedby="DDD" placeholder="DDD">
+                                <input type="number" min="0" max="999" class="form-control form-control-sm" id="dddAdd" aria-describedby="DDD" placeholder="DDD">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-8">
                             <div class="form-group">
                                 <label for="phoneAdd" class="text-primary">Phone</label>
-                                <input type="tel" min="0" max="99999999999" class="form-control form-control-sm" id="phoneAdd" name="phoneAdd" aria-describedby="Phone" placeholder="Phone">
+                                <input type="number" min="0" max="99999999999" class="form-control form-control-sm" id="phoneAdd" aria-describedby="Phone" placeholder="Phone">
                             </div>
                         </div>
 
@@ -221,6 +288,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card-footer bg-primary">
+            <button class="btn btn-block btn-sm btn-outline-light" type="submit">Create user</button>
         </div>
     </form>
 
@@ -281,23 +351,50 @@
             } // if(reference == '' || ddi == '' || ddd == '' || phone == '') { ... }
 
             // Clear data form
-            document.getElementById('ddiAdd').value     =   null;
-            document.getElementById('dddAdd').value     =   null;
-            document.getElementById('phoneAdd').value   =   null;
+            document.getElementById('referenceAdd').value   =   null;
+            document.getElementById('ddiAdd').value         =   null;
+            document.getElementById('dddAdd').value         =   null;
+            document.getElementById('phoneAdd').value       =   null;
 
             var tableRef        =   document.getElementById('tablePhone').getElementsByTagName('tbody')[0];
             var newRow          =   tableRef.insertRow();
 
             var newCell         =   newRow.insertCell(0);
-            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="ddi[]" value="' + ddi + '">';
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="reference[]" value="' + reference + '">';
 
             var newCell         =   newRow.insertCell(1);
-            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="ddd[]" value="' + ddd + '">';
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="ddi[]" value="' + ddi + '">';
 
             var newCell         =   newRow.insertCell(2);
-            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="phone[]" value="' + phone + '">';
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="ddd[]" value="' + ddd + '">';
 
             var newCell         =   newRow.insertCell(3);
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="phone[]" value="' + phone + '">';
+
+            var newCell         =   newRow.insertCell(4);
+            newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
+        } // function addPhone(data) { ... }
+
+
+        function addGroup() {
+            var groupID     =   document.getElementById('id_groupAdd').options[document.getElementById('id_groupAdd').selectedIndex].value;
+            var groupName   =   document.getElementById('id_groupAdd').options[document.getElementById('id_groupAdd').selectedIndex].text;
+
+            if(groupID == '') {
+                alert('Fill out the form correctly!');
+                return;
+            } // if(reference == '' || ddi == '' || ddd == '' || phone == '') { ... }
+
+            // Clear data form
+            document.getElementById('id_groupAdd').value    =   '';
+
+            var tableRef        =   document.getElementById('tableGroup').getElementsByTagName('tbody')[0];
+            var newRow          =   tableRef.insertRow();
+
+            var newCell         =   newRow.insertCell(0);
+            newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="id_group[]" value="' + groupID + '"><input type="text" readonly class="form-control-plaintext" value="' + groupName + '">';
+
+            var newCell         =   newRow.insertCell(1);
             newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
         } // function addPhone(data) { ... }
 

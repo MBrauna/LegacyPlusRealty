@@ -7,6 +7,7 @@ use Carbon\Carbon;
 
 use App\Models\Contract;
 use App\Models\Payment as PaymentModel;
+use App\Models\UserCompensation;
 use App\User;
 
 class payment extends Command
@@ -79,7 +80,10 @@ class payment extends Command
                     $valueMain  =   0;
                 } // if(is_null($user->percent) || $user->percent == 0) { ... }
                 else {
-                    $valueMain  =   round(((($value->value - $valueLegacy)/100)*$user->percent),2);
+                    $percent    =   UserCompensation::where('id_user',$user->id)
+                                    ->where('type',$value->type)
+                                    ->first();
+                    $valueMain  =   round(((($value->value - $valueLegacy)/100)*$percent->percentual),2);
                 } // else { ... }
 
                 if(isset($user->id) && !is_null($user) && $valueMain > 0) {
@@ -101,7 +105,6 @@ class payment extends Command
                 } // if(is_null($user->percent) || $user->percent == 0) { ... }
                 else {
                     $valueSec   =   round((($valueLegacy/100)*$userSec->percent),2);
-                    $valueLegacy=   $valueLegacy - $valueSec;
                 } // else { ... }
 
 
@@ -117,6 +120,7 @@ class payment extends Command
 
                     $payment->save();
                 } // if(isset($userSec) && !is_null($userSec) && $valueSec > 0) { ... }
+                $valueLegacy=   $valueLegacy - $valueSec;
 
 
                 if($valueLegacy <= 0) {
@@ -128,7 +132,6 @@ class payment extends Command
                 } // if(is_null($user->percent) || $user->percent == 0) { ... }
                 else {
                     $valueFinal =   round((($valueLegacy/100)*$userFinal->percent),2);
-                    $valueLegacy=   $valueLegacy - $valueFinal;
                 } // else { ... }
 
                 if(isset($userFinal) && !is_null($userFinal) && $valueFinal > 0) {
@@ -143,6 +146,7 @@ class payment extends Command
 
                     $payment->save();
                 } // if(isset($userFinal) && !is_null($userFinal) && $valueFinal > 0) { ... }
+                $valueLegacy=   $valueLegacy - $valueFinal;
 
                 Contract::where('id_contract',$value->id_contract)->update([
                     'payment_exec'  =>  true,

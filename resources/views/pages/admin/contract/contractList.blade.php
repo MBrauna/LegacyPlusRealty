@@ -65,7 +65,7 @@
 @endsection
 
 @section('layout')
-
+    <link href="/legacy/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 @endsection
 
 @section('script')

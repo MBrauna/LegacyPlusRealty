@@ -5,10 +5,17 @@
     use App\Http\Controllers\Controller;
     use Illuminate\Http\Request;
 
-    use App\User;
+    use Validator;
+    use Hash;
+    use Carbon\Carbon;
 
-    class MainUser extends Controller
-    {
+    use App\User;
+    use App\Models\Group;
+    use App\Models\UserAddress;
+    use App\Models\UserPhone;
+    use App\Models\UserCompensation;
+
+    class MainUser extends Controller {
         public function list(Request $request) {
             try {
                 $users  =   User::orderBy('name','asc')->get();
@@ -33,8 +40,212 @@
 
         public function pageAdd(Request $request) {
             $users  =   User::orderBy('name','asc')->get();
+            $groups =   Group::where('status',true)->orderBy('name','asc')->get();
+
             return view('pages.admin.user.add',[
-                'users' =>  $users,
+                'users'     =>  $users,
+                'groups'    =>  $groups,
             ]);
         } // public function pageAdd(Request $request) { ... }
-    }
+
+        public function pageEdit(Request $request) {
+            $validator  =   Validator::make($request->all(),[
+                'idUser'    =>  'required',
+            ]);
+
+            if($validator->fails()) {
+                return back();
+            } // if($validator->fails()) { ... }
+
+            $user       =   User::find($request->idUser);
+            $users      =   User::orderBy('name','asc')->get();
+            $groups     =   Group::join('group_user','group_user.id_group','group.id_group')
+                            ->where('group_user.id_user',$user->id)
+                            ->orderBy('group.name','asc')
+                            ->select('group.*')
+                            ->distinct()
+                            ->get();
+            $groupList  =   Group::where('status',true)->orderBy('name','asc')->get();
+            $userAddress=   UserAddress::where('id_user',$user->id)->orderBy('id_user_address','asc')->get();
+            $userPhone  =   UserPhone::where('id_user',$user->id)->orderBy('id_user_phone','asc')->get();
+            $userComp   =   UserCompensation::where('id_user',$user->id)->orderBy('id_user_compensation','asc')->get();
+
+            return view('pages.admin.user.edit',[
+                'users'     =>  $users,
+                'user'      =>  $user,
+                'groups'    =>  $groupList,
+                'group'     =>  $groups,
+                'address'   =>  $userAddress,
+                'phone'     =>  $userPhone,
+                'usercomp'  =>  $userComp,
+            ]);
+        }
+
+        public function save(Request $request) {
+            try {
+                $validator  =   Validator::make($request->all(),[
+                    'name'      =>  'required|String',
+                    'email'     =>  'required|email:rfc,dns',
+                    'password'  =>  'required|string',
+                    'perc_sale' =>  'required',
+                    'perc_rent' =>  'required',
+                ]);
+
+                if($validator->fails()) {
+                    return back();
+                } // if($validator->fails()) { ... }
+
+                $existEmail =   User::where('email',$request->email)->count();
+                if($existEmail > 0 || strlen($request->password) < 3 || strlen($request->password) > 16) {
+                    return back();
+                } // if($existEmail > 0 || strlen($request->password) < 3 || strlen($request->password) > 16) { ... }
+
+                $user                       =   new User;
+                $user->name                 =   $request->name;
+                $user->email                =   $request->email;
+                $user->license              =   $request->license;
+                $user->password             =   Hash::make($request->password);
+                $user->id_user_recommend    =   is_null($request->id_user_recommend) ? null : intval($request->id_user_recommend);
+                $user->admin                =   is_null($request->admin) ? false : (intval($request->admin) == 1);
+                $user->broker               =   is_null($request->broker) ? false : (intval($request->broker) == 1);
+                $user->realtor              =   is_null($request->realtor) ? false : (intval($request->realtor) == 1);
+                $user->percent              =   round(doubleval($request->percent),2);
+
+                $user->save();
+
+                // Sale
+                $userCompensation               =   new UserCompensation;
+                $userCompensation->id_user      =   $user->id;
+                $userCompensation->type         =   1;
+                $userCompensation->percentual   =   round(doubleval($request->perc_sale),2);
+                $userCompensation->init_date    =   Carbon::now();
+                $userCompensation->save();
+
+                // Rent
+                $userCompensation               =   new UserCompensation;
+                $userCompensation->id_user      =   $user->id;
+                $userCompensation->type         =   2;
+                $userCompensation->percentual   =   round(doubleval($request->perc_rent),2);
+                $userCompensation->init_date    =   Carbon::now();
+                $userCompensation->save();
+
+                // Save address
+                foreach ($request->address as $key => $value) {
+                    $userAddress                =   new UserAddress;
+                    $userAddress->id_user       =   $user->id;
+                    $userAddress->address       =   $request->address[$key];
+                    $userAddress->city          =   $request->city[$key];
+                    $userAddress->state         =   $request->state[$key];
+                    $userAddress->country       =   $request->country[$key];
+                    $userAddress->postal_code   =   $request->postal_code[$key];
+                    $userAddress->save();
+                } // foreach ($request->address as $key => $value) { ... }
+
+                // Save phone
+                foreach ($request->phone as $key => $value) {
+                    $userPhone              =   new UserPhone;
+                    $userPhone->id_user     =   $user->id;
+                    $userPhone->reference   =   $request->reference[$key];
+                    $userPhone->ddi         =   $request->ddi[$key];
+                    $userPhone->ddd         =   $request->ddd[$key];
+                    $userPhone->phone       =   $request->phone[$key];
+                    $userPhone->save();
+                } // foreach ($request->phone as $key => $value) { ... }
+
+                return redirect()->route('admin.user.list');
+
+            } // try { ... }
+            catch(Exception $error) {
+                return redirect()->route('dashboard.home');
+            } // catch(Exception $error) { ... }
+        } // public function save(Request $request) { ... }
+
+        public function update(Request $request) {
+            try {
+                
+                $validator  =   Validator::make($request->all(),[
+                    'idUser'    =>  'required',
+                    'name'      =>  'required|String',
+                    'email'     =>  'required|email:rfc,dns',
+                    'perc_sale' =>  'required',
+                    'perc_rent' =>  'required',
+                ]);
+
+                if($validator->fails()) {
+                    return back();
+                } // if($validator->fails()) { ... }
+
+                $existEmail =   User::where('email',$request->email)->where('id','!=',$request->idUser)->count();
+                if($existEmail > 0) {
+                    return back();
+                } // if($existEmail > 0 || strlen($request->password) < 3 || strlen($request->password) > 16) { ... }
+
+
+                $user                       =   User::find($request->idUser);
+                $user->name                 =   $request->name;
+                $user->email                =   $request->email;
+                $user->license              =   $request->license;
+                $user->password             =   (!isset($request->password) || is_null($request->password)) ? $user->password : Hash::make($request->password);
+                $user->id_user_recommend    =   is_null($request->id_user_recommend) ? null : intval($request->id_user_recommend);
+                $user->admin                =   is_null($request->admin) ? false : (intval($request->admin) == 1);
+                $user->broker               =   is_null($request->broker) ? false : (intval($request->broker) == 1);
+                $user->realtor              =   is_null($request->realtor) ? false : (intval($request->realtor) == 1);
+                $user->percent              =   round(doubleval($request->percent),2);
+
+                $user->save();
+
+                UserCompensation::where('id_user',$user->id)->delete();
+
+                // Sale
+                $userCompensation               =   new UserCompensation;
+                $userCompensation->id_user      =   $user->id;
+                $userCompensation->type         =   1;
+                $userCompensation->percentual   =   round(doubleval($request->perc_sale),2);
+                $userCompensation->init_date    =   Carbon::now();
+                $userCompensation->save();
+
+                // Rent
+                $userCompensation               =   new UserCompensation;
+                $userCompensation->id_user      =   $user->id;
+                $userCompensation->type         =   2;
+                $userCompensation->percentual   =   round(doubleval($request->perc_rent),2);
+                $userCompensation->init_date    =   Carbon::now();
+                $userCompensation->save();
+
+                // Save address
+                UserAddress::where('id_user',$user->id)->delete();
+                if(!is_null($request->address)) {
+                    foreach ($request->address as $key => $value) {
+                        $userAddress                =   new UserAddress;
+                        $userAddress->id_user       =   $user->id;
+                        $userAddress->address       =   $request->address[$key];
+                        $userAddress->city          =   $request->city[$key];
+                        $userAddress->state         =   $request->state[$key];
+                        $userAddress->country       =   $request->country[$key];
+                        $userAddress->postal_code   =   $request->postal_code[$key];
+                        $userAddress->save();
+                    } // foreach ($request->address as $key => $value) { ... }
+                }
+
+                // Save phone
+                UserPhone::where('id_user',$user->id)->delete();
+                if(!is_null($request->phone)) {
+                    foreach ($request->phone as $key => $value) {
+                        $userPhone              =   new UserPhone;
+                        $userPhone->id_user     =   $user->id;
+                        $userPhone->reference   =   $request->reference[$key];
+                        $userPhone->ddi         =   $request->ddi[$key];
+                        $userPhone->ddd         =   $request->ddd[$key];
+                        $userPhone->phone       =   $request->phone[$key];
+                        $userPhone->save();
+                    } // foreach ($request->phone as $key => $value) { ... }
+                }
+
+                return redirect()->route('admin.user.list');
+
+            } // try { ... }
+            catch(Exception $error) {
+                return redirect()->route('dashboard.home');
+            } // catch(Exception $error) { ... }
+        } // public function update(Request $request) { ... }
+    } // class MainUser extends Controller { ... }

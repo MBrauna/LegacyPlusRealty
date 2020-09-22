@@ -46,14 +46,7 @@
                             <td class="font-weight-bold {{$user->realtor ? 'text-success' : 'text-danger' }}"><small>{{$user->realtor ? 'Yes' : 'No' }}</small></td>
                             <td>
                                 <div class="row d-flex justify-content-center">
-                                    <form class="col-12 col-sm-6 col-md-6" method="POST" action="{{ route('admin.group.user') }}">
-                                        @csrf
-                                        <input type="hidden" name="idUser" value="{{ $user->id }}">
-                                        <button type="submit" class="btn btn-block btn-outline-primary btn-sm">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </form>
-                                    <form class="col-12 col-sm-6 col-md-6" method="POST" action="{{ route('admin.group.user') }}">
+                                    <form class="col-12 col-sm-6 col-md-12" method="POST" action="{{ route('admin.user.pageEdit') }}">
                                         @csrf
                                         <input type="hidden" name="idUser" value="{{ $user->id }}">
                                         <button type="submit" class="btn btn-block btn-outline-primary btn-sm">
@@ -81,6 +74,23 @@
 
 @endsection
 
+
+@section('layout')
+    <link href="/legacy/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+@endsection
+
 @section('script')
-    
+    <!-- Page level plugins -->
+    <script src="/legacy/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/legacy/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                ordering:  true,
+                responsive: true,
+                paging: true,
+            });
+        });
+    </script>
 @endsection

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class OldData extends Migration {
     public function up() {
         Schema::create('user_address',function(Blueprint $table){
-            $table->increments('id_users_address');
+            $table->increments('id_user_address');
             $table->integer('id_user');
             $table->text('address');
             $table->text('city');
@@ -27,7 +27,7 @@ class OldData extends Migration {
         });
 
         Schema::create('user_phone',function(Blueprint $table){
-            $table->increments('id_users_phone');
+            $table->increments('id_user_phone');
             $table->integer('id_user');
             $table->text('reference');
             $table->integer('ddi')->default(1);

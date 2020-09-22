@@ -92,7 +92,7 @@
                     'start_contract'    =>  'required|date',
                     'end_contract'      =>  'required|date',
                     'value'             =>  'required|regex:/^\d+(\.\d{1,2})?$/',
-                    'description'       =>  'required|String',
+                    'description'       =>  'required|string',
                 ]);
         
                 if ($validator->fails()) {

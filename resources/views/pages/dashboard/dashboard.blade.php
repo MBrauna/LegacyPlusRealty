@@ -94,7 +94,18 @@
         <script src="/legacy/vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="/legacy/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="/legacy/js/demo/datatables-demo.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#dataTable').DataTable({
+                    ordering:  true,
+                    responsive: true,
+                    paging: true,
+                });
+            });
+        </script>
 
+@endsection
+
+@section('layout')
+    <link href="/legacy/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 @endsection

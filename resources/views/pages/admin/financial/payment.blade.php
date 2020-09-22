@@ -51,8 +51,8 @@
                                     <tbody>
                                         @forelse ($item->allDesc->comission as $itemComission)
                                             <tr class="text-primary">
-                                                <td class="text-right"><small>{{ $itemComission->id_payment }}</small></td>
-                                                <td><small>Contract #{{ $itemComission->id_contract }}</small></td>
+                                                <td class="text-right"><small><a href="{{ route('contract.id',['id_contract' => $itemComission->id_contract]) }}">{{ $itemComission->id_payment }}</a></small></td>
+                                                <td><small><a href="{{ route('contract.id',['id_contract' => $itemComission->id_contract]) }}">Contract #{{ $itemComission->id_contract }}</a></small></td>
                                                 <td><small>{{ $itemComission->allDesc->id_user->name ?? 'Legacy Plus Realty' }}</small></td>
                                                 <td class="text-right"><small>{{ $itemComission->allDesc->value }}</small></td>
                                                 <td class="font-weight-bold text-right"><small>{{ $itemComission->allDesc->comission }}</small></td>

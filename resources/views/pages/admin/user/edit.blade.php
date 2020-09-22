@@ -1,12 +1,16 @@
 @extends('layouts.legacy')
 
-@section('pageName','Profile')
+@section('pageName','Register user')
 
 @section('body')
+
     <form action="{{ route('admin.user.update') }}" method="POST" class="card was-validated shadow-sm" autocomplete="off">
         @csrf
         <div class="card-header bg-primary text-white d-flex justify-content-between">
             <div style="min-width: 10vw;">
+                <a href="{{ route('admin.user.list') }}" class="btn btn-outline-light btn-sm btn-block">
+                    <i class="fas fa-caret-square-left"></i>
+                </a>
             </div>
             <span>Edit {{ $user->name }}</span>
             <div style="min-width: 10vw;">
@@ -24,15 +28,15 @@
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 d-flex justify-content-center">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="admin" name="admin" value="1" {{ $user->admin ? 'checked' : null }} disabled>
+                                <input class="form-check-input" type="checkbox" id="admin" name="admin" value="1" {{ $user->admin ? 'checked' : null }}>
                                 <label class="form-check-label" for="admin">Admin</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="broker" name="broker" value="1" {{ $user->broker ? 'checked' : null }} disabled>
+                                <input class="form-check-input" type="checkbox" id="broker" name="broker" value="1" {{ $user->broker ? 'checked' : null }}>
                                 <label class="form-check-label" for="broker">Broker</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="realtor" name="realtor" value="1" {{ $user->realtor ? 'checked' : null }} disabled>
+                                <input class="form-check-input" type="checkbox" id="realtor" name="realtor" value="1" {{ $user->realtor ? 'checked' : null }}>
                                 <label class="form-check-label" for="realtor">Realtor</label>
                             </div>
                         </div>
@@ -92,7 +96,7 @@
                         <div class="col-12 col-sm-12 col-md-3">
                             <div class="form-group">
                                 <label for="percent" class="text-primary">Percentage indication</label>
-                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="{{ number_format($user->percent,2,'.','') }}" disabled>
+                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="{{ number_format($user->percent,2,'.','') }}" required>
                             </div>
                         </div>
                     </div>
@@ -112,14 +116,14 @@
                                 <div class="col-12 col-sm-12 col-md-6">
                                     <div class="form-group">
                                         <label for="name" class="text-primary">Sale %</label>
-                                        <input type="number" min="0" max="100" step="0.01"  class="form-control form-control-sm" id="perc_sale" name="perc_sale" aria-describedby="Sale" placeholder="For sale" value="{{ number_format($item->percentual,2,'.','') }}" disabled>
+                                        <input type="number" min="0" max="100" step="0.01"  class="form-control form-control-sm" id="perc_sale" name="perc_sale" aria-describedby="Sale" placeholder="For sale" value="{{ number_format($item->percentual,2,'.','') }}" required>
                                     </div>
                                 </div>
                             @else
                             <div class="col-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="text-primary">Rent %</label>
-                                    <input type="number" min="0" max="100" step="0.01" class="form-control form-control-sm" id="perc_rent" name="perc_rent" aria-describedby="Rent" placeholder="For rent" value="{{ number_format($item->percentual,2,'.','') }}" disabled>
+                                    <input type="number" min="0" max="100" step="0.01" class="form-control form-control-sm" id="perc_rent" name="perc_rent" aria-describedby="Rent" placeholder="For rent" value="{{ number_format($item->percentual,2,'.','') }}" required>
                                 </div>
                             </div>
                             @endif
@@ -127,13 +131,13 @@
                         <div class="col-12 col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label for="name" class="text-primary">Sale %</label>
-                            <input type="number" min="0" max="100" step="0.01" value="0.00" class="form-control form-control-sm" id="perc_sale" name="perc_sale" aria-describedby="Sale" placeholder="For sale" value="0.00" disabled>
+                            <input type="number" min="0" max="100" step="0.01" value="0.00" class="form-control form-control-sm" id="perc_sale" name="perc_sale" aria-describedby="Sale" placeholder="For sale" value="0.00" required>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label for="name" class="text-primary">Rent %</label>
-                                <input type="number" min="0" max="100" step="0.01" value="0.00" class="form-control form-control-sm" id="perc_rent" name="perc_rent" aria-describedby="Rent" placeholder="For rent" value="0.00" disabled>
+                                <input type="number" min="0" max="100" step="0.01" value="0.00" class="form-control form-control-sm" id="perc_rent" name="perc_rent" aria-describedby="Rent" placeholder="For rent" value="0.00" required>
                             </div>
                         </div>
                         @endforelse
@@ -149,20 +153,37 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="id_groupAdd">Group</label>
+                                <select id="id_groupAdd" class="form-control form-control-sm">
+                                  <option value="">Choose ...</option>
+                                  @foreach ($groups as $item)
+                                  <option value="{{ $item->id_group }}">{{ $item->name }}</option>
+                                  @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12">
+                            <button class="btn btn-block btn-sm btn-primary" type="button" onclick="addGroup();">
+                                Add group
+                            </button>
+                        </div>
+
                         <div class="col-12 mt-4">
                             <div class="table-responsive">
                                 <table class="table table-sm table-hover" id="tableGroup">
                                     <thead>
                                         <tr>
                                             <th><small>Group</small></th>
-                                            <th style="width: 10vw;"><small>Icon</small></th>
+                                            <th style="width: 10vw;"><small>Action</small></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($group as $item)
                                             <tr>
                                                 <td><small>{{ $item->name }}</small></td>
-                                                <td><small><i class="{{ $item->icon ?? 'fas fa-users' }}"></i></small></td>
+                                                <td style="width: 10vw;"><button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -317,8 +338,114 @@
             <button class="btn btn-block btn-sm btn-outline-light" type="submit">Update {{ $user->name }}</button>
         </div>
     </form>
+
 @endsection
 
 @section('script')
+    <script type="text/javascript">
+        function addAddress(data) {
+            var address         =   document.getElementById('addressAdd').value;
+            var city            =   document.getElementById('cityAdd').value;
+            var state           =   document.getElementById('stateAdd').value;
+            var country         =   document.getElementById('countryAdd').value;
+            var postal_code     =   document.getElementById('postal_codeAdd').value;
 
+            if(address == '' || city == '' || state == '' || country == '' || postal_code == null) {
+                alert('Fill out the form correctly!');
+                return;
+            } // if(address == '' || city == '' || state == '' || country == '' || postal_code == null) {
+
+            // Clear data form
+            document.getElementById('addressAdd').value     =   null;
+            document.getElementById('cityAdd').value        =   null;
+            document.getElementById('stateAdd').value       =   null;
+            document.getElementById('countryAdd').value     =   null;
+            document.getElementById('postal_codeAdd').value =   null;
+
+            var tableRef        =   document.getElementById('tableAddress').getElementsByTagName('tbody')[0];
+            var newRow          =   tableRef.insertRow();
+
+            var newCell         =   newRow.insertCell(0);
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="address[]" value="' + address + '">';
+
+            var newCell         =   newRow.insertCell(1);
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="city[]" value="' + city + '">';
+
+            var newCell         =   newRow.insertCell(2);
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="state[]" value="' + state + '">';
+
+            var newCell         =   newRow.insertCell(3);
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="country[]" value="' + country + '">';
+
+            var newCell         =   newRow.insertCell(4);
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="postal_code[]" value="' + postal_code + '">';
+
+            var newCell         =   newRow.insertCell(5);
+            newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
+        } // function addAddress(data) { ... }
+
+        function addPhone() {
+            var reference   =   document.getElementById('referenceAdd').value;
+            var ddi         =   document.getElementById('ddiAdd').value;
+            var ddd         =   document.getElementById('dddAdd').value;
+            var phone       =   document.getElementById('phoneAdd').value;
+
+            if(reference == '' || ddi == '' || ddd == '' || phone == '') {
+                alert('Fill out the form correctly!');
+                return;
+            } // if(reference == '' || ddi == '' || ddd == '' || phone == '') { ... }
+
+            // Clear data form
+            document.getElementById('referenceAdd').value   =   null;
+            document.getElementById('ddiAdd').value         =   null;
+            document.getElementById('dddAdd').value         =   null;
+            document.getElementById('phoneAdd').value       =   null;
+
+            var tableRef        =   document.getElementById('tablePhone').getElementsByTagName('tbody')[0];
+            var newRow          =   tableRef.insertRow();
+
+            var newCell         =   newRow.insertCell(0);
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="reference[]" value="' + reference + '">';
+
+            var newCell         =   newRow.insertCell(1);
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="ddi[]" value="' + ddi + '">';
+
+            var newCell         =   newRow.insertCell(2);
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="ddd[]" value="' + ddd + '">';
+
+            var newCell         =   newRow.insertCell(3);
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="phone[]" value="' + phone + '">';
+
+            var newCell         =   newRow.insertCell(4);
+            newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
+        } // function addPhone(data) { ... }
+
+
+        function addGroup() {
+            var groupID     =   document.getElementById('id_groupAdd').options[document.getElementById('id_groupAdd').selectedIndex].value;
+            var groupName   =   document.getElementById('id_groupAdd').options[document.getElementById('id_groupAdd').selectedIndex].text;
+
+            if(groupID == '') {
+                alert('Fill out the form correctly!');
+                return;
+            } // if(reference == '' || ddi == '' || ddd == '' || phone == '') { ... }
+
+            // Clear data form
+            document.getElementById('id_groupAdd').value    =   '';
+
+            var tableRef        =   document.getElementById('tableGroup').getElementsByTagName('tbody')[0];
+            var newRow          =   tableRef.insertRow();
+
+            var newCell         =   newRow.insertCell(0);
+            newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="id_group[]" value="' + groupID + '"><input type="text" readonly class="form-control-plaintext" value="' + groupName + '">';
+
+            var newCell         =   newRow.insertCell(1);
+            newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
+        } // function addPhone(data) { ... }
+
+        function deleteNode(btn) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        } // function deleteNode(btn) { ... }
+    </script>
 @endsection

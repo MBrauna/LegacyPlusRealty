@@ -61,7 +61,7 @@
 @endsection
 
 @section('layout')
-
+    <link href="/legacy/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 @endsection
 
 @section('script')
@@ -72,10 +72,9 @@
     <script>
         $(document).ready(function() {
             $('#dataTable').DataTable({
-                searching: false,
                 ordering:  true,
                 responsive: true,
-                paging: false,
+                paging: true,
             });
         });
     </script>

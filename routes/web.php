@@ -113,6 +113,12 @@
                 Route::any('/list','MainUser@list')->name('list');
                 // [admin.user.pageAdd]
                 Route::any('/add','MainUser@pageAdd')->name('pageAdd');
+                // [admin.user.pageEdit]
+                Route::any('/edit','MainUser@pageEdit')->name('pageEdit');
+                // [admin.user.save]
+                Route::any('/save','MainUser@save')->name('save');
+                // [admin.user.update]
+                Route::any('/update','MainUser@update')->name('update');
             });
         }); // Route::prefix('admin')->name('admin')->namespace('Admin')->group(function(){ ... }
     });
