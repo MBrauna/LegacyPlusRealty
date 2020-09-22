@@ -3,7 +3,9 @@
     use Illuminate\Support\Facades\Route;
 
     Auth::routes([
-        //'register' => false,
+        'register' => false, // Registration Routes...
+        'reset' => false, // Password Reset Routes...
+        'verify' => false, // Email Verification Routes...
     ]);
 
     // Rotas protegidas pelo Sanctum
