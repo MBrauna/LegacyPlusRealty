@@ -130,27 +130,31 @@
                 $userCompensation->save();
 
                 // Save address
-                foreach ($request->address as $key => $value) {
-                    $userAddress                =   new UserAddress;
-                    $userAddress->id_user       =   $user->id;
-                    $userAddress->address       =   $request->address[$key];
-                    $userAddress->city          =   $request->city[$key];
-                    $userAddress->state         =   $request->state[$key];
-                    $userAddress->country       =   $request->country[$key];
-                    $userAddress->postal_code   =   $request->postal_code[$key];
-                    $userAddress->save();
-                } // foreach ($request->address as $key => $value) { ... }
+                if(isset($request->address)) {
+                    foreach ($request->address as $key => $value) {
+                        $userAddress                =   new UserAddress;
+                        $userAddress->id_user       =   $user->id;
+                        $userAddress->address       =   $request->address[$key];
+                        $userAddress->city          =   $request->city[$key];
+                        $userAddress->state         =   $request->state[$key];
+                        $userAddress->country       =   $request->country[$key];
+                        $userAddress->postal_code   =   $request->postal_code[$key];
+                        $userAddress->save();
+                    } // foreach ($request->address as $key => $value) { ... }
+                }
 
                 // Save phone
-                foreach ($request->phone as $key => $value) {
-                    $userPhone              =   new UserPhone;
-                    $userPhone->id_user     =   $user->id;
-                    $userPhone->reference   =   $request->reference[$key];
-                    $userPhone->ddi         =   $request->ddi[$key];
-                    $userPhone->ddd         =   $request->ddd[$key];
-                    $userPhone->phone       =   $request->phone[$key];
-                    $userPhone->save();
-                } // foreach ($request->phone as $key => $value) { ... }
+                if(isset($request->phone)) {
+                    foreach ($request->phone as $key => $value) {
+                        $userPhone              =   new UserPhone;
+                        $userPhone->id_user     =   $user->id;
+                        $userPhone->reference   =   $request->reference[$key];
+                        $userPhone->ddi         =   $request->ddi[$key];
+                        $userPhone->ddd         =   $request->ddd[$key];
+                        $userPhone->phone       =   $request->phone[$key];
+                        $userPhone->save();
+                    } // foreach ($request->phone as $key => $value) { ... }
+                }
 
                 return redirect()->route('admin.user.list');
 
