@@ -218,7 +218,8 @@
 
                 // Save address
                 UserAddress::where('id_user',$user->id)->delete();
-                if(!is_null($request->address)) {
+                // Save address
+                if(isset($request->address)) {
                     foreach ($request->address as $key => $value) {
                         $userAddress                =   new UserAddress;
                         $userAddress->id_user       =   $user->id;
@@ -233,7 +234,7 @@
 
                 // Save phone
                 UserPhone::where('id_user',$user->id)->delete();
-                if(!is_null($request->phone)) {
+                if(isset($request->phone)) {
                     foreach ($request->phone as $key => $value) {
                         $userPhone              =   new UserPhone;
                         $userPhone->id_user     =   $user->id;
