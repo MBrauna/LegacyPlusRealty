@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
-                                <label for="second_name" class="text-primary">Second name</label>
+                                <label for="second_name" class="text-primary">Middle name</label>
                                 <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="second_name" name="second_name" aria-describedby="name" placeholder="Enter the second name">
                             </div>
                         </div>
@@ -208,7 +208,7 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
-                                <label for="postal_codeAdd" class="text-primary">Postal Code</label>
+                                <label for="postal_codeAdd" class="text-primary">Zip Code</label>
                                 <input type="number" min="0" max="99999999" class="form-control form-control-sm" id="postal_codeAdd"  aria-describedby="postal_code" placeholder="Postal code">
                             </div>
                         </div>
@@ -243,7 +243,7 @@
                                             <th><small>City</small></th>
                                             <th><small>State</small></th>
                                             <th><small>Country</small></th>
-                                            <th><small>Postal Code</small></th>
+                                            <th><small>Zip Code</small></th>
                                             <th><small>Action</small></th>
                                         </tr>
                                     </thead>
@@ -265,25 +265,15 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12">
+                        <input type="hidden" min="0" max="999" class="form-control form-control-sm" id="ddiAdd" aria-describedby="DDI" placeholder="DDI" value="1">
+                        <input type="hidden" min="0" max="999" class="form-control form-control-sm" id="dddAdd" aria-describedby="DDD" placeholder="DDD" value="0">
+                        <div class="col-12 col-sm-12 col-md-8">
                             <div class="form-group">
                                 <label for="referenceAdd" class="text-primary">Reference</label>
                                 <input type="text" minlength="0" maxlength="150" class="form-control form-control-sm" id="referenceAdd" aria-describedby="Reference" placeholder="Who will be communicated">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-2">
-                            <div class="form-group">
-                                <label for="ddiAdd" class="text-primary">DDI</label>
-                                <input type="number" min="0" max="999" class="form-control form-control-sm" id="ddiAdd" aria-describedby="DDI" placeholder="DDI" value="1">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-2">
-                            <div class="form-group">
-                                <label for="dddAdd" class="text-primary">DDD</label>
-                                <input type="number" min="0" max="999" class="form-control form-control-sm" id="dddAdd" aria-describedby="DDD" placeholder="DDD">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-8">
+                        <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="phoneAdd" class="text-primary">Phone</label>
                                 <input type="number" min="0" max="99999999999" class="form-control form-control-sm" id="phoneAdd" aria-describedby="Phone" placeholder="Phone">
@@ -299,8 +289,8 @@
                                     <thead>
                                         <tr>
                                             <th><small>Reference</small></th>
-                                            <th><small>DDI</small></th>
-                                            <th><small>DDD</small></th>
+                                            <th><small></small></th>
+                                            <th><small></small></th>
                                             <th><small>Phone</small></th>
                                             <th><small>Action</small></th>
                                         </tr>
@@ -378,8 +368,8 @@
 
             // Clear data form
             document.getElementById('referenceAdd').value   =   null;
-            document.getElementById('ddiAdd').value         =   null;
-            document.getElementById('dddAdd').value         =   null;
+            //document.getElementById('ddiAdd').value         =   null;
+            //document.getElementById('dddAdd').value         =   null;
             document.getElementById('phoneAdd').value       =   null;
 
             var tableRef        =   document.getElementById('tablePhone').getElementsByTagName('tbody')[0];
@@ -389,10 +379,10 @@
             newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="reference[]" value="' + reference + '">';
 
             var newCell         =   newRow.insertCell(1);
-            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="ddi[]" value="' + ddi + '">';
+            newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="ddi[]" value="' + ddi + '">';
 
             var newCell         =   newRow.insertCell(2);
-            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="ddd[]" value="' + ddd + '">';
+            newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="ddd[]" value="' + ddd + '">';
 
             var newCell         =   newRow.insertCell(3);
             newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="phone[]" value="' + phone + '">';
