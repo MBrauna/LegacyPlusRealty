@@ -87,7 +87,7 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
-                                <label for="license_due" class="text-primary">broker fee due</label>
+                                <label for="license_due" class="text-primary">Fee due date</label>
                                 <input type="date" class="form-control form-control-sm" id="license_due" name="license_due" aria-describedby="license_due" placeholder="wiser broker fee due date"  value="{{ $user->license_due }}">
                             </div>
                         </div>
