@@ -148,21 +148,10 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="ddiAdd">DDI:</label>
-                                        <input type="number" class="form-control form-control-sm" min="0" max="999" minlength="0" maxlength="3" id="ddiAdd">
-                                    </div>
-                                </div>
+                                <input type="hidden" class="form-control form-control-sm" min="0" max="999" minlength="0" maxlength="3" id="ddiAdd" value="0">
+                                <input type="hidden" class="form-control form-control-sm" min="0" max="999" minlength="0" maxlength="3" id="dddAdd" value="1">
 
-                                <div class="col-12 col-sm-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="dddAdd">DDD:</label>
-                                        <input type="number" class="form-control form-control-sm" min="0" max="999" minlength="0" maxlength="3" id="dddAdd">
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-sm-12 col-md-6">
+                                <div class="col-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="phoneAdd">Phone:</label>
                                         <input type="tel" class="form-control form-control-sm" min="0" max="999999999" minlength="0" maxlength="12" id="phoneAdd">
@@ -177,8 +166,8 @@
                                 <table class="table table-sm table-hover" id="tablePhone">
                                     <thead>
                                         <tr>
-                                            <th><small>DDI</small></th>
-                                            <th><small>DDD</small></th>
+                                            <th><small></small></th>
+                                            <th><small></small></th>
                                             <th><small>Phone</small></th>
                                             <th><small>Action</small></th>
                                         </tr>
@@ -254,18 +243,18 @@
             var phone   =   document.getElementById('phoneAdd').value;
 
             // Clear data form
-            document.getElementById('ddiAdd').value     =   null;
-            document.getElementById('dddAdd').value     =   null;
+            //document.getElementById('ddiAdd').value     =   null;
+            //document.getElementById('dddAdd').value     =   null;
             document.getElementById('phoneAdd').value   =   null;
 
             var tableRef        =   document.getElementById('tablePhone').getElementsByTagName('tbody')[0];
             var newRow          =   tableRef.insertRow();
 
             var newCell         =   newRow.insertCell(0);
-            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="ddi[]" value="' + ddi + '">';
+            newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="ddi[]" value="' + ddi + '">';
 
             var newCell         =   newRow.insertCell(1);
-            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="ddd[]" value="' + ddd + '">';
+            newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="ddd[]" value="' + ddd + '">';
 
             var newCell         =   newRow.insertCell(2);
             newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="phone[]" value="' + phone + '">';
