@@ -7,6 +7,7 @@
 
     use Carbon\Carbon;
     use Validator;
+    use App\Http\Controllers\Job\Payment as PaymentController;
 
     use App\Models\Contract;
     use App\Models\ContractAddress;
@@ -134,6 +135,10 @@
                         $contractPhone->save();
                     } // foreach ($request->ddi as $key => $value) { ... }
                 } // if(isset($request->ddi) && count($request->ddi) > 0) { ... }
+
+
+                $jobExec = new PaymentController;
+                $jobExec->paymentJob();
 
                 return redirect()->route('admin.contract.id',[
                     'id_contract'   =>  $contract->id_contract,
