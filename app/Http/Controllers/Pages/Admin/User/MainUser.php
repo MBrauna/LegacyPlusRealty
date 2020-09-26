@@ -102,8 +102,12 @@
 
                 $user                       =   new User;
                 $user->name                 =   $request->name;
+                $user->second_name          =   $request->second_name;
+                $user->last_name            =   $request->last_name;
                 $user->email                =   $request->email;
                 $user->license              =   $request->license;
+                $user->license_date         =   $request->license_date;
+                $user->license_due          =   $request->license_due;
                 $user->password             =   Hash::make($request->password);
                 $user->id_user_recommend    =   is_null($request->id_user_recommend) ? null : intval($request->id_user_recommend);
                 $user->admin                =   is_null($request->admin) ? false : (intval($request->admin) == 1);
@@ -187,8 +191,12 @@
 
                 $user                       =   User::find($request->idUser);
                 $user->name                 =   $request->name;
+                $user->second_name          =   $request->second_name;
+                $user->last_name            =   $request->last_name;
                 $user->email                =   $request->email;
                 $user->license              =   $request->license;
+                $user->license_date         =   $request->license_date;
+                $user->license_due          =   $request->license_due;
                 $user->password             =   (!isset($request->password) || is_null($request->password)) ? $user->password : Hash::make($request->password);
                 $user->id_user_recommend    =   is_null($request->id_user_recommend) ? null : intval($request->id_user_recommend);
                 $user->admin                =   is_null($request->admin) ? false : (intval($request->admin) == 1);

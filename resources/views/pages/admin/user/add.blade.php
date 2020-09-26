@@ -52,26 +52,52 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-8">
+                        <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
-                                <label for="name" class="text-primary">Name</label>
+                                <label for="name" class="text-primary">First name</label>
                                 <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="name" name="name" aria-describedby="name" placeholder="Enter the user name" required>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="second_name" class="text-primary">Second name</label>
+                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="second_name" name="second_name" aria-describedby="name" placeholder="Enter the second name">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="last_name" class="text-primary">Last name</label>
+                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="last_name" name="last_name" aria-describedby="name" placeholder="Enter the last name" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <label for="email" class="text-primary">E-mail</label>
                                 <input type="email" minlength="5" maxlength="250" class="form-control form-control-sm" id="email" name="email" aria-describedby="email" placeholder="E-mail will be used for access" required>
                             </div>
                         </div>
         
-                        <div class="col-12 col-sm-12 col-md-2">
+                        <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="license" class="text-primary">License</label>
                                 <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="license" name="license" aria-describedby="license" placeholder="License">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-3">
+                        <div class="col-12 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="license_expiration" class="text-primary">License expiration</label>
+                                <input type="date" class="form-control form-control-sm" id="license_expiration" name="license_expiration" aria-describedby="license_expiration" placeholder="License expiration date">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="license_due" class="text-primary">Fee due date</label>
+                                <input type="date" class="form-control form-control-sm" id="license_due" name="license_due" aria-describedby="license_due" placeholder="wiser broker fee due date">
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="password" class="text-primary">Password</label>
                                 <input type="password" minlength="2" maxlength="16" class="form-control form-control-sm" id="password" name="password" aria-describedby="password" placeholder="password" required>
@@ -88,7 +114,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-3">
+                        <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="percent" class="text-primary">Percentage indication</label>
                                 <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="0.00" required>
