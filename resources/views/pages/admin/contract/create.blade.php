@@ -111,7 +111,7 @@
 
                                 <div class="col-12 col-sm-12 col-md-6">
                                     <div class="form-group">
-                                        <label for="postal_codeAdd">Postal code:</label>
+                                        <label for="postal_codeAdd">Zip code:</label>
                                         <input type="number" class="form-control form-control-sm" min="0" max="99999999" minlength="3" maxlength="8" id="postal_codeAdd">
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                                             <th><small>City</small></th>
                                             <th><small>State</small></th>
                                             <th><small>Country</small></th>
-                                            <th><small>Postal Code</small></th>
+                                            <th><small>Zip Code</small></th>
                                             <th><small>Action</small></th>
                                         </tr>
                                     </thead>

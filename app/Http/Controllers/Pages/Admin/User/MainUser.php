@@ -68,7 +68,7 @@
             $groupList  =   Group::where('status',true)->orderBy('name','asc')->get();
             $userAddress=   UserAddress::where('id_user',$user->id)->orderBy('id_user_address','asc')->get();
             $userPhone  =   UserPhone::where('id_user',$user->id)->orderBy('id_user_phone','asc')->get();
-            $userComp   =   UserCompensation::where('id_user',$user->id)->orderBy('id_user_compensation','asc')->get();
+            $userComp   =   UserCompensation::where('id_user',$user->id)->orderBy('min_value','asc')->orderBy('max_value','asc')->get();
 
             return view('pages.admin.user.edit',[
                 'users'     =>  $users,
@@ -84,11 +84,9 @@
         public function save(Request $request) {
             try {
                 $validator  =   Validator::make($request->all(),[
-                    'name'      =>  'required|String',
-                    'email'     =>  'required|email:rfc,dns',
-                    'password'  =>  'required|string',
-                    'perc_sale' =>  'required',
-                    'perc_rent' =>  'required',
+                    'name'      =>  'required',
+                    'email'     =>  'required',
+                    'password'  =>  'required',
                 ]);
 
                 if($validator->fails()) {
@@ -118,20 +116,30 @@
                 $user->save();
 
                 // Sale
-                $userCompensation               =   new UserCompensation;
-                $userCompensation->id_user      =   $user->id;
-                $userCompensation->type         =   1;
-                $userCompensation->percentual   =   round(doubleval($request->perc_sale),2);
-                $userCompensation->init_date    =   Carbon::now();
-                $userCompensation->save();
+                if(isset($request->min_sale)) {
+                    foreach ($request->min_sale as $key => $value) {
+                        $userCompensation               =   new UserCompensation;
+                        $userCompensation->id_user      =   $user->id;
+                        $userCompensation->type         =   1;
+                        $userCompensation->min_value    =   round(doubleval($request->min_sale[$key]),2);
+                        $userCompensation->max_value    =   round(doubleval($request->max_sale[$key]),2);
+                        $userCompensation->percentual   =   round(doubleval($request->perc_sale[$key]),2);
+                        $userCompensation->save();
+                    } // foreach ($request->min_sale as $key => $value) { ... }
+                } // if(isset($request->min_sale)) { ... }
 
                 // Rent
-                $userCompensation               =   new UserCompensation;
-                $userCompensation->id_user      =   $user->id;
-                $userCompensation->type         =   2;
-                $userCompensation->percentual   =   round(doubleval($request->perc_rent),2);
-                $userCompensation->init_date    =   Carbon::now();
-                $userCompensation->save();
+                if(isset($request->min_rent)) {
+                    foreach ($request->min_rent as $key => $value) {
+                        $userCompensation               =   new UserCompensation;
+                        $userCompensation->id_user      =   $user->id;
+                        $userCompensation->type         =   2;
+                        $userCompensation->min_value    =   round(doubleval($request->min_rent[$key]),2);
+                        $userCompensation->max_value    =   round(doubleval($request->max_rent[$key]),2);
+                        $userCompensation->percentual   =   round(doubleval($request->perc_rent[$key]),2);
+                        $userCompensation->save();
+                    } // foreach ($request->min_sale as $key => $value) { ... }
+                } // if(isset($request->min_sale)) { ... }
 
                 // Save address
                 if(isset($request->address)) {
@@ -173,10 +181,8 @@
                 
                 $validator  =   Validator::make($request->all(),[
                     'idUser'    =>  'required',
-                    'name'      =>  'required|String',
-                    'email'     =>  'required|email:rfc,dns',
-                    'perc_sale' =>  'required',
-                    'perc_rent' =>  'required',
+                    'name'      =>  'required',
+                    'email'     =>  'required',
                 ]);
 
                 if($validator->fails()) {
@@ -207,22 +213,29 @@
                 $user->save();
 
                 UserCompensation::where('id_user',$user->id)->delete();
-
                 // Sale
-                $userCompensation               =   new UserCompensation;
-                $userCompensation->id_user      =   $user->id;
-                $userCompensation->type         =   1;
-                $userCompensation->percentual   =   round(doubleval($request->perc_sale),2);
-                $userCompensation->init_date    =   Carbon::now();
-                $userCompensation->save();
-
-                // Rent
-                $userCompensation               =   new UserCompensation;
-                $userCompensation->id_user      =   $user->id;
-                $userCompensation->type         =   2;
-                $userCompensation->percentual   =   round(doubleval($request->perc_rent),2);
-                $userCompensation->init_date    =   Carbon::now();
-                $userCompensation->save();
+                if(isset($request->min_sale)) {
+                    foreach ($request->min_sale as $key => $value) {
+                        $userCompensation               =   new UserCompensation;
+                        $userCompensation->id_user      =   $user->id;
+                        $userCompensation->type         =   1;
+                        $userCompensation->min_value    =   round(doubleval($request->min_sale[$key]),2);
+                        $userCompensation->max_value    =   round(doubleval($request->max_sale[$key]),2);
+                        $userCompensation->percentual   =   round(doubleval($request->perc_sale[$key]),2);
+                        $userCompensation->save();
+                    } // foreach ($request->min_sale as $key => $value) { ... }
+                } // if(isset($request->min_sale)) { ... }
+                if(isset($request->min_rent)) {
+                    foreach ($request->min_rent as $key => $value) {
+                        $userCompensation               =   new UserCompensation;
+                        $userCompensation->id_user      =   $user->id;
+                        $userCompensation->type         =   2;
+                        $userCompensation->min_value    =   round(doubleval($request->min_rent[$key]),2);
+                        $userCompensation->max_value    =   round(doubleval($request->max_rent[$key]),2);
+                        $userCompensation->percentual   =   round(doubleval($request->perc_rent[$key]),2);
+                        $userCompensation->save();
+                    } // foreach ($request->min_sale as $key => $value) { ... }
+                } // if(isset($request->min_sale)) { ... }
 
                 // Save address
                 UserAddress::where('id_user',$user->id)->delete();

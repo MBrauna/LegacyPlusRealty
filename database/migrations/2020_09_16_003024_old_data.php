@@ -30,7 +30,7 @@ class OldData extends Migration {
             $table->increments('id_user_phone');
             $table->integer('id_user');
             $table->text('reference');
-            $table->integer('ddi')->default(1);
+            $table->integer('ddi')->nullable();
             $table->integer('ddd')->nullable();
             $table->integer('phone');
             $table->timestamps();
@@ -47,9 +47,9 @@ class OldData extends Migration {
             $table->increments('id_user_compensation');
             $table->integer('id_user');
             $table->integer('type')->default(0); // [1] - Sales, [2] - Rental
+            $table->double('min_value',20,2);
+            $table->double('max_value',20,2);
             $table->double('percentual',12,2)->default(0);
-            $table->dateTime('init_date');
-            $table->dateTime('end_date')->nullable();
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
@@ -164,7 +164,7 @@ class OldData extends Migration {
         Schema::create('contract_phone',function(Blueprint $table){
             $table->increments('id_contract_phone');
             $table->integer('id_contract');
-            $table->integer('ddi')->default(1);
+            $table->integer('ddi')->nullable();
             $table->integer('ddd')->nullable();
             $table->integer('phone')->nullable();
             $table->timestamps();

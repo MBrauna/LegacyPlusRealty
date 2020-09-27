@@ -52,6 +52,21 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-12 col-sm-12 col-md-8">
+                            <div class="form-group">
+                                <label for="email" class="text-primary">E-mail</label>
+                                <input type="email" minlength="5" maxlength="250" class="form-control form-control-sm" id="email" name="email" aria-describedby="email" placeholder="E-mail will be used for access" required>
+                            </div>
+                        </div>
+        
+                        <div class="col-12 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="password" class="text-primary">Password</label>
+                                <input type="password" minlength="4" maxlength="16" class="form-control form-control-sm" id="password" name="password" aria-describedby="password" placeholder="password" required>
+                            </div>
+                        </div>
+
+
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="name" class="text-primary">First name</label>
@@ -70,13 +85,8 @@
                                 <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="last_name" name="last_name" aria-describedby="name" placeholder="Enter the last name" required>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <label for="email" class="text-primary">E-mail</label>
-                                <input type="email" minlength="5" maxlength="250" class="form-control form-control-sm" id="email" name="email" aria-describedby="email" placeholder="E-mail will be used for access" required>
-                            </div>
-                        </div>
-        
+
+
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="license" class="text-primary">License</label>
@@ -96,18 +106,11 @@
                             </div>
                         </div>
 
-
-                        <div class="col-12 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label for="password" class="text-primary">Password</label>
-                                <input type="password" minlength="2" maxlength="16" class="form-control form-control-sm" id="password" name="password" aria-describedby="password" placeholder="password" required>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-4">
+                        <div class="col-12 col-sm-12 col-md-8">
                             <div class="form-group">
                                 <label for="id_user_recommend" class="text-primary">Indicated by</label>
                                 <select id="id_user_recommend" name="id_user_recommend" class="form-control form-control-sm">
-                                    <option value="" selected>No recommendation</option>
+                                    <option value="">No recommendation</option>
                                     @foreach ($users as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
@@ -124,29 +127,107 @@
                 </div>
             </div>
 
+
             <div class="mt-3"></div>
             <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <i class="fas fa-comments-dollar"></i>
-                    <small>Comission</small>
+                    <small>Commission</small>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-6">
-                            <div class="form-group">
-                                <label for="name" class="text-primary">Sale %</label>
-                                <input type="number" min="0" max="100" step="0.01" value="0.00" class="form-control form-control-sm" id="perc_sale" name="perc_sale" aria-describedby="Sale" placeholder="For sale" required>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 border-primary">
+                            <h6 class="text-center text-white bg-primary"><small>Sale</small></h6>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="min_sale" class="text-primary">From (US$)</label>
+                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="min_sale" aria-describedby="percent" placeholder="Lowest value" value="0.00">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="max_sale" class="text-primary">To (US$)</label>
+                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="max_sale" aria-describedby="percent" placeholder="Highest value" value="0.00">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="percent_sale" class="text-primary">Split to agent (%)</label>
+                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right" id="percent_sale" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
+                                    </div>
+                                </div>
+        
+                                <button type="button" class="btn btn-sm btn-block btn-primary ml-2 mr-2" onclick="addSale();">Add commission for sale</button>
+                                <div class="col-12 text-center text-primary"><small>Only the content below will be taken to the register</small></div>
+
+                                <div class="col-12 mt-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-hover" id="tableSale">
+                                            <thead>
+                                                <tr>
+                                                    <th><small>From (US$)</small></th>
+                                                    <th><small>To (US$)</small></th>
+                                                    <th><small>Split to agent</small></th>
+                                                    <th><small>Action</small></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-6">
-                            <div class="form-group">
-                                <label for="name" class="text-primary">Rent %</label>
-                                <input type="number" min="0" max="100" step="0.01" value="0.00" class="form-control form-control-sm" id="perc_rent" name="perc_rent" aria-describedby="Rent" placeholder="For rent" required>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                            <h6 class="text-center text-white bg-primary"><small>Rent</small></h6>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="min_rent" class="text-primary">From (US$)</label>
+                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="min_rent" aria-describedby="percent" placeholder="Lowest value" value="0.00">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="max_rent" class="text-primary">To (US$)</label>
+                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="max_rent" aria-describedby="percent" placeholder="Highest value" value="0.00">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="percent_rent" class="text-primary">Split to agent (%)</label>
+                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right" id="percent_rent" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
+                                    </div>
+                                </div>
+        
+                                <button type="button" class="btn btn-sm btn-block btn-primary ml-2 mr-2" onclick="addRent();">Add commission for rent</button>
+                                <div class="col-12 text-center text-primary"><small>Only the content below will be taken to the register</small></div>
+
+                                <div class="col-12 mt-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-hover" id="tableRent">
+                                            <thead>
+                                                <tr>
+                                                    <th><small>From (US$)</small></th>
+                                                    <th><small>To (US$)</small></th>
+                                                    <th><small>Split to agent</small></th>
+                                                    <th><small>Action</small></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <div class="mt-3"></div>
             <div class="card border-primary">
@@ -414,9 +495,76 @@
             newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
         } // function addPhone(data) { ... }
 
+        function addRent() {
+            var minRent     =   document.getElementById('min_rent').value;
+            var maxRent     =   document.getElementById('max_rent').value;
+            var percRent    =   document.getElementById('percent_rent').value;
+
+            if(minRent == '' || maxRent == '' || percRent == '') {
+                alert('Fill out the form correctly!');
+                return;
+            } // if(saleMinRent == '' || saleMaxRent == '' || percRent == '') {
+
+            // Clear data form
+            document.getElementById('percent_rent').value   =   '0.00';
+            document.getElementById('min_rent').value       =   maxRent;
+            document.getElementById('max_rent').value       =   '0.00';
+
+            var tableRef        =   document.getElementById('tableRent').getElementsByTagName('tbody')[0];
+            var newRow          =   tableRef.insertRow();
+
+            var newCell         =   newRow.insertCell(0);
+            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="min_rent[]" value="' + minRent + '">';
+
+            var newCell         =   newRow.insertCell(1);
+            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="max_rent[]" value="' + maxRent + '">';
+
+            var newCell         =   newRow.insertCell(2);
+            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_rent[]" value="' + percRent + '">';
+
+            var newCell         =   newRow.insertCell(3);
+            newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
+        } // function addPhone(data) { ... }
+
+
+        function addSale() {
+            var minSale     =   document.getElementById('min_sale').value;
+            var maxSale     =   document.getElementById('max_sale').value;
+            var percSale    =   document.getElementById('percent_sale').value;
+
+            if(minSale == '' || maxSale == '' || percSale == '') {
+                alert('Fill out the form correctly!');
+                return;
+            } // if(saleMinRent == '' || saleMaxRent == '' || percRent == '') {
+
+            // Clear data form
+            document.getElementById('percent_sale').value   =   '0.00';
+            document.getElementById('min_sale').value       =   maxSale;
+            document.getElementById('max_sale').value       =   '0.00';
+
+            var tableRef        =   document.getElementById('tableSale').getElementsByTagName('tbody')[0];
+            var newRow          =   tableRef.insertRow();
+
+            var newCell         =   newRow.insertCell(0);
+            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="min_sale[]" value="' + minSale + '">';
+
+            var newCell         =   newRow.insertCell(1);
+            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="max_sale[]" value="' + maxSale + '">';
+
+            var newCell         =   newRow.insertCell(2);
+            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_sale[]" value="' + percSale + '">';
+
+            var newCell         =   newRow.insertCell(3);
+            newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
+        } // function addPhone(data) { ... }
+
+
+
+
         function deleteNode(btn) {
             var row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
         } // function deleteNode(btn) { ... }
     </script>
+
 @endsection

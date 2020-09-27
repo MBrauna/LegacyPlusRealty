@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="card-body">
-            <input type="hidden" name="idUser" value="{{ $user->id }}">
+            <input type="hidden" value="{{ Auth::user()->id }}" name="idUser">
 
             <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
@@ -52,6 +52,22 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-12 col-sm-12 col-md-8">
+                            <div class="form-group">
+                                <label for="email" class="text-primary">E-mail</label>
+                                <input type="email" minlength="5" maxlength="250" class="form-control form-control-sm" id="email" name="email" aria-describedby="email" placeholder="E-mail will be used for access" value="{{ $user->email }}" required>
+                            </div>
+                        </div>
+        
+                        <div class="col-12 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="password" class="text-primary">Password</label>
+                                <input type="password" minlength="4" maxlength="16" class="form-control form-control-sm" id="password" name="password" aria-describedby="password" placeholder="password">
+                                <small id="password" class="form-text text-muted">Keep it blank to stay with the current password</small>
+                            </div>
+                        </div>
+
+
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="name" class="text-primary">First name</label>
@@ -61,22 +77,17 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="second_name" class="text-primary">Middle name</label>
-                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="second_name" name="second_name" aria-describedby="name" value="{{ $user->second_name }}" placeholder="Enter the second name">
+                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="second_name" name="second_name" aria-describedby="name" placeholder="Enter the second name" value="{{ $user->second_name }}">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="last_name" class="text-primary">Last name</label>
-                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="last_name" name="last_name" aria-describedby="name" value="{{ $user->last_name }}" placeholder="Enter the last name" required>
+                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="last_name" name="last_name" aria-describedby="name" placeholder="Enter the last name" value="{{ $user->last_name }}" required>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <label for="email" class="text-primary">E-mail</label>
-                                <input type="email" minlength="5" maxlength="250" class="form-control form-control-sm" id="email" name="email" aria-describedby="email" placeholder="E-mail will be used for access" value="{{ $user->email }}" required>
-                            </div>
-                        </div>
-        
+
+
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="license" class="text-primary">License</label>
@@ -86,25 +97,17 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="license_expiration" class="text-primary">License expiration</label>
-                                <input type="date" class="form-control form-control-sm" id="license_expiration" name="license_expiration" aria-describedby="license_expiration" placeholder="License expiration date"  value="{{ $user->license_expiration }}">
+                                <input type="date" class="form-control form-control-sm" id="license_expiration" name="license_expiration" aria-describedby="license_expiration" placeholder="License expiration date"  value="{{ $user->license_date }}">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="license_due" class="text-primary">Fee due date</label>
-                                <input type="date" class="form-control form-control-sm" id="license_due" name="license_due" aria-describedby="license_due" placeholder="wiser broker fee due date"  value="{{ $user->license_due }}">
+                                <input type="date" class="form-control form-control-sm" id="license_due" name="license_due" aria-describedby="license_due" placeholder="wiser broker fee due date" value="{{ $user->license_due }}">
                             </div>
                         </div>
 
-
-                        <div class="col-12 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label for="password" class="text-primary">Password</label>
-                                <input type="password" minlength="2" maxlength="16" class="form-control form-control-sm" id="password" name="password" aria-describedby="password" placeholder="password">
-                                <small id="password" class="form-text text-muted">Keep it blank to stay with the current password</small>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-4">
+                        <div class="col-12 col-sm-12 col-md-8">
                             <div class="form-group">
                                 <label for="id_user_recommend" class="text-primary">Indicated by</label>
                                 <select id="id_user_recommend" name="id_user_recommend" class="form-control form-control-sm">
@@ -129,47 +132,125 @@
                 </div>
             </div>
 
+
             <div class="mt-3"></div>
             <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
                     <i class="fas fa-comments-dollar"></i>
-                    <small>Comission</small>
+                    <small>Commission</small>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        @forelse ($usercomp as $item)
-                            @if($item->type == 1)
-                                <div class="col-12 col-sm-12 col-md-6">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 border-primary">
+                            <h6 class="text-center text-white bg-primary"><small>Sale</small></h6>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="name" class="text-primary">Sale %</label>
-                                        <input type="number" min="0" max="100" step="0.01"  class="form-control form-control-sm" id="perc_sale" name="perc_sale" aria-describedby="Sale" placeholder="For sale" value="{{ number_format($item->percentual,2,'.','') }}" required>
+                                        <label for="min_sale" class="text-primary">From (US$)</label>
+                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="min_sale" aria-describedby="percent" placeholder="Lowest value" value="0.00">
                                     </div>
                                 </div>
-                            @else
-                            <div class="col-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="name" class="text-primary">Rent %</label>
-                                    <input type="number" min="0" max="100" step="0.01" class="form-control form-control-sm" id="perc_rent" name="perc_rent" aria-describedby="Rent" placeholder="For rent" value="{{ number_format($item->percentual,2,'.','') }}" required>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="max_sale" class="text-primary">To (US$)</label>
+                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="max_sale" aria-describedby="percent" placeholder="Highest value" value="0.00">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="percent_sale" class="text-primary">Split to agent (%)</label>
+                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right" id="percent_sale" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
+                                    </div>
+                                </div>
+        
+                                <button type="button" class="btn btn-sm btn-block btn-primary ml-2 mr-2" onclick="addSale();">Add commission for sale</button>
+                                <div class="col-12 text-center text-primary"><small>Only the content below will be taken to the register</small></div>
+
+                                <div class="col-12 mt-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-hover" id="tableSale">
+                                            <thead>
+                                                <tr>
+                                                    <th><small>From (US$)</small></th>
+                                                    <th><small>To (US$)</small></th>
+                                                    <th><small>Split to agent</small></th>
+                                                    <th><small>Action</small></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($usercomp as $item)
+                                                    @if($item->type == 1)
+                                                        <tr>
+                                                            <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="min_sale[]" value="{{ $item->min_value }}"></td>
+                                                            <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="max_sale[]" value="{{ $item->max_value }}"></td>
+                                                            <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_rent[]" value="{{ $item->percentual }}"></td>
+                                                            <td><button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button></td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                            @endif
-                        @empty
-                        <div class="col-12 col-sm-12 col-md-6">
-                            <div class="form-group">
-                                <label for="name" class="text-primary">Sale %</label>
-                            <input type="number" min="0" max="100" step="0.01" value="0.00" class="form-control form-control-sm" id="perc_sale" name="perc_sale" aria-describedby="Sale" placeholder="For sale" value="0.00" required>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                            <h6 class="text-center text-white bg-primary"><small>Rent</small></h6>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="min_rent" class="text-primary">From (US$)</label>
+                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="min_rent" aria-describedby="percent" placeholder="Lowest value" value="0.00">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label for="max_rent" class="text-primary">To (US$)</label>
+                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="max_rent" aria-describedby="percent" placeholder="Highest value" value="0.00">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="percent_rent" class="text-primary">Split to agent (%)</label>
+                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right" id="percent_rent" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
+                                    </div>
+                                </div>
+        
+                                <button type="button" class="btn btn-sm btn-block btn-primary ml-2 mr-2" onclick="addRent();">Add commission for rent</button>
+                                <div class="col-12 text-center text-primary"><small>Only the content below will be taken to the register</small></div>
+
+                                <div class="col-12 mt-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-hover" id="tableRent">
+                                            <thead>
+                                                <tr>
+                                                    <th><small>From (US$)</small></th>
+                                                    <th><small>To (US$)</small></th>
+                                                    <th><small>Split to agent</small></th>
+                                                    <th><small>Action</small></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($usercomp as $item)
+                                                    @if($item->type == 2)
+                                                        <tr>
+                                                            <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="min_rent[]" value="{{ $item->min_value }}"></td>
+                                                            <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="max_rent[]" value="{{ $item->max_value }}"></td>
+                                                            <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_rent[]" value="{{ $item->percentual }}"></td>
+                                                            <td><button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button></td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-6">
-                            <div class="form-group">
-                                <label for="name" class="text-primary">Rent %</label>
-                                <input type="number" min="0" max="100" step="0.01" value="0.00" class="form-control form-control-sm" id="perc_rent" name="perc_rent" aria-describedby="Rent" placeholder="For rent" value="0.00" required>
-                            </div>
-                        </div>
-                        @endforelse
                     </div>
                 </div>
             </div>
+
 
             <div class="mt-3"></div>
             <div class="card border-primary">
@@ -183,10 +264,10 @@
                             <div class="form-group">
                                 <label for="id_groupAdd">Group</label>
                                 <select id="id_groupAdd" class="form-control form-control-sm">
-                                  <option value="">Choose ...</option>
-                                  @foreach ($groups as $item)
-                                  <option value="{{ $item->id_group }}">{{ $item->name }}</option>
-                                  @endforeach
+                                <option value="">Choose ...</option>
+                                @foreach ($groups as $item)
+                                <option value="{{ $item->id_group }}">{{ $item->name }}</option>
+                                @endforeach
                                 </select>
                             </div>
                         </div>
@@ -308,14 +389,15 @@
                                 <input type="text" minlength="0" maxlength="150" class="form-control form-control-sm" id="referenceAdd" aria-describedby="Reference" placeholder="Who will be communicated">
                             </div>
                         </div>
+                        <input type="hidden" min="0" max="999" class="form-control form-control-sm" id="ddiAdd"  aria-describedby="DDI" placeholder="DDI" value="1">
+                        <input type="hidden" min="0" max="999" class="form-control form-control-sm" id="dddAdd"  aria-describedby="DDD" placeholder="DDD" value="0">
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="phoneAdd" class="text-primary">Phone</label>
                                 <input type="number" min="0" max="99999999999" class="form-control form-control-sm" id="phoneAdd" aria-describedby="Phone" placeholder="Phone">
                             </div>
                         </div>
-                        <input type="hidden" min="0" max="999" class="form-control form-control-sm" id="ddiAdd"  aria-describedby="DDI" placeholder="DDI" value="1">
-                        <input type="hidden" min="0" max="999" class="form-control form-control-sm" id="dddAdd"  aria-describedby="DDD" placeholder="DDD" value="0">
+
                         <button type="button" class="btn btn-primary btn-sm btn-block" onclick="addPhone()">Add phone</button>
                         <div class="col-12 text-center text-primary"><small>Only the content below will be taken to the register</small></div>
 
@@ -405,7 +487,7 @@
             var ddd         =   document.getElementById('dddAdd').value;
             var phone       =   document.getElementById('phoneAdd').value;
 
-            if(reference == '' || ddi == '' || ddd == '' || phone == '') {
+            if(reference == '' || phone == '') {
                 alert('Fill out the form correctly!');
                 return;
             } // if(reference == '' || ddi == '' || ddd == '' || phone == '') { ... }
@@ -455,6 +537,69 @@
             newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="id_group[]" value="' + groupID + '"><input type="text" readonly class="form-control-plaintext" value="' + groupName + '">';
 
             var newCell         =   newRow.insertCell(1);
+            newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
+        } // function addPhone(data) { ... }
+
+        function addRent() {
+            var minRent     =   document.getElementById('min_rent').value;
+            var maxRent     =   document.getElementById('max_rent').value;
+            var percRent    =   document.getElementById('percent_rent').value;
+
+            if(minRent == '' || maxRent == '' || percRent == '') {
+                alert('Fill out the form correctly!');
+                return;
+            } // if(saleMinRent == '' || saleMaxRent == '' || percRent == '') {
+
+            // Clear data form
+            document.getElementById('percent_rent').value   =   '0.00';
+            document.getElementById('min_rent').value       =   maxRent;
+            document.getElementById('max_rent').value       =   '0.00';
+
+            var tableRef        =   document.getElementById('tableRent').getElementsByTagName('tbody')[0];
+            var newRow          =   tableRef.insertRow();
+
+            var newCell         =   newRow.insertCell(0);
+            newCell.innerHTML   =   '<input type="number" min="0" max="999999999999" step="0.01" readonly class="form-control-plaintext" name="min_rent[]" value="' + minRent + '">';
+
+            var newCell         =   newRow.insertCell(1);
+            newCell.innerHTML   =   '<input type="number" min="0" max="999999999999" step="0.01" readonly class="form-control-plaintext" name="max_rent[]" value="' + maxRent + '">';
+
+            var newCell         =   newRow.insertCell(2);
+            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_rent[]" value="' + percRent + '">';
+
+            var newCell         =   newRow.insertCell(3);
+            newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
+        } // function addPhone(data) { ... }
+
+
+        function addSale() {
+            var minSale     =   document.getElementById('min_sale').value;
+            var maxSale     =   document.getElementById('max_sale').value;
+            var percSale    =   document.getElementById('percent_sale').value;
+
+            if(minSale == '' || maxSale == '' || percSale == '') {
+                alert('Fill out the form correctly!');
+                return;
+            } // if(saleMinRent == '' || saleMaxRent == '' || percRent == '') {
+
+            // Clear data form
+            document.getElementById('percent_sale').value   =   '0.00';
+            document.getElementById('min_sale').value       =   maxSale;
+            document.getElementById('max_sale').value       =   '0.00';
+
+            var tableRef        =   document.getElementById('tableSale').getElementsByTagName('tbody')[0];
+            var newRow          =   tableRef.insertRow();
+
+            var newCell         =   newRow.insertCell(0);
+            newCell.innerHTML   =   '<input type="number" min="0" max="999999999999" step="0.01" readonly class="form-control-plaintext" name="min_sale[]" value="' + minSale + '">';
+
+            var newCell         =   newRow.insertCell(1);
+            newCell.innerHTML   =   '<input type="number" min="0" max="999999999999" step="0.01" readonly class="form-control-plaintext" name="max_sale[]" value="' + maxSale + '">';
+
+            var newCell         =   newRow.insertCell(2);
+            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_sale[]" value="' + percSale + '">';
+
+            var newCell         =   newRow.insertCell(3);
             newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
         } // function addPhone(data) { ... }
 

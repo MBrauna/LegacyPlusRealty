@@ -37,8 +37,8 @@
                     @forelse ($users as $user)
                         <tr>
                             <td class="text-white text-center bg-primary" style="min-width: 5vw;"><small>#{{ $user->id }}</small></td>
-                            <td style="min-width: 15vw;" class="text-primary font-weight-bold"><small>{{ $user->name }}</small></td>
-                            <td><small>{{$user->email.' '.$user->second_name.' '.$user->last_name}}</small></td>
+                            <td style="min-width: 15vw;" class="text-primary font-weight-bold"><small>{{ $user->last_name.', '.$user->name.' '.$user->second_name }}</small></td>
+                            <td><small>{{$user->email}}</small></td>
                             <td><small>{{$user->license ?? 'without license' }}</small></td>
                             <td><small>{{$user->recommendedBy->name ?? ' - ' }}</small></td>
                             <td class="font-weight-bold {{$user->admin ? 'text-success' : 'text-danger' }}"><small>{{$user->admin ? 'Yes' : 'No' }}</small></td>
