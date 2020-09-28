@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="card-body">
-            <input type="hidden" value="{{ Auth::user()->id }}" name="idUser">
+            <input type="hidden" value="{{ $user->id }}" name="idUser">
 
             <div class="card border-primary">
                 <div class="card-header bg-primary text-white">
