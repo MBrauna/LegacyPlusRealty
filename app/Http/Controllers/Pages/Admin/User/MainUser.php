@@ -95,7 +95,7 @@
 
                 $existEmail =   User::where('email',$request->email)->count();
                 if($existEmail > 0 || strlen($request->password) < 3 || strlen($request->password) > 16) {
-                    return back();
+                    return redirect()->route('admin.user.list');
                 } // if($existEmail > 0 || strlen($request->password) < 3 || strlen($request->password) > 16) { ... }
 
                 $user                       =   new User;
@@ -186,12 +186,12 @@
                 ]);
 
                 if($validator->fails()) {
-                    return back();
+                    return redirect()->route('admin.user.list');
                 } // if($validator->fails()) { ... }
 
                 $existEmail =   User::where('email',$request->email)->where('id','!=',$request->idUser)->count();
                 if($existEmail > 0) {
-                    return back();
+                    return redirect()->route('admin.user.list');
                 } // if($existEmail > 0 || strlen($request->password) < 3 || strlen($request->password) > 16) { ... }
 
 
