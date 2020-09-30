@@ -36,7 +36,7 @@
                         <select class="form-control form-control-sm" id="id_user_seller" name="id_user_seller" required>
                             <option value="">Select a seller</option>
                             @foreach ($users as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }} ({{ $item->allDesc->percent }})</option>
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -21,6 +21,7 @@
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th class="text-center"><small>#ID</small></th>
+                                <th><small>Value</small></th>
                                 <th><small>Type</small></th>
                                 <th><small>Contract start</small></th>
                                 <th><small>Contract end</small></th>
@@ -33,11 +34,12 @@
                             @forelse ($contracts as $item)
                                 <tr class="text-primary">
                                     <td style="min-width: 5vw;" class="bg-primary text-white text-right"><small>{{ $item->id_contract }}</small></td>
+                                    <td class="text-right text-white bg-primary" style="min-width: 6vw;"><small><b>{{ $item->allDesc->value }}</b></small></td>
                                     <td style="min-width: 6vw;"><small>{{ $item->allDesc->type }}</small></td>
                                     <td style="min-width: 6vw;"><small>{{ $item->allDesc->start_contract }}</small></td>
                                     <td style="min-width: 6vw;"><small>{{ $item->allDesc->end_contract }}</small></td>
                                     <td style="min-width: 6vw;"><small>{{ $item->allDesc->payment_exec }}</small></td>
-                                    <td style="min-width: 10vw;"><small>{{ $item->allDesc->id_user_seller->name ?? 'Not defined' }}</small></td>
+                                    <td style="min-width: 10vw;"><small>{{ $item->allDesc->id_user_seller->name.' '.$item->allDesc->id_user_seller->second_name.' '.$item->allDesc->id_user_seller->last_name ?? 'Not defined' }}</small></td>
                                     <td style="min-width: 8vw;" class="row d-flex justify-content-center">
                                         <form action="{{ route('admin.contract.id',['id_contract' => $item->id_contract]) }}" method="POST" class="col-12 col-sm-12 col-md-12">
                                             @csrf

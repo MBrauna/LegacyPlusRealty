@@ -18,7 +18,11 @@
     class MainContract extends Controller {
         public function list(Request $request) {
             try {
-                $contracts      =   Contract::where('start_contract','>=',Carbon::now()->subYears(1))->get();
+                $contracts      =   Contract::where('start_contract','>=',Carbon::now()->subYears(1))
+                                    ->orderBy('start_contract','desc')
+                                    ->orderBy('end_contract','desc')
+                                    ->orderBy('value','desc')
+                                    ->get();
 
                 foreach ($contracts as $key => $value) {
                     $contracts[$key]->allDesc                   =   (object)[];
@@ -32,7 +36,7 @@
 
                     switch ($value->type) {
                         case 1:
-                            $contracts[$key]->allDesc->type =   'Sales';
+                            $contracts[$key]->allDesc->type =   'Sale';
                             break;
                         case 2:
                             $contracts[$key]->allDesc->type =   'Rental';

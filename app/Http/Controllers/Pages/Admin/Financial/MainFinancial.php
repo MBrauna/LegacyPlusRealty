@@ -41,7 +41,11 @@
                     $payment[$key]->allDesc->value      =   'US$ '.number_format($value->comission,2,',','.');
                     $payment[$key]->allDesc->min_date   =   Carbon::parse($value->min_date)->format('m/d/Y');
                     $payment[$key]->allDesc->max_date   =   Carbon::parse($value->max_date)->format('m/d/Y');
-                    $payment[$key]->allDesc->comission  =   Payment::where('payment_date','>=',Carbon::now()->subMonths($this->monthsPrev))->orderBy('payment_date','asc')->orderBy('id_contract','asc')->get();
+                    $payment[$key]->allDesc->comission  =   Payment::where('payment_date','>=',Carbon::now()->subMonths($this->monthsPrev))
+                                                            ->where('id_user',$value->id)
+                                                            ->orderBy('payment_date','asc')
+                                                            ->orderBy('id_contract','asc')
+                                                            ->get();
                     
                     foreach ($payment[$key]->allDesc->comission as $keyData => $valueData) {
                         $payment[$key]->allDesc->comission[$keyData]->allDesc               =   (object)[];

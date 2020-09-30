@@ -14,9 +14,9 @@
             <div class="accordion" id="listPayments">
                 @forelse ($payments as $item)
                 <div class="card">
-                    <div class="card-header" id="payment-{{ $item->id_payment }}">
+                    <div class="card-header" id="payment-{{ $item->id }}">
                         <div class="mb-0">
-                            <span class="text-left" data-toggle="collapse" data-target="#collapsePayment-{{ $item->id_payment }}" aria-expanded="true" aria-controls="collapsePayment-{{ $item->id_payment }}">
+                            <span class="text-left" data-toggle="collapse" data-target="#collapsePayment-{{ $item->id }}" aria-expanded="true" aria-controls="collapsePayment-{{ $item->id }}">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-6">
                                         <span class="text-decoration-none text-primary">{{ $item->name }}</span><br/>
@@ -33,7 +33,7 @@
                             <small>Click to detail</small>
                         </div>
                     </div>
-                    <div id="collapsePayment-{{ $item->id_payment }}" class="collapse" aria-labelledby="payment-{{ $item->id_payment }}" data-parent="#listPayments">
+                    <div id="collapsePayment-{{ $item->id }}" class="collapse" aria-labelledby="payment-{{ $item->id }}" data-parent="#listPayments">
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-sm table-hover">
