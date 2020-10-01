@@ -51,19 +51,19 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="name" class="text-primary">Name</label>
-                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="name" name="name" aria-describedby="name" placeholder="Enter the user name" value="{{ $user->name }}" required>
+                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="name" name="name" aria-describedby="name" placeholder="Enter the user name" value="{{ $user->name }}" required>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="second_name" class="text-primary">Middle name</label>
-                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="second_name" name="second_name" aria-describedby="name" value="{{ $user->second_name }}" placeholder="Enter the second name">
+                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="second_name" name="second_name" aria-describedby="name" value="{{ $user->second_name }}" placeholder="Enter the second name">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="last_name" class="text-primary">Last name</label>
-                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="last_name" name="last_name" aria-describedby="name" value="{{ $user->last_name }}" placeholder="Enter the last name" required>
+                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="last_name" name="last_name" aria-describedby="name" value="{{ $user->last_name }}" placeholder="Enter the last name" required>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-12">
@@ -119,7 +119,7 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="percent" class="text-primary">Percentage indication</label>
-                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="{{ number_format($user->percent,2,'.','') }}" disabled>
+                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="{{ number_format($user->percent,2,'.',',') }}" disabled>
                             </div>
                         </div>
                     </div>
@@ -139,14 +139,14 @@
                                 <div class="col-12 col-sm-12 col-md-6">
                                     <div class="form-group">
                                         <label for="name" class="text-primary">Sale %</label>
-                                        <input type="number" min="0" max="100" step="0.01"  class="form-control form-control-sm" id="perc_sale" name="perc_sale" aria-describedby="Sale" placeholder="For sale" value="{{ number_format($item->percentual,2,'.','') }}" disabled>
+                                        <input type="number" min="0" max="100" step="0.01"  class="form-control form-control-sm" id="perc_sale" name="perc_sale" aria-describedby="Sale" placeholder="For sale" value="{{ number_format($item->percentual,2,'.',',') }}" disabled>
                                     </div>
                                 </div>
                             @else
                             <div class="col-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="text-primary">Rent %</label>
-                                    <input type="number" min="0" max="100" step="0.01" class="form-control form-control-sm" id="perc_rent" name="perc_rent" aria-describedby="Rent" placeholder="For rent" value="{{ number_format($item->percentual,2,'.','') }}" disabled>
+                                    <input type="number" min="0" max="100" step="0.01" class="form-control form-control-sm" id="perc_rent" name="perc_rent" aria-describedby="Rent" placeholder="For rent" value="{{ number_format($item->percentual,2,'.',',') }}" disabled>
                                 </div>
                             </div>
                             @endif

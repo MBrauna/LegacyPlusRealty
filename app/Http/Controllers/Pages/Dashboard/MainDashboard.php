@@ -26,13 +26,13 @@
             
             foreach ($dataContract as $key => $value) {
                 $dataContract[$key]->desc_date  =   Carbon::parse($value->month_date)->format('m/Y');
-                $dataContract[$key]->value      =   'US$ '.number_format($value->sum_comission,2,',','.');
+                $dataContract[$key]->value      =   'US$ '.number_format($value->sum_comission,2,'.',',');
             } // foreach ($dataContract as $key => $value) { ... }
 
             $sumMonth       =   Payment::where('payment_date','>=',Carbon::now()->subMonths(1))->where('id_user',Auth::user()->id)->where('payment_date','<=',Carbon::now())->sum('payment.comission');
             $sumYear        =   Payment::where('payment_date','>=',Carbon::now()->subMonths(1))->where('id_user',Auth::user()->id)->where('payment_date','<=',Carbon::now())->sum('payment.comission');
-            $sumMonth       =   'US$ '.number_format($sumMonth,2,',','.');
-            $sumYear        =   'US$ '.number_format($sumYear,2,',','.');
+            $sumMonth       =   'US$ '.number_format($sumMonth,2,'.',',');
+            $sumYear        =   'US$ '.number_format($sumYear,2,'.',',');
 
             $monthMin       =   Carbon::now()->subMonths(1)->format('m/d/Y');
             $monthMax       =   Carbon::now()->format('m/d/Y');

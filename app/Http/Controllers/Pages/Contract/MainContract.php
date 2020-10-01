@@ -28,7 +28,7 @@
                     $contracts[$key]->allDesc->end_contract     =   Carbon::parse($value->end_contract)->format('m/d/Y');
                     $contracts[$key]->allDesc->payment_date     =   Carbon::parse($value->payment_date)->format('m/d/Y');
                     $contracts[$key]->allDesc->payment_exec     =   $value->payment_exec ? 'Paid' : 'Unpaid';
-                    $contracts[$key]->allDesc->value            =   'US$ '.number_format($value->value, 2, ',', ' ');
+                    $contracts[$key]->allDesc->value            =   'US$ '.number_format($value->value, 2, '.', ',');
                     $contracts[$key]->allDesc->id_user_seller   =   User::find($value->id_user_seller);
 
 
@@ -71,7 +71,7 @@
                 $contract->allDesc->end_contract    =   Carbon::parse($contract->end_contract)->format('m/d/Y');
                 $contract->allDesc->payment_date    =   Carbon::parse($contract->payment_date)->format('m/d/Y');
                 $contract->allDesc->payment_exec    =   $contract->payment_exec ? 'Paid' : 'Unpaid';
-                $contract->allDesc->value           =   'US$ '.number_format($contract->value, 2, ',', ' ');
+                $contract->allDesc->value           =   'US$ '.number_format($contract->value, 2, '.', ',');
                 $contract->allDesc->id_user_seller  =   User::find($contract->id_user_seller);
 
                 switch ($contract->type) {
@@ -94,7 +94,7 @@
                     $archive[$key]->allDesc =   (object)[];
                     $archive[$key]->allDesc->created_at         =   Carbon::parse($value->created_at)->format('m/d/Y');
                     $archive[$key]->allDesc->id_user_created    =   User::find($value->id_user_created);
-                    $archive[$key]->allDesc->length             =   number_format($value->length,0,',',' ').' KB';
+                    $archive[$key]->allDesc->length             =   number_format($value->length,0,'.',',').' KB';
                 } // foreach ($archive as $key => $value) { ... }
 
                 return view('pages.contract.id',[

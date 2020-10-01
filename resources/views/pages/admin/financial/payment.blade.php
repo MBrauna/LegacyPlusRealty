@@ -70,7 +70,7 @@
                                     <tfoot>
                                         <tr>
                                             <th colspan="4" class="text-primary text-right"><small>Total:</small></th>
-                                            <th class="font-weight-bold text-right"><small>US$ {{ number_format($item->comission,2,',','.') }}</small></th>
+                                            <th class="font-weight-bold text-right"><small>US$ {{ number_format($item->comission,2,'.',',') }}</small></th>
                                             <th colspan="2" class="text-primary"></th>
                                         </tr>
                                     </tfoot>

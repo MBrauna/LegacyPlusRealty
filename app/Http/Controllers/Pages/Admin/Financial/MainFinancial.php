@@ -37,8 +37,8 @@
 
                 foreach($payment as $key => $value) {
                     $payment[$key]->allDesc             =   (object)[];
-                    $payment[$key]->allDesc->percent    =   number_format($value->percent,2,',','.').'%';
-                    $payment[$key]->allDesc->value      =   'US$ '.number_format($value->comission,2,',','.');
+                    $payment[$key]->allDesc->percent    =   number_format($value->percent,2,'.',',').'%';
+                    $payment[$key]->allDesc->value      =   'US$ '.number_format($value->comission,2,'.',',');
                     $payment[$key]->allDesc->min_date   =   Carbon::parse($value->min_date)->format('m/d/Y');
                     $payment[$key]->allDesc->max_date   =   Carbon::parse($value->max_date)->format('m/d/Y');
                     $payment[$key]->allDesc->comission  =   Payment::where('payment_date','>=',Carbon::now()->subMonths($this->monthsPrev))
@@ -50,9 +50,9 @@
                     foreach ($payment[$key]->allDesc->comission as $keyData => $valueData) {
                         $payment[$key]->allDesc->comission[$keyData]->allDesc               =   (object)[];
                         $payment[$key]->allDesc->comission[$keyData]->allDesc->id_user      =   User::find($valueData->id_user);
-                        $payment[$key]->allDesc->comission[$keyData]->allDesc->value        =   'US$ '.number_format($valueData->value,2,',','.');
-                        $payment[$key]->allDesc->comission[$keyData]->allDesc->comission    =   'US$ '.number_format($valueData->comission,2,',','.');
-                        $payment[$key]->allDesc->comission[$keyData]->allDesc->percent      =   number_format($valueData->percent,2,',','.').' %';
+                        $payment[$key]->allDesc->comission[$keyData]->allDesc->value        =   'US$ '.number_format($valueData->value,2,'.',',');
+                        $payment[$key]->allDesc->comission[$keyData]->allDesc->comission    =   'US$ '.number_format($valueData->comission,2,'.',',');
+                        $payment[$key]->allDesc->comission[$keyData]->allDesc->percent      =   number_format($valueData->percent,2,'.',',').' %';
                         $payment[$key]->allDesc->comission[$keyData]->allDesc->payment_date =   Carbon::parse($valueData->payment_date)->format('m/d/Y');
                     } // foreach ($payment[$key]->allDesc->comission as $keyData => $valueData) { ... }
                 } // foreach($payment as $key => $value) { ... }

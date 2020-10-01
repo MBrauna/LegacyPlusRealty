@@ -70,19 +70,19 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="name" class="text-primary">First name</label>
-                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="name" name="name" aria-describedby="name" placeholder="Enter the user name" required>
+                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="name" name="name" aria-describedby="name" placeholder="Enter the user name" required>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="second_name" class="text-primary">Middle name</label>
-                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="second_name" name="second_name" aria-describedby="name" placeholder="Enter the second name">
+                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="second_name" name="second_name" aria-describedby="name" placeholder="Enter the second name">
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="last_name" class="text-primary">Last name</label>
-                                <input type="text" minlength="5" maxlength="250" class="form-control form-control-sm" id="last_name" name="last_name" aria-describedby="name" placeholder="Enter the last name" required>
+                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="last_name" name="last_name" aria-describedby="name" placeholder="Enter the last name" required>
                             </div>
                         </div>
 
