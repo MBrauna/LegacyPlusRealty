@@ -119,7 +119,7 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="percent" class="text-primary">Percentage indication</label>
-                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="{{ number_format($user->percent,2,'.',',') }}" disabled>
+                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right percent" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="{{ number_format($user->percent,2,'.',',') }}" disabled>
                             </div>
                         </div>
                     </div>
@@ -338,6 +338,7 @@
 @endsection
 
 @section('script')
+<script src="/legacy/vendor/jquery-mask/dist/jquery.mask.min.js"></script>
 <script type="text/javascript">
     function addAddress(data) {
         var address         =   document.getElementById('addressAdd').value;
@@ -350,6 +351,10 @@
             alert('Fill out the form correctly!');
             return;
         } // if(address == '' || city == '' || state == '' || country == '' || postal_code == null) {
+
+        if(postal_code > 999999999999) {
+            alert('invalid zip code!');
+        } // if(phone > 999999999999) { ... }
 
         // Clear data form
         document.getElementById('addressAdd').value     =   null;
@@ -391,6 +396,10 @@
             return;
         } // if(reference == '' || ddi == '' || ddd == '' || phone == '') { ... }
 
+        if(phone > 999999999999) {
+            alert('invalid phone!');
+        } // if(phone > 999999999999) { ... }
+
         // Clear data form
         document.getElementById('referenceAdd').value   =   null;
         //document.getElementById('ddiAdd').value         =   null;
@@ -415,5 +424,11 @@
         var newCell         =   newRow.insertCell(4);
         newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
     } // function addPhone(data) { ... }
+
+    $(document).ready(function(){
+        $('.percent').mask('000.00', {
+            reverse: true,
+        });
+    });
 </script>
 @endsection

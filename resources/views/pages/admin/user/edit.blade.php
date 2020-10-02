@@ -125,7 +125,7 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="percent" class="text-primary">Percentage indication</label>
-                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="{{ number_format($user->percent,2,'.',',') }}" required>
+                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right percent" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="{{ number_format($user->percent,2,'.',',') }}" required>
                             </div>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="percent_sale" class="text-primary">Split to agent (%)</label>
-                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right" id="percent_sale" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
+                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right percent" id="percent_sale" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
                                     </div>
                                 </div>
         
@@ -212,7 +212,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="percent_rent" class="text-primary">Split to agent (%)</label>
-                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right" id="percent_rent" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
+                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right percent" id="percent_rent" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
                                     </div>
                                 </div>
         
@@ -439,6 +439,7 @@
 @endsection
 
 @section('script')
+    <script src="/legacy/vendor/jquery-mask/dist/jquery.mask.min.js"></script>
     <script type="text/javascript">
         function addAddress(data) {
             var address         =   document.getElementById('addressAdd').value;
@@ -550,6 +551,14 @@
                 return;
             } // if(saleMinRent == '' || saleMaxRent == '' || percRent == '') {
 
+            if(minRent < 0 ){
+                minRent = 0;
+            } // if(minRent < 0 ){ ... }
+
+            if(maxRent <=0) {
+                maxRent = 99999999999;
+            }
+
             // Clear data form
             document.getElementById('percent_rent').value   =   '0.00';
             document.getElementById('min_rent').value       =   maxRent;
@@ -582,6 +591,14 @@
                 return;
             } // if(saleMinRent == '' || saleMaxRent == '' || percRent == '') {
 
+            if(minSale < 0 ){
+                minSale = 0;
+            } // if(minRent < 0 ){ ... }
+
+            if(maxSale <=0) {
+                maxSale = 99999999999;
+            }
+
             // Clear data form
             document.getElementById('percent_sale').value   =   '0.00';
             document.getElementById('min_sale').value       =   maxSale;
@@ -607,5 +624,11 @@
             var row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
         } // function deleteNode(btn) { ... }
+
+        $(document).ready(function(){
+            $('.percent').mask('000.00', {
+                reverse: true,
+            });
+        });
     </script>
 @endsection

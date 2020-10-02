@@ -120,7 +120,12 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="percent" class="text-primary">Percentage indication</label>
-                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="0.00" required>
+                                <div class="input-group">
+                                    <input type="number" step="0.01" min="0" max="100" class="form-control rounded-left text-right percent" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="0.00" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text text-white bg-primary">%</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -154,7 +159,12 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="percent_sale" class="text-primary">Split to agent (%)</label>
-                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right" id="percent_sale" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
+                                        <div class="input-group">
+                                            <input type="number" step="0.01" min="0" max="100" class="form-control text-right percent" id="percent_sale" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-white bg-primary">%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
         
@@ -197,10 +207,16 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="percent_rent" class="text-primary">Split to agent (%)</label>
-                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right" id="percent_rent" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
+                                        <label for="percent_sale" class="text-primary">Split to agent (%)</label>
+                                        <div class="input-group">
+                                            <input type="number" step="0.01" min="0" max="100" class="form-control text-right percent" id="percent_rent" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text text-white bg-primary">%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                
         
                                 <button type="button" class="btn btn-sm btn-block btn-primary ml-2 mr-2" onclick="addRent();">Add commission for rent</button>
                                 <div class="col-12 text-center text-primary"><small>Only the content below will be taken to the register</small></div>
@@ -394,6 +410,7 @@
 @endsection
 
 @section('script')
+    <script src="/legacy/vendor/jquery-mask/dist/jquery.mask.min.js"></script>
     <script type="text/javascript">
         function addAddress(data) {
             var address         =   document.getElementById('addressAdd').value;
@@ -406,6 +423,10 @@
                 alert('Fill out the form correctly!');
                 return;
             } // if(address == '' || city == '' || state == '' || country == '' || postal_code == null) {
+
+            if(postal_code > 999999999999) {
+                alert('invalid zip code!');
+            } // if(phone > 999999999999) { ... }
 
             // Clear data form
             document.getElementById('addressAdd').value     =   null;
@@ -446,6 +467,10 @@
                 alert('Fill out the form correctly!');
                 return;
             } // if(reference == '' || ddi == '' || ddd == '' || phone == '') { ... }
+
+            if(phone > 999999999999) {
+                alert('invalid phone!');
+            } // if(phone > 999999999999) { ... }
 
             // Clear data form
             document.getElementById('referenceAdd').value   =   null;
@@ -505,6 +530,14 @@
                 return;
             } // if(saleMinRent == '' || saleMaxRent == '' || percRent == '') {
 
+            if(minRent < 0 ){
+                minRent = 0;
+            } // if(minRent < 0 ){ ... }
+
+            if(maxRent <=0) {
+                maxRent = 99999999999;
+            }
+
             // Clear data form
             document.getElementById('percent_rent').value   =   '0.00';
             document.getElementById('min_rent').value       =   maxRent;
@@ -514,10 +547,10 @@
             var newRow          =   tableRef.insertRow();
 
             var newCell         =   newRow.insertCell(0);
-            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="min_rent[]" value="' + minRent + '">';
+            newCell.innerHTML   =   '<input type="number" min="0" max="999999999999" step="0.01" readonly class="form-control-plaintext" name="min_rent[]" value="' + minRent + '">';
 
             var newCell         =   newRow.insertCell(1);
-            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="max_rent[]" value="' + maxRent + '">';
+            newCell.innerHTML   =   '<input type="number" min="0" max="999999999999" step="0.01" readonly class="form-control-plaintext" name="max_rent[]" value="' + maxRent + '">';
 
             var newCell         =   newRow.insertCell(2);
             newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_rent[]" value="' + percRent + '">';
@@ -537,6 +570,14 @@
                 return;
             } // if(saleMinRent == '' || saleMaxRent == '' || percRent == '') {
 
+            if(minSale < 0 ){
+                minSale = 0;
+            } // if(minRent < 0 ){ ... }
+
+            if(maxSale <=0) {
+                maxSale = 99999999999;
+            }
+
             // Clear data form
             document.getElementById('percent_sale').value   =   '0.00';
             document.getElementById('min_sale').value       =   maxSale;
@@ -546,10 +587,10 @@
             var newRow          =   tableRef.insertRow();
 
             var newCell         =   newRow.insertCell(0);
-            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="min_sale[]" value="' + minSale + '">';
+            newCell.innerHTML   =   '<input type="number" min="0" max="999999999999" step="0.01" readonly class="form-control-plaintext" name="min_sale[]" value="' + minSale + '">';
 
             var newCell         =   newRow.insertCell(1);
-            newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="max_sale[]" value="' + maxSale + '">';
+            newCell.innerHTML   =   '<input type="number" min="0" max="99999999999" step="0.01" readonly class="form-control-plaintext" name="max_sale[]" value="' + maxSale + '">';
 
             var newCell         =   newRow.insertCell(2);
             newCell.innerHTML   =   '<input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_sale[]" value="' + percSale + '">';
@@ -565,6 +606,12 @@
             var row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
         } // function deleteNode(btn) { ... }
+
+        $(document).ready(function(){
+            $('.percent').mask('000.00', {
+                reverse: true,
+            });
+        });
     </script>
 
 @endsection
