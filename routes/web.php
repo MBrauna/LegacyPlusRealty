@@ -70,6 +70,8 @@
 
                 // [admin.financial.list]
                 Route::any('/list','MainFinancial@list')->name('list');
+                // [admin.financial.additional]
+                Route::post('/additional','MainFinancial@additional')->name('additional');
             }); // Route::namespace('Financial')->prefix('financial')->name('financial.')->group(function(){ ... });
 
             // [admin.utilities]

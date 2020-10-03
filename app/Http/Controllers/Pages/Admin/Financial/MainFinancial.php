@@ -24,14 +24,18 @@
                                 ->select(
                                     'users.id',
                                     'users.name',
+                                    'users.second_name',
+                                    'users.last_name',
                                     'users.percent',
                                     DB::raw('count(1) as count_payment'),
-                                    DB::raw('sum(payment.comission) as comission'),
+                                    DB::raw('(sum(payment.comission) + sum(payment.additional)) as comission'),
                                     DB::raw('max(payment.payment_date) as min_date'),
                                     DB::raw('min(payment.payment_date) as max_date'),
                                 )
                                 ->groupBy('users.id')
                                 ->groupBy('users.name')
+                                ->groupBy('users.second_name')
+                                ->groupBy('users.last_name')
                                 ->groupBy('users.percent')
                                 ->get();
 
@@ -53,6 +57,7 @@
                         $payment[$key]->allDesc->comission[$keyData]->allDesc->value        =   'US$ '.number_format($valueData->value,2,'.',',');
                         $payment[$key]->allDesc->comission[$keyData]->allDesc->comission    =   'US$ '.number_format($valueData->comission,2,'.',',');
                         $payment[$key]->allDesc->comission[$keyData]->allDesc->percent      =   number_format($valueData->percent,2,'.',',').' %';
+                        $payment[$key]->allDesc->comission[$keyData]->allDesc->additional   =   number_format($valueData->additional,2,'.','');
                         $payment[$key]->allDesc->comission[$keyData]->allDesc->payment_date =   Carbon::parse($valueData->payment_date)->format('m/d/Y');
                     } // foreach ($payment[$key]->allDesc->comission as $keyData => $valueData) { ... }
                 } // foreach($payment as $key => $value) { ... }
@@ -65,4 +70,22 @@
                 return redirect()->route('dashboard.home');
             } // catch(Exception $error) { ... }
         } // public function list(Request $request) { ... }
+
+
+        public function additional(Request $request) {
+            try {
+                if(!isset($request->id_payment) || is_null($request->id_payment)) return redirect()->route('admin.financial.list');
+                $payment    =   Payment::find($request->id_payment);
+
+                Payment::where('id_payment',$request->id_payment)
+                ->update([
+                    'additional'    =>  doubleval($request->additional),
+                ]);
+
+                return redirect()->route('admin.financial.list');
+            } // try { ... }
+            catch(Exception $error) {
+                return redirect()->route('admin.financial.list');
+            } // catch(Exception $error) { ... }
+        } // public function additional(Request $request) { ... }
     }
