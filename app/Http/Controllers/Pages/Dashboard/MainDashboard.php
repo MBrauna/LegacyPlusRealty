@@ -19,7 +19,7 @@
                                 ->groupByRaw("date_trunc('month', payment.payment_date)")
                                 ->select(
                                     DB::raw('count(payment.id_payment) as count_comission'),
-                                    DB::raw('sum(payment.comission) as sum_comission'),
+                                    DB::raw('(sum(payment.comission) + sum(payment.additional)) as sum_comission'),
                                     DB::raw("date_trunc('month', payment.payment_date) as month_date"),
                                 )
                                 ->get();
@@ -29,8 +29,8 @@
                 $dataContract[$key]->value      =   'US$ '.number_format($value->sum_comission,2,'.',',');
             } // foreach ($dataContract as $key => $value) { ... }
 
-            $sumMonth       =   Payment::where('payment_date','>=',Carbon::now()->subMonths(1))->where('id_user',Auth::user()->id)->where('payment_date','<=',Carbon::now())->sum('payment.comission');
-            $sumYear        =   Payment::where('payment_date','>=',Carbon::now()->subMonths(1))->where('id_user',Auth::user()->id)->where('payment_date','<=',Carbon::now())->sum('payment.comission');
+            $sumMonth       =   Payment::where('payment_date','>=',Carbon::now()->subMonths(1))->where('id_user',Auth::user()->id)->where('payment_date','<=',Carbon::now())->selectRaw('(sum(payment.comission) + sum(payment.additional)) as comission');
+            $sumYear        =   Payment::where('payment_date','>=',Carbon::now()->subMonths(1))->where('id_user',Auth::user()->id)->where('payment_date','<=',Carbon::now())->selectRaw('(sum(payment.comission) + sum(payment.additional)) as comission');
             $sumMonth       =   'US$ '.number_format($sumMonth,2,'.',',');
             $sumYear        =   'US$ '.number_format($sumYear,2,'.',',');
 
