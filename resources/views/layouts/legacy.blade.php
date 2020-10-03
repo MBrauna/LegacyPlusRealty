@@ -130,22 +130,10 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-cogs"></i>
-                        <span>Utilities</span>
+                    <a class="nav-link" href="{{ route('admin.utilities.link') }}">
+                        <i class="fas fa-link"></i>
+                        <span>Quick access</span>
                     </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.utilities.file') }}">
-                                <i class="fas fa-file-upload"></i>
-                                <span>File upload</span>
-                            </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.utilities.link') }}">
-                                <i class="fas fa-link"></i>
-                                <span>Quick access</span>
-                            </a>
-                        </div>
-                    </div>
                 </li>
                 @endif
 

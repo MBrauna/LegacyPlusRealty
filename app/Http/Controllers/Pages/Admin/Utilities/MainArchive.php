@@ -40,7 +40,7 @@
                 } // foreach ($listUsers as $key => $value) { ... }
 
                 foreach ($listGroups as $key => $value) {
-                    $listGroups[$key]->group  =   UsersGroup::find($value->id_group);
+                    $listGroups[$key]->group  =   Group::find($value->id_group);
                 } // foreach ($listUsers as $key => $value) { ... }
 
                 return view('pages.admin.utilities.archive',[
