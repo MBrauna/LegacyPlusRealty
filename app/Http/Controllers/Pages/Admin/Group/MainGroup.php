@@ -7,6 +7,7 @@
 
     use App\Models\Group;
     use App\Models\GroupUser;
+    use App\Models\Archive;
     use App\User;
 
     class MainGroup extends Controller {
@@ -161,4 +162,28 @@
                 return redirect()->route('admin.group.list');
             } // catch(Exception $error) { ... }
         } // public function removeGroup(Request $request) { ... }
+
+        public function archive(Request $request) {
+            try {
+                if(!isset($request->idGroup) || is_null($request->idGroup)) {
+                    return redirect()->route('admin.group.list');
+                } // if(!isset($request->idGroup) || is_null($request->idGroup)) { ... }
+
+                $idGroup    =   Group::find($request->idGroup);
+
+                if(is_null($idGroup)) return redirect()->route('admin.group.list');
+
+                $archive    =   Archive::where('id_group',$idGroup->id_group)
+                                ->orderBy('name_file','asc')
+                                ->get();
+
+                return view('pages.admin.group.archive',[
+                    'idGroup'   =>  $idGroup,
+                    'archive'   =>  $archive,
+                ]);
+            } // try { ... }
+            catch(Exception $error) {
+                return redirect()->route('admin.group.list');
+            } // catch(Exception $error) { ... }
+        }
     } // class MainGroup extends Controller { ... }

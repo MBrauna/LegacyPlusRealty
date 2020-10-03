@@ -105,6 +105,8 @@
                 Route::post('/addGroup','MainGroup@addGroupUser')->name('addGroup');
                 // [admin.group.removeGroup]
                 Route::post('/removeGroup','MainGroup@removeGroupUser')->name('removeGroup');
+                // [admin.group.archive]
+                Route::any('/archive','MainGroup@archive')->name('archive');
             }); // Route::namespace('Group')->name('group.')->prefix('group')->group(function(){ ... });
 
             Route::namespace('User')->name('user.')->prefix('user')->group(function(){

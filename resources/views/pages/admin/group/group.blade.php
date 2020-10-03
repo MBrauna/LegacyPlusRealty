@@ -53,14 +53,21 @@
                             <td class="text-primary"><small>{{ $group->created_at }}</small></td>
                             <td>
                                 <div class="row d-flex justify-content-center">
-                                    <form class="col-12 col-sm-6 col-md-6" method="POST" action="{{ route('admin.group.user') }}">
+                                    <form class="col-12 col-sm-6 col-md-6 col-lg-4" method="POST" action="{{ route('admin.group.archive') }}">
+                                        @csrf
+                                        <input type="hidden" name="idGroup" value="{{ $group->id_group }}">
+                                        <button type="submit" class="btn btn-block btn-outline-primary btn-sm">
+                                            <i class="fas fa-file-upload"></i>
+                                        </button>
+                                    </form>
+                                    <form class="col-12 col-sm-6 col-md-6 col-lg-4" method="POST" action="{{ route('admin.group.user') }}">
                                         @csrf
                                         <input type="hidden" name="idGroup" value="{{ $group->id_group }}">
                                         <button type="submit" class="btn btn-block btn-outline-primary btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </form>
-                                    <div class="col-12 col-sm-6 col-md-6">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                         <button type="button" class="btn btn-outline-primary btn-sm btn-block" data-toggle="modal" data-target="#createGroup_{{ $group->id_group }}">
                                             <i class="fas fa-pencil-alt"></i>
                                         </button>

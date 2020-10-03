@@ -157,7 +157,6 @@
             dictDefaultMessage: "Drop files here to upload on Legacy Plus Realty",
             totaluploadprogress: function(progress){
                 if(progress == 100) {
-                    sleep(1000);
                     location.reload();
                 }
             }

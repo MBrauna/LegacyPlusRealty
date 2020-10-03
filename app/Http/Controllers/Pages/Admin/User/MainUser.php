@@ -14,6 +14,7 @@
     use App\Models\UserAddress;
     use App\Models\UserPhone;
     use App\Models\UserCompensation;
+    use App\Models\Archive;
 
     class MainUser extends Controller {
         public function list(Request $request) {
@@ -69,6 +70,7 @@
             $userAddress=   UserAddress::where('id_user',$user->id)->orderBy('id_user_address','asc')->get();
             $userPhone  =   UserPhone::where('id_user',$user->id)->orderBy('id_user_phone','asc')->get();
             $userComp   =   UserCompensation::where('id_user',$user->id)->orderBy('min_value','asc')->orderBy('max_value','asc')->get();
+            $archive    =   Archive::where('id_user',$user->id)->orderBy('name_file')->get();
 
             return view('pages.admin.user.edit',[
                 'users'     =>  $users,
@@ -78,6 +80,7 @@
                 'address'   =>  $userAddress,
                 'phone'     =>  $userPhone,
                 'usercomp'  =>  $userComp,
+                'archive'   =>  $archive,
             ]);
         }
 

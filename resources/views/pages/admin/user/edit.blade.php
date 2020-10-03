@@ -430,6 +430,56 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="mt-3"></div>
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-house-user"></i>
+                    <small>Files</small>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <form method="POST" action="{{ route('archive.import') }}" enctype="multipart/form-data" class="dropzone border-primary was-validated" id="dropzone">
+                                @csrf
+                                <input type="hidden" name="legacy_type" value="1">
+                                <div class="fallback">
+                                    <input name="fileToUpload[]" type="file" multiple />
+                                </div>
+                            </form>
+                        </div>
+                        <ul class="list-group col-12">
+                            @if(count($archive) <= 0)
+                                <li class="list-group-item text-center">
+                                    No files
+                                </li>
+                            @else
+                                @foreach ($archive as $item)
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-10 col-sm-10 col-md-10 col-lg-10">
+                                            <a href="{{ Storage::url($item->repository.'/'.$item->name_server) }}">
+                                                <i class="fas fa-file-invoice"></i> - {{ $item->name_file }}
+                                            </a>
+                                        </div>
+                                        <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+                                            <button class="btn btn-sm btn-primary btn-block">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                @endforeach
+                            @endif
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
         <div class="card-footer bg-primary">
             <button class="btn btn-block btn-sm btn-outline-light" type="submit">Update {{ $user->name }}</button>
@@ -438,7 +488,25 @@
 
 @endsection
 
+@section('layout')
+    <link href="/legacy/vendor/dropzone/dist/dropzone.css" rel="stylesheet">
+@endsection
+
 @section('script')
+    <script src="/legacy/vendor/dropzone/dist/dropzone.js"></script>
+    <script type="text/javascript">
+
+        Dropzone.options.dropzone = {
+            maxFilesize: 12,
+            parallelUploads:10,
+            dictDefaultMessage: "Drop files here to upload on Legacy Plus Realty",
+            totaluploadprogress: function(progress){
+                if(progress == 100) {
+                    location.reload();
+                }
+            }
+        };
+    </script>
     <script src="/legacy/vendor/jquery-mask/dist/jquery.mask.min.js"></script>
     <script type="text/javascript">
         function addAddress(data) {
@@ -631,4 +699,5 @@
             });
         });
     </script>
+
 @endsection
