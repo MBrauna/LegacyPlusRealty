@@ -18,52 +18,53 @@
 
         public function list(Request $request) {
             try {
-                $payment    =   User::join('payment','payment.id_user','users.id')
-                                ->where('payment.payment_date','>=',Carbon::now()->subMonths($this->monthsPrev))
-                                ->orderBy('users.name','desc')
-                                ->select(
-                                    'users.id',
-                                    'users.name',
-                                    'users.second_name',
-                                    'users.last_name',
-                                    'users.percent',
-                                    DB::raw('count(1) as count_payment'),
-                                    DB::raw('(sum(payment.comission) + sum(payment.additional)) as comission'),
-                                    DB::raw('max(payment.payment_date) as min_date'),
-                                    DB::raw('min(payment.payment_date) as max_date'),
-                                )
-                                ->groupBy('users.id')
-                                ->groupBy('users.name')
-                                ->groupBy('users.second_name')
-                                ->groupBy('users.last_name')
-                                ->groupBy('users.percent')
-                                ->get();
+                $contractList   =   Contract::where('payment_date','>=',Carbon::now()->subMonths(1))
+                                    ->orderBy('payment_date','asc')
+                                    ->get();
 
-                foreach($payment as $key => $value) {
-                    $payment[$key]->allDesc             =   (object)[];
-                    $payment[$key]->allDesc->percent    =   number_format($value->percent,2,'.',',').'%';
-                    $payment[$key]->allDesc->value      =   'US$ '.number_format($value->comission,2,'.',',');
-                    $payment[$key]->allDesc->min_date   =   Carbon::parse($value->min_date)->format('m/d/Y');
-                    $payment[$key]->allDesc->max_date   =   Carbon::parse($value->max_date)->format('m/d/Y');
-                    $payment[$key]->allDesc->comission  =   Payment::where('payment_date','>=',Carbon::now()->subMonths($this->monthsPrev))
-                                                            ->where('id_user',$value->id)
-                                                            ->orderBy('payment_date','asc')
-                                                            ->orderBy('id_contract','asc')
-                                                            ->get();
-                    
-                    foreach ($payment[$key]->allDesc->comission as $keyData => $valueData) {
-                        $payment[$key]->allDesc->comission[$keyData]->allDesc               =   (object)[];
-                        $payment[$key]->allDesc->comission[$keyData]->allDesc->id_user      =   User::find($valueData->id_user);
-                        $payment[$key]->allDesc->comission[$keyData]->allDesc->value        =   'US$ '.number_format($valueData->value,2,'.',',');
-                        $payment[$key]->allDesc->comission[$keyData]->allDesc->comission    =   'US$ '.number_format($valueData->comission,2,'.',',');
-                        $payment[$key]->allDesc->comission[$keyData]->allDesc->percent      =   number_format($valueData->percent,2,'.',',').' %';
-                        $payment[$key]->allDesc->comission[$keyData]->allDesc->additional   =   number_format($valueData->additional,2,'.','');
-                        $payment[$key]->allDesc->comission[$keyData]->allDesc->payment_date =   Carbon::parse($valueData->payment_date)->format('m/d/Y');
+                foreach ($contractList as $key => $value) {
+                    $contractList[$key]->allDesc                    =   (object)[];
+                    $contractList[$key]->allDesc->start_contract    =   Carbon::parse($value->start_contract)->format('m/d/Y');
+                    $contractList[$key]->allDesc->end_contract      =   Carbon::parse($value->end_contract)->format('m/d/Y');
+                    $contractList[$key]->allDesc->payment_date      =   Carbon::parse($value->payment_date)->format('m/d/Y');
+                    $contractList[$key]->allDesc->payment_exec      =   $value->payment_exec ? 'Treated' : 'UnTreated';
+                    $contractList[$key]->allDesc->value             =   'US$ '.number_format($value->value, 2, '.', ',');
+                    $contractList[$key]->allDesc->id_user_seller    =   User::find($value->id_user_seller);
+                    $contractList[$key]->allDesc->split_value       =   'US$ 0.00';
+                    $contractList[$key]->allDesc->additional        =   'US$ 0.00';
+                    $contractList[$key]->allDesc->total             =   'US$ 0.00';
+
+                    $contractList[$key]->total                      =   0;
+                    $contractList[$key]->split_value                =   0;
+                    $contractList[$key]->additional                 =   0;
+
+                    $contractList[$key]->allPayments                =   Payment::where('id_contract',$value->id_contract)
+                                                                        ->orderBy('id_user','asc')
+                                                                        ->get();
+                    foreach ($contractList[$key]->allPayments as $keyData => $valueData) {
+                        $contractList[$key]->allPayments[$keyData]->allDesc                 =   (object)[];
+                        $contractList[$key]->allPayments[$keyData]->allDesc->id_user        =   User::find($valueData->id_user);
+                        $contractList[$key]->allPayments[$keyData]->allDesc->value          =   'US$ '.number_format($valueData->value,2,'.',',');
+                        $contractList[$key]->allPayments[$keyData]->allDesc->comission      =   'US$ '.number_format($valueData->comission,2,'.',',');
+                        $contractList[$key]->allPayments[$keyData]->allDesc->percent        =   number_format($valueData->percent,2,'.',',').' %';
+                        $contractList[$key]->allPayments[$keyData]->allDesc->additional     =   'US$ '.number_format($valueData->additional,2,'.','');
+                        $contractList[$key]->allPayments[$keyData]->allDesc->additionalVal  =   number_format($valueData->additional,2,'.','');
+                        $contractList[$key]->allPayments[$keyData]->allDesc->payment_date   =   Carbon::parse($valueData->payment_date)->format('m/d/Y');
+                        $contractList[$key]->allPayments[$keyData]->allDesc->total          =   'US$ '.number_format(round(($valueData->value + $valueData->additional),2),2,'.',',');
+
+                        $contractList[$key]->split_value                                    =   $contractList[$key]->split_value + $valueData->comission;
+                        $contractList[$key]->additional                                     =   $contractList[$key]->additional + $valueData->additional;
+                        $contractList[$key]->total                                          =   $contractList[$key]->total + round(($valueData->comission + $valueData->additional),2);
+                        $contractList[$key]->allDesc->split_value                           =   'US$ '.number_format($contractList[$key]->split_value,2,'.',',');
+                        $contractList[$key]->allDesc->additional                            =   'US$ '.number_format($contractList[$key]->additional,2,'.',',');
+                        $contractList[$key]->allDesc->total                                 =   'US$ '.number_format($contractList[$key]->total,2,'.',',');
                     } // foreach ($payment[$key]->allDesc->comission as $keyData => $valueData) { ... }
-                } // foreach($payment as $key => $value) { ... }
+
+                    $contractList[$key]->allDesc->avaiable          =   'US$ '.number_format(round($contractList[$key]->value - $contractList[$key]->total,2),2,'.',',');
+                } // foreach ($contractList as $key => $value) { ... }
 
                 return view('pages.admin.financial.payment',[
-                    'payments'  =>  $payment,
+                    'payments'  =>  $contractList,
                 ]);
             } // try { ... }
             catch(Exception $error) {
@@ -80,6 +81,24 @@
                 Payment::where('id_payment',$request->id_payment)
                 ->update([
                     'additional'    =>  doubleval($request->additional),
+                ]);
+
+                return redirect()->route('admin.financial.list');
+            } // try { ... }
+            catch(Exception $error) {
+                return redirect()->route('admin.financial.list');
+            } // catch(Exception $error) { ... }
+        } // public function additional(Request $request) { ... }
+
+
+        public function confirm(Request $request) {
+            try {
+                if(!isset($request->id_payment) || is_null($request->id_payment)) return redirect()->route('admin.financial.list');
+                $payment    =   Payment::find($request->id_payment);
+
+                Payment::where('id_payment',$request->id_payment)
+                ->update([
+                    'confirm_payment'    =>  true,
                 ]);
 
                 return redirect()->route('admin.financial.list');

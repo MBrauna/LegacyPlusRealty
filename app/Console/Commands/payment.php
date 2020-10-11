@@ -39,7 +39,12 @@ class payment extends Command
     public function handle()
     {
         $jobExec = new PaymentController;
-        $jobExec->paymentJob();
+        $returndata =   $jobExec->paymentJob();
+
+        if($returndata == 1) {
+            $this->info('erro');
+        }
+
         return 0;
     }
 }

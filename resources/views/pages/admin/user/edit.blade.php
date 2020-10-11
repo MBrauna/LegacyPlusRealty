@@ -503,6 +503,32 @@
                 return;
             } // if(address == '' || city == '' || state == '' || country == '' || postal_code == null) {
 
+            // Validate length for inputs
+            if(address.length < 0 || address.length > 250) {
+                alert('The content of the address field does not conform to valid parameters.');
+                return false;
+            } // if(city.length < 0 || city.length > 250) { ... }
+
+            if(city.length < 0 || city.length > 250) {
+                alert('The content of the city field does not conform to valid parameters.');
+                return false;
+            } // if(city.length < 0 || city.length > 250) { ... }
+
+            if(state.length < 0 || state.length > 250) {
+                alert('The content of the state field does not conform to valid parameters.');
+                return false;
+            } // if(city.length < 0 || city.length > 250) { ... }
+
+            if(country.length < 0 || country.length > 250) {
+                alert('The content of the country field does not conform to valid parameters.');
+                return false;
+            }
+
+            if(postal_code < 0 || postal_code > 999999999) {
+                alert('The content of the zip code field does not conform to valid parameters.');
+                return false;
+            }
+
             // Clear data form
             document.getElementById('addressAdd').value     =   null;
             document.getElementById('cityAdd').value        =   null;
@@ -542,6 +568,11 @@
                 alert('Fill out the form correctly!');
                 return;
             } // if(reference == '' || ddi == '' || ddd == '' || phone == '') { ... }
+
+            if(phone < 0 || phone > 99999999999999) {
+                alert('Invalid phone number!');
+                return false;
+            } // if(phone < 0 || phone > 99999999999999) { ... }
 
             // Clear data form
             document.getElementById('referenceAdd').value   =   null;
@@ -598,15 +629,22 @@
 
             if(minRent == '' || maxRent == '' || percRent == '') {
                 alert('Fill out the form correctly!');
-                return;
+                return false;
             } // if(saleMinRent == '' || saleMaxRent == '' || percRent == '') {
 
-            if(minRent < 0 ){
-                minRent = 0;
-            } // if(minRent < 0 ){ ... }
+            if(minRent < 0 || minRent > 999999999999) {
+                alert('Content must be between US$ 0 and US$ 999999999999');
+                return false;
+            }
 
-            if(maxRent <=0) {
-                maxRent = 99999999999;
+            if(maxRent < 0 || maxRent > 999999999999) {
+                alert('Content must be between US$ 0 and US$ 999999999999');
+                return false;
+            }
+
+            if(percRent < 0 || percRent > 100) {
+                alert('Content must be between 0% and 100%');
+                return false;
             }
 
             // Clear data form
@@ -641,12 +679,19 @@
                 return;
             } // if(saleMinRent == '' || saleMaxRent == '' || percRent == '') {
 
-            if(minSale < 0 ){
-                minSale = 0;
-            } // if(minRent < 0 ){ ... }
+            if(minSale < 0 || minSale > 999999999999) {
+                alert('Content must be between US$ 0 and US$ 999999999999');
+                return false;
+            }
 
-            if(maxSale <=0) {
-                maxSale = 99999999999;
+            if(maxSale < 0 || maxSale > 999999999999) {
+                alert('Content must be between US$ 0 and US$ 999999999999');
+                return false;
+            }
+
+            if(percSale < 0 || percSale > 100) {
+                alert('Content must be between 0% and 100%');
+                return false;
             }
 
             // Clear data form

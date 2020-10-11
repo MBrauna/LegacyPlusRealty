@@ -150,7 +150,7 @@
 
             } // try { ... }
             catch(Exception $error) {
-                return back();
+                return redirect()->route('admin.contract.list');
             } // catch(Exception $error) { ... }
         } // public function createPage(Request $request) { ... }
 

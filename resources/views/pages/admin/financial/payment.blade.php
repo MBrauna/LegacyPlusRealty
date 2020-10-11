@@ -13,88 +13,116 @@
         <div class="card-body">
             <div class="accordion" id="listPayments">
                 @forelse ($payments as $item)
-                <div class="card">
-                    <div class="card-header" id="payment-{{ $item->id }}">
-                        <div class="mb-0">
-                            <span class="text-left" data-toggle="collapse" data-target="#collapsePayment-{{ $item->id }}" aria-expanded="true" aria-controls="collapsePayment-{{ $item->id }}">
+                    <div class="card">
+                        <div class="card-header" id="payment-{{ $item->id }}">
+                            <div class="mb-0">
+                                <span class="text-left" data-toggle="collapse" data-target="#collapsePayment-{{ $item->id_contract }}" aria-expanded="true" aria-controls="collapsePayment-{{ $item->id_contract }}">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-6">
+                                            <span class="text-decoration-none text-primary"><a href="{{ route('contract.id',['id_contract' => $item->id_contract]) }}">{{ $item->description }}</a></span><br/>
+                                            <span><small>Between {{ $item->allDesc->start_contract }} and {{ $item->allDesc->end_contract }}</small></span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-6 text-right text-decoration-none">
+                                            <span class="text-primary">{{ $item->allDesc->value }}</span><br/>
+                                            <span><small>Contract value</small></span>
+                                        </div>
+                                        <div class="col-12 text-center text-primary">
+                                            <small>Click to detail</small>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                        <div id="collapsePayment-{{ $item->id_contract }}" class="collapse" aria-labelledby="payment-{{ $item->id_contract }}" data-parent="#listPayments">
+                            <div class="card-body">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-6">
-                                        <span class="text-decoration-none text-primary">{{ $item->name.' '.$item->second_name.' '.$item->last_name }}</span><br/>
-                                        <span><small>Between {{ $item->allDesc->min_date }} and {{ $item->allDesc->max_date }}</small></span>
+                                        <div class="form-group">
+                                            <label for="contractPrice">Contract purchase price</label>
+                                            <input type="text" class="form-control form-control-sm form-control-plaintext text-primary" id="exampleFormControlInput1" value="{{ $item->allDesc->value }}">
+                                        </div>
                                     </div>
-                                    <div class="col-12 col-sm-12 col-md-6 text-right text-decoration-none">
-                                        <span class="text-primary">{{ $item->allDesc->value }}</span><br/>
-                                        <span><small>{{ $item->count_payment }} payments</small></span>
+                                    <div class="col-12 col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="contractPrice">Avaible value</label>
+                                            <input type="text" class="form-control form-control-sm form-control-plaintext text-primary" id="exampleFormControlInput1" value="{{ $item->allDesc->avaiable }}">
+                                        </div>
                                     </div>
-                                    <div class="col-12 text-center text-primary">
-                                        <small>Click to detail</small>
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table">
+                                                <thead class="bg-primary text-center text-white">
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Apply % on</th>
+                                                        <th>% of $ amount</th>
+                                                        <th>Split $</th>
+                                                        <th>Additional $</th>
+                                                        <th>Total $</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($item->allPayments as $itemPayment)
+                                                        <tr>
+                                                            <td style="min-width: 20vw"><small>{{ isset($itemPayment->allDesc->id_user->name) ? $itemPayment->allDesc->id_user->name.' '.$itemPayment->allDesc->id_user->second_name.' '.$itemPayment->allDesc->id_user->last_name : 'Legacy Plus Realty' }}</small></td>
+                                                            <td class="text-right"><small>{{ $itemPayment->allDesc->value }}</small></td>
+                                                            <td class="text-right"><small>{{ $itemPayment->allDesc->percent }}</small></td>
+                                                            <td class="text-right"><small>{{ $itemPayment->allDesc->comission }}</small></td>
+                                                            @if($itemPayment->confirm_payment)
+                                                                <td class="text-right"><small>{{ $itemPayment->allDesc->additional }}</small></td>
+                                                            @else
+                                                                <td style="min-width: 15vw;" class="font-weight-bold text-right"><small>
+                                                                    <form method="POST" action="{{ route('admin.financial.additional') }}" class="was-validated">
+                                                                        @csrf
+                                                                        <input type="hidden" name="id_payment" value="{{ $itemPayment->id_payment }}">
+                
+                                                                        <div class="input-group mb-2">
+                                                                        <input type="number" step="0.01" min="-{{$itemPayment->value}}" max="{{$itemPayment->value}}" class="form-control form-control-sm text-right value-legacy" name="additional" placeholder="additional value US$" value="{{ is_null($itemPayment->allDesc->additionalVal) ? '0.00' : $itemPayment->allDesc->additionalVal }}">
+                                                                            <div class="input-group-prepend">
+                                                                                <button type="submit" class="btn btn-sm btn-block btn-primary">Apply</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </small></td>
+                                                            @endif
+                                                            <td class="text-right"><small>{{ $itemPayment->allDesc->total }}</small></td>
+                                                            @if($itemPayment->confirm_payment)
+                                                                <td><button type="button" class="btn btn-sm btn-block btn-success" disabled>Paid out</button></td>
+                                                            @else
+                                                                <td style="min-width: 10vw;">
+                                                                    <form method="POST" action="{{ route('admin.financial.confirm') }}">
+                                                                        @csrf
+                                                                        <input type="hidden" name="id_payment" value="{{ $itemPayment->id_payment }}">
+                                                                        <button type="submit" class="btn btn-sm btn-block btn-primary">Confirm payment</button>
+                                                                    </form>
+                                                                </td>
+                                                            @endif
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                                <tfoot class="bg-primary text-center text-white">
+                                                    <tr>
+                                                        <th colspan="3">Total:</th>
+                                                        <th>{{ $item->allDesc->split_value }}</th>
+                                                        <th>{{ $item->allDesc->additional }}</th>
+                                                        <th>{{ $item->allDesc->total }}</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </span>
-                        </div>
-                    </div>
-                    <div id="collapsePayment-{{ $item->id }}" class="collapse" aria-labelledby="payment-{{ $item->id }}" data-parent="#listPayments">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-sm table-hover">
-                                    <thead>
-                                        <tr>
-                                            <td class="text-right"><small>#ID</small></td>
-                                            <td><small>Contract</small></td>
-                                            <td><small>User</small></td>
-                                            <td class="text-right"><small>US$ contract value</small></td>
-                                            <td class="text-right"><small>US$ comission value</small></td>
-                                            <td class="text-right"><small>US$ manual value</small></td>
-                                            <td class="text-right"><small>Percentual</small></td>
-                                            <td class="text-center"><small>Payment date</small></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($item->allDesc->comission as $itemComission)
-                                            <tr class="text-primary">
-                                                <td class="text-right"><small><a href="{{ route('contract.id',['id_contract' => $itemComission->id_contract]) }}">{{ $itemComission->id_payment }}</a></small></td>
-                                                <td><small><a href="{{ route('contract.id',['id_contract' => $itemComission->id_contract]) }}">Contract #{{ $itemComission->id_contract }}</a></small></td>
-                                                <td><small>{{ $itemComission->allDesc->id_user->name ?? 'Legacy Plus Realty' }}</small></td>
-                                                <td class="text-right"><small>{{ $itemComission->allDesc->value }}</small></td>
-                                                <td class="font-weight-bold text-right"><small>{{ $itemComission->allDesc->comission }}</small></td>
-                                                <td style="min-width: 30vw;" class="font-weight-bold text-right"><small>
-                                                    <form method="POST" action="{{ route('admin.financial.additional') }}" class="was-validated">
-                                                        @csrf
-                                                        <input type="hidden" name="id_payment" value="{{ $itemComission->id_payment }}">
-
-                                                        <div class="input-group mb-2">
-                                                        <input type="number" step="0.01" min="-{{$itemComission->value}}" max="{{$itemComission->value}}" class="form-control form-control-sm text-right value-legacy" name="additional" placeholder="additional value US$" value="{{ is_null($itemComission->additional) ? '0.00' : $itemComission->allDesc->additional }}">
-                                                            <div class="input-group-prepend">
-                                                                <button type="submit" class="btn btn-sm btn-block btn-primary">Apply</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </small></td>
-                                                <td class="text-right"><small>{{ $itemComission->allDesc->percent }}</small></td>
-                                                <td><small>{{ $itemComission->allDesc->payment_date }}</small></td>
-                                            </tr>
-                                        @empty
-                                            <tr class="text-primary">
-                                                <td colspan="7">
-                                                    No payments
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="4" class="text-primary text-right"><small>Total:</small></th>
-                                            <th class="font-weight-bold text-right"><small>US$ {{ number_format($item->comission,2,'.',',') }}</small></th>
-                                            <th colspan="2" class="text-primary"></th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
                             </div>
                         </div>
                     </div>
-                </div>    
                 @empty
-                    
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="text-center text-primary">No contracts between {{ Carbon\Carbon::now()->subDays(30)->format('m/d/Y') }} and {{ Carbon\Carbon::now()->format('m/d/Y') }}</h6>
+                        </div>
+                    </div>
                 @endforelse
             </div>
         </div>

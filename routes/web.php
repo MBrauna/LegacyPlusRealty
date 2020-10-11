@@ -72,6 +72,8 @@
                 Route::any('/list','MainFinancial@list')->name('list');
                 // [admin.financial.additional]
                 Route::post('/additional','MainFinancial@additional')->name('additional');
+                // [admin.financial.confirm]
+                Route::post('/confirm','MainFinancial@confirm')->name('confirm');
             }); // Route::namespace('Financial')->prefix('financial')->name('financial.')->group(function(){ ... });
 
             // [admin.utilities]

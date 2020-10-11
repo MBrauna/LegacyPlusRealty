@@ -32,7 +32,7 @@ class OldData extends Migration {
             $table->text('reference');
             $table->integer('ddi')->nullable();
             $table->integer('ddd')->nullable();
-            $table->integer('phone');
+            $table->bigInteger('phone');
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
@@ -166,7 +166,7 @@ class OldData extends Migration {
             $table->integer('id_contract');
             $table->integer('ddi')->nullable();
             $table->integer('ddd')->nullable();
-            $table->integer('phone')->nullable();
+            $table->bigInteger('phone')->nullable();
             $table->timestamps();
 
             $table->foreign('id_contract')->references('id_contract')->on('contract')->onUpdate('cascade')->onDelete('cascade');
@@ -181,6 +181,7 @@ class OldData extends Migration {
             $table->increments('id_payment');
             $table->integer('id_contract');
             $table->integer('id_user')->nullable();
+            $table->boolean('confirm_payment')->default(false);
             $table->double('value',12,2)->default(0);
             $table->double('comission',8,2)->default(0);
             $table->double('percent',8,2)->default(0);

@@ -208,6 +208,31 @@
                 return false;
             } // if(address == '' || city == '' || state == '' || country == '' || postal_code == null) {
 
+            // Validate length for inputs
+            if(address.length < 0 || address.length > 250) {
+                alert('The content of the address field does not conform to valid parameters.');
+                return false;
+            } // if(city.length < 0 || city.length > 250) { ... }
+
+            if(city.length < 0 || city.length > 250) {
+                alert('The content of the city field does not conform to valid parameters.');
+                return false;
+            } // if(city.length < 0 || city.length > 250) { ... }
+
+            if(state.length < 0 || state.length > 250) {
+                alert('The content of the state field does not conform to valid parameters.');
+                return false;
+            } // if(city.length < 0 || city.length > 250) { ... }
+
+            if(country.length < 0 || country.length > 250) {
+                alert('The content of the country field does not conform to valid parameters.');
+                return false;
+            }
+
+            if(postal_code < 0 || postal_code > 999999999) {
+                alert('The content of the zip code field does not conform to valid parameters.');
+                return false;
+            }
             // Clear data form
             document.getElementById('addressAdd').value     =   null;
             document.getElementById('cityAdd').value        =   null;
@@ -241,6 +266,11 @@
             var ddi     =   document.getElementById('ddiAdd').value;
             var ddd     =   document.getElementById('dddAdd').value;
             var phone   =   document.getElementById('phoneAdd').value;
+
+            if(phone < 0 || phone > 99999999999999) {
+                alert('Invalid phone number!');
+                return false;
+            } // if(phone < 0 || phone > 99999999999999) { ... }
 
             // Clear data form
             //document.getElementById('ddiAdd').value     =   null;
