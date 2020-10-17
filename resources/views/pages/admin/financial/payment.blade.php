@@ -42,13 +42,45 @@
                                             <input type="text" class="form-control form-control-sm form-control-plaintext text-primary" id="exampleFormControlInput1" value="{{ $item->allDesc->value }}">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="contractPrice">Avaible value</label>
-                                            <input type="text" class="form-control form-control-sm form-control-plaintext text-primary" id="exampleFormControlInput1" value="{{ $item->allDesc->avaiable }}">
+                                    
+                                    <div class="col-12">
+                                        <h6 class="text-center text-primary font-weight-bold">Transaction Comission</h6>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-hover table-striped">
+                                                <thead class="bg-primary text-white">
+                                                    <tr>
+                                                        <th style="min-width: 30vw;">Item description</th>
+                                                        <th>% on $ amount</th>
+                                                        <th>Apply % on</th>
+                                                        <th>To receive (+) or contribute(-)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><small>{{ $item->transactions->realState->title }}</small></td>
+                                                        <td class="text-right"><small>{{ $item->transactions->realState->allDesc->amount }}</small></td>
+                                                        <td class="text-right"><small>{{ $item->transactions->realState->allDesc->apply }}</small></td>
+                                                        <td class="text-right"><small>{{ $item->transactions->realState->allDesc->received }}</small></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><small>{{ $item->transactions->officeFee->title }}</small></td>
+                                                        <td class="text-right"><small>{{ $item->transactions->officeFee->allDesc->amount }}</small></td>
+                                                        <td class="text-right"><small>{{ $item->transactions->officeFee->allDesc->apply }}</small></td>
+                                                        <td class="text-right"><small>{{ $item->transactions->officeFee->allDesc->received }}</small></td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot class="bg-primary text-white">
+                                                    <tr>
+                                                        <td class="text-right" colspan="3">Net comission to collect for this transaction</td>
+                                                        <td class="text-right">{{ $item->transactions->total->allDesc->received }}</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </div>
+
                                     <div class="col-12">
+                                        <h6 class="text-center text-primary font-weight-bold">Distribution to brokerage/agent(s)</h6>
                                         <div class="table-responsive">
                                             <table class="table table-sm table">
                                                 <thead class="bg-primary text-center text-white">
@@ -76,7 +108,7 @@
                                                                     <form method="POST" action="{{ route('admin.financial.additional') }}" class="was-validated">
                                                                         @csrf
                                                                         <input type="hidden" name="id_payment" value="{{ $itemPayment->id_payment }}">
-                
+                                    
                                                                         <div class="input-group mb-2">
                                                                         <input type="number" step="0.01" min="-{{$itemPayment->value}}" max="{{$itemPayment->value}}" class="form-control form-control-sm text-right value-legacy" name="additional" placeholder="additional value US$" value="{{ is_null($itemPayment->allDesc->additionalVal) ? '0.00' : $itemPayment->allDesc->additionalVal }}">
                                                                             <div class="input-group-prepend">

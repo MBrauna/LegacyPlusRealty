@@ -26,10 +26,12 @@
                     // Coleta o valor para o vendedor do contrato
                     $user       =   User::find($value->id_user_seller);
 
-                    // -- ## RETIRADA DE PERCENTUAL PARA BROKER
-                    $percBroker             =   round((($value->value/100)*3),2);
-                    $valorBroker            =   $percBroker;
-                    $valor                  =   round(($value->value - $percBroker),2);
+
+                    # Retira o valor da comissão que iremos trabalhar
+                    $totalValue =   round((($value->value/100)*6),2);
+                    $broker     =   round((($value->value/100)*10),2);
+                    $realtor    =   round(($totalValue - $broker),2);
+                    $valueBroker=   $broker;
 
                     // -- ## PRIMEIRO NÍVEL DE COMISSÃO
                     if(isset($user) && isset($user->id) && !is_null($user->id)) {
@@ -37,13 +39,14 @@
                                                     ->whereRaw('? between min_value and max_value',[$value->value])
                                                     ->where('type',$value->type)
                                                     ->first();
+
                         if(isset($userComission) && isset($userComission->percentual) && !is_null($userComission->percentual)) {
-                            $valueFirst             =   round((($valor/100)*$userComission->percentual),2);
+                            $valueFirst             =   round((($realtor/100)*$userComission->percentual),2);
 
                             $payment                =   new PaymentModel;
                             $payment->id_contract   =   $value->id_contract;
                             $payment->id_user       =   $user->id;
-                            $payment->value         =   $valor;
+                            $payment->value         =   $totalValue;
                             $payment->comission     =   $valueFirst;
                             $payment->percent       =   $userComission->percentual;
                             $payment->payment_date  =   Carbon::now();
@@ -51,51 +54,40 @@
                         } // if(isset($userComission) && isset($userComission->percentual) && !is_null($userComission->percentual)) { ... }
                     } // if(isset($user) && isset($user->id) && !is_null($user->id)) { ... }
 
+                    # Indicação para nível 1
                     if(isset($user) && isset($user->id) && !is_null($user->id) && !is_null($user->id_user_recommend)) {
                         $user                   =   User::find($user->id_user_recommend);
                         if(isset($user) && isset($user->percent) && !is_null($user->percent) && $user->percent > 0) {
-                            $valueFirst             =   round((($valorBroker/100)*$user->percent),2);
+                            $valueFirst             =   round((($broker/100)*$user->percent),2);
 
-                            $payment                =   new PaymentModel;
-                            $payment->id_contract   =   $value->id_contract;
-                            $payment->id_user       =   $user->id;
-                            $payment->value         =   $percBroker;
-                            $payment->comission     =   $valueFirst;
-                            $payment->percent       =   $user->percent;
-                            $payment->payment_date  =   Carbon::now();
-                            $payment->save();
+                            if(round(($valueBroker - $valueFirst),2) > 0) {
+                                $payment                =   new PaymentModel;
+                                $payment->id_contract   =   $value->id_contract;
+                                $payment->id_user       =   $user->id;
+                                $payment->value         =   $broker;
+                                $payment->comission     =   $valueFirst;
+                                $payment->percent       =   $user->percent;
+                                $payment->payment_date  =   Carbon::now();
+                                $payment->save();
 
-                            $valorBroker            =   round(($percBroker - $valueFirst),2);
+                                $valueBroker            =   round(($valueBroker - $valueFirst),2);
+                            }
                         } // if(isset($userComission) && isset($userComission->percentual) && !is_null($userComission->percentual)) { ... }
                     } // if(isset($user) && isset($user->id) && !is_null($user->id) && !is_null($user->id_user_recommend)) { ... }
 
-                    if(isset($user) && isset($user->id) && !is_null($user->id) && !is_null($user->id_user_recommend)) {
-                        $user                   =   User::find($user->id_user_recommend);
-                        if(isset($user) && isset($user->percent) && !is_null($user->percent) && $user->percent > 0) {
-                            $valueFirst             =   round((($valorBroker/100)*$user->percent),2);
 
-                            $payment                =   new PaymentModel;
-                            $payment->id_contract   =   $value->id_contract;
-                            $payment->id_user       =   $user->id;
-                            $payment->value         =   $percBroker;
-                            $payment->comission     =   $valueFirst;
-                            $payment->percent       =   $user->percent;
-                            $payment->payment_date  =   Carbon::now();
-                            $payment->save();
-
-                            $valorBroker            =   round(($percBroker - $valueFirst),2);
-                        } // if(isset($userComission) && isset($userComission->percentual) && !is_null($userComission->percentual)) { ... }
-                    } // if(isset($user) && isset($user->id) && !is_null($user->id) && !is_null($user->id_user_recommend)) { ... }
-
-                    // Comissão para Legacy
-                    $payment                =   new PaymentModel;
-                    $payment->id_contract   =   $value->id_contract;
-                    $payment->id_user       =   null;
-                    $payment->value         =   $value->value;
-                    $payment->comission     =   $percBroker;
-                    $payment->percent       =   3;
-                    $payment->payment_date  =   Carbon::now();
-                    $payment->save();
+                    if($valueBroker > 0) {
+                        // Comissão para Legacy
+                        $payment                =   new PaymentModel;
+                        $payment->id_contract   =   $value->id_contract;
+                        $payment->id_user       =   null;
+                        $payment->value         =   $broker;
+                        $payment->comission     =   $valueBroker;
+                        $payment->percent       =   3;
+                        $payment->payment_date  =   Carbon::now();
+                        $payment->save();
+                    } // if($valueBroker > 0) { ... }
+                    
 
                     Contract::where('id_contract',$value->id_contract)
                     ->update([
@@ -107,7 +99,6 @@
                 return 0;
             }
             catch(Exception $error) {
-                print($error);
                 return 1;
             }
         }
