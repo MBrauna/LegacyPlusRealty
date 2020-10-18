@@ -83,8 +83,8 @@
                         $contractList[$key]->transactions->total->received          =   $contractList[$key]->transactions->total->received + $valueData->comission + $valueData->additional;
                     } // foreach ($contractList[$key]->allPayments as $keyData => $valueData) { ... }
 
-                    $contractList[$key]->transactions->officeFee->amount            =   round((($contractList[$key]->transactions->officeFee->received*100)/$contractList[$key]->transactions->officeFee->apply),2);
-                    $contractList[$key]->transactions->realState->amount            =   round((($contractList[$key]->transactions->realState->received*100)/$contractList[$key]->transactions->realState->apply),2);
+                    $contractList[$key]->transactions->officeFee->amount            =   0;//round((($contractList[$key]->transactions->officeFee->received*100)/$contractList[$key]->transactions->officeFee->apply),2);
+                    $contractList[$key]->transactions->realState->amount            =   0;//round((($contractList[$key]->transactions->realState->received*100)/$contractList[$key]->transactions->realState->apply),2);
 
 
                     $contractList[$key]->transactions->realState->allDesc->amount   =   number_format($contractList[$key]->transactions->realState->amount,2,'.',',').' %';
