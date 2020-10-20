@@ -1,18 +1,28 @@
 <?php
 
-    namespace App\Providers;
+namespace App\Providers;
 
-    use Illuminate\Support\ServiceProvider;
-    use Carbon\Carbon;
+use Illuminate\Support\ServiceProvider;
 
-    class AppServiceProvider extends ServiceProvider
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
     {
-        public function register() {
-            //
-        }
-
-        public function boot() {
-            date_default_timezone_set('America/Mexico_City');
-            Carbon::setLocale('us_FL');
-        }
+        //
     }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+}
