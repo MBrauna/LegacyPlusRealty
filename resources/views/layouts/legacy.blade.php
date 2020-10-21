@@ -56,28 +56,28 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('contract.list') }}">
+                <!--<li class="nav-item">
+                    <a class="nav-link" href="#">
                         <i class="fas fa-comments-dollar"></i>
                         <span>Contract</span>
                     </a>
-                </li>
+                </li>-->
 
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtil" aria-expanded="true" aria-controls="collapseUtil">
                         <i class="fas fa-tags"></i>
-                        <span>Utilities</span>
+                        <span>Quick access</span>
                     </a>
                     <div id="collapseUtil" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('archive.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.file') }}">
                                 <i class="fas fa-folder-open"></i>
                                 <span>Files</span>
                             </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('quickAccess.link') }}">
                                 <i class="fas fa-link"></i>
-                                <span>Quick access</span>
+                                <span>Links</span>
                             </a>
                         </div>
                     </div>

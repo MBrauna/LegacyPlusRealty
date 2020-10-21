@@ -23,15 +23,15 @@
         }); // Route::prefix('dashboard')->name('dashboard.')->group(function(){ ... });
 
 
-        Route::prefix('quickAccess')->name('quickAccess.')->namespace('QuickAccess')->group(function(){
-            // [quickAcess.list]
-            Route::any('/','MainQuickAccess@index')->name('list');
+        Route::prefix('quickAccess')->name('quickAccess.')->group(function(){
+            // [quickAcess.link]
+            Route::any('/link','Quick@link')->name('link');
+            // [quickAcess.file]
+            Route::any('/file','Quick@file')->name('file');
         }); // Route::prefix('quickAccess')->name('quickAccess.')->namespace('QuickAccess')->group(function(){ ... });
 
 
-        Route::prefix('archive')->name('archive.')->namespace('Archive')->group(function(){
-            // [archive.list]
-            Route::any('/','MainArchive@index')->name('list');
+        Route::prefix('archive')->name('archive.')->group(function(){
             // [archive.import]
             Route::any('/import','ImportFile@index')->name('import');
         }); // Route::prefix('archive')->name('archive.')->namespace('Archive')->group(function(){ ... });
