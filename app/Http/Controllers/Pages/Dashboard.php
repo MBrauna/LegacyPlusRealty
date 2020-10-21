@@ -27,6 +27,7 @@
                     $percComission[$key]->allDesc->type =   ($value->id_transaction_type == 1) ? 'Salle' : 'Rent';
                     $percComission[$key]->allDesc->min  =   'US$ '.number_format($value->min_value,2,'.',',');
                     $percComission[$key]->allDesc->max  =   'US$ '.number_format($value->max_value,2,'.',',');
+                    $percComission[$key]->allDesc->between  =   $percComission[$key]->allDesc->min.' and '.$percComission[$key]->allDesc->max;
                     $percComission[$key]->allDesc->perc =   number_format($value->percentual).'%';
                 }
 
@@ -42,17 +43,12 @@
                                             DB::raw("date_trunc('month', payment.payment_date) as payment_date"),
                                         )
                                         ->get();
+                foreach ($infoMonth as $key => $value) {
+                    $infoMonth[$key]->allDesc   =   (object)[];
 
-                $infoYear           =   DB::table('payment')
-                                        ->where('payment_date','>=',Carbon::now()->startOfYear())
-                                        ->where('payment_date','<=',Carbon::now()->endOfYear())
-                                        ->where('id_user',Auth::user()->id)
-                                        ->groupByRaw("date_trunc('year', payment.payment_date)")
-                                        ->select(
-                                            DB::raw('sum(payment.value_split) as value_split'),
-                                            DB::raw("date_trunc('year', payment.payment_date) as payment_date"),
-                                        )
-                                        ->get();
+                    $infoMonth[$key]->allDesc->value    =   'US$ '.number_format($value->value_split,2,'.',',');
+                    $infoMonth[$key]->allDesc->date     =   Carbon::parse($value->payment_date)->format('m/Y');
+                } // foreach ($infoMonth as $key => $value) { ... }
 
                 $additionalMonth    =   DB::table('payment_additional')
                                         ->where('payment_date','>=',Carbon::now()->startOfYear())
@@ -65,18 +61,12 @@
                                         )
                                         ->get();
 
-                $additionalYear     =   DB::table('payment_additional')
-                                        ->where('payment_date','>=',Carbon::now()->startOfYear())
-                                        ->where('payment_date','<=',Carbon::now()->endOfYear())
-                                        ->where('id_user',Auth::user()->id)
-                                        ->groupByRaw("date_trunc('year', payment_date)")
-                                        ->select(
-                                            DB::raw('sum(value) as value_split'),
-                                            DB::raw("date_trunc('year', payment_date) as payment_date"),
-                                        )
-                                        ->get();
+                foreach ($additionalMonth as $key => $value) {
+                    $additionalMonth[$key]->allDesc         =   (object)[];
 
-
+                    $additionalMonth[$key]->allDesc->value  =   'US$ '.number_format($value->value_split,2,'.',',');
+                    $additionalMonth[$key]->allDesc->date   =   Carbon::parse($value->payment_date)->format('m/Y');
+                } // foreach ($infoMonth as $key => $value) { ... }
                 // -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- # -- //
                 
                 $infoMonthTotal     =   DB::table('payment')
@@ -110,8 +100,6 @@
                     'totalAdditional'       =>  'US$ '.number_format($additionalYearTot,2,'.',','),
                     'comissionMonth'        =>  $infoMonth,
                     'additionalMonth'       =>  $additionalMonth,
-                    'comissionYear'         =>  $infoYear,
-                    'additionalYear'        =>  $additionalYear,
                     'totalMonth'            =>  'US$ '.number_format(($infoMonthTotal + $additionalMonthTot),2,'.',','),
                     'totalYear'             =>  'US$ '.number_format(($infoYearTotal + $additionalYearTot),2,'.',','),
                     'monthMin'              =>  Carbon::now()->startOfMonth()->format('m/d/Y'),
@@ -122,7 +110,7 @@
                 ]);
             } // try { ... }
             catch(Exception $error) {
-
+                dd('erro');
             } // catch(Exception $error) { ... }
         } // public function index(Request $request) { ... }
     }

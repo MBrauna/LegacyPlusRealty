@@ -5,7 +5,7 @@
 @section('body')
     <!-- Content Row -->
     <div class="row">
-        <div class="col-12 col-sm-8 col-md-8 col-lg-8">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8">
             <div class="row">
                 <div class="col-12">
                     <div class="card border-left-primary shadow h-100 py-2">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
 
-                <div class="col-12">
+                <div class="col-12 pt-2">
                     <div class="card border-left-primary shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -50,21 +50,27 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
             <div class="card border-left-primary">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 text-center text-primary font-weight-bold">
                             {{ Auth::user()->name }}
                         </div>
-                        <div class="col-12">
-                            <span class="text-primary font-weight-bold">ID:</span> #{{ Auth::user()->id }}
+                        <div class="col-6">
+                            <span class="text-primary font-weight-bold">ID:</span><br/>
+                            <small>#{{ Auth::user()->id }}</small>
+                        </div>
+                        <div class="col-6">
+                            <span class="text-primary font-weight-bold">email:</span><br/>
+                            <small>{{ Auth::user()->email }}</small>
                         </div>
 
 
                         <h6 class="col-12 text-center bg-primary text-white mt-3 pt-1 pb-1 font-weight-bold rounded">License</h6>
+
                         @if(is_null(Auth::user()->license))
-                        <span class="col-12 text-center">Without license</span>
+                            <span class="col-12 text-center">Without license</span>
                         @else
                         <div class="col-12">
                             <span class="text-primary font-weight-bold">License:</span> {{ Auth::user()->license ?? 'without license' }}
@@ -84,8 +90,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-primary">Type</th>
-                                        <th class="text-primary">Min value</th>
-                                        <th class="text-primary">Max value</th>
+                                        <th class="text-primary">Value</th>
                                         <th class="text-primary">% split</th>
                                     </tr>
                                 </thead>
@@ -93,13 +98,12 @@
                                     @forelse ($dataComission as $item)
                                         <tr>
                                             <td class="text-primary"><small>{{ $item->allDesc->type }}</small></td>
-                                            <td class="text-primary"><small>{{ $item->allDesc->min }}</small></td>
-                                            <td class="text-primary"><small>{{ $item->allDesc->max }}</small></td>
+                                            <td class="text-primary"><small>{{ $item->allDesc->between }}</small></td>
                                             <td class="text-primary"><small>{{ $item->allDesc->perc }}</small></td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="text-center">No data</td>
+                                            <td colspan="3" class="text-center">No data</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -109,11 +113,69 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Content Row -->
-    <div class="table-responsive">
-        
+        <div class="col-12 col-sm-12 col-md-6">
+            <div class="row">
+                <h6 class="col-12 text-white bg-primary text-center mt-3 pt-1 pb-1">Comission</h6>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Comission US$</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                        @forelse ($comissionMonth as $item)
+                                            <td><small>{{ $item->allDesc->date }}</small></td>
+                                            <td><small>{{ $item->allDesc->value }}</small></td>
+                                        @empty
+                                            <td colspan="2" class="text-center">No values</td>
+                                        @endforelse
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6">
+            <div class="row">
+                <h6 class="col-12 text-white bg-primary text-center mt-3 pt-1 pb-1">Additional</h6>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Additional US$</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                        @forelse ($additionalMonth as $item)
+                                            <td><small>{{ $item->allDesc->date }}</small></td>
+                                            <td><small>{{ $item->allDesc->value }}</small></td>
+                                        @empty
+                                            <td colspan="2" class="text-center">No values</td>
+                                        @endforelse
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
