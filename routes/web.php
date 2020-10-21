@@ -94,40 +94,40 @@
             }); // Route::namespace('Utilities')->prefix('utilities')->name('utilities.')->group(function(){ ... }
 
             // [admin.group]
-            Route::namespace('Group')->name('group.')->prefix('group')->group(function(){
+            Route::name('group.')->prefix('group')->group(function(){
                 // [admin.group.home]
                 Route::any('/',function(){ return redirect()->route('dashboard.home'); })->name('home');
 
                 // [admin.group.list]
-                Route::any('/list','MainGroup@list')->name('list');
+                Route::any('/list','Groups@list')->name('list');
                 // [admin.group.save]
-                Route::post('/save','MainGroup@save')->name('save');
+                Route::post('/save','Groups@save')->name('save');
                 // [admin.group.update]
-                Route::post('/update','MainGroup@update')->name('update');
+                Route::post('/update','Groups@update')->name('update');
                 // [admin.group.user]
-                Route::any('/user','MainGroup@groupUsers')->name('user');
+                Route::any('/user','Groups@groupUsers')->name('user');
                 // [admin.group.addGroup]
-                Route::post('/addGroup','MainGroup@addGroupUser')->name('addGroup');
+                Route::post('/addGroup','Groups@addGroupUser')->name('addGroup');
                 // [admin.group.removeGroup]
-                Route::post('/removeGroup','MainGroup@removeGroupUser')->name('removeGroup');
+                Route::post('/removeGroup','Groups@removeGroupUser')->name('removeGroup');
                 // [admin.group.archive]
-                Route::any('/archive','MainGroup@archive')->name('archive');
+                Route::any('/archive','Groups@archive')->name('archive');
             }); // Route::namespace('Group')->name('group.')->prefix('group')->group(function(){ ... });
 
-            Route::namespace('User')->name('user.')->prefix('user')->group(function(){
+            Route::name('user.')->prefix('user')->group(function(){
                 // [admin.user.home]
                 Route::any('/',function(){ return redirect()->route('dashboard.home'); })->name('home');
 
                 // [admin.user.list]
-                Route::any('/list','MainUser@list')->name('list');
+                Route::any('/list','Users@list')->name('list');
                 // [admin.user.pageAdd]
-                Route::any('/add','MainUser@pageAdd')->name('pageAdd');
+                Route::any('/add','Users@pageAdd')->name('pageAdd');
                 // [admin.user.pageEdit]
-                Route::any('/edit','MainUser@pageEdit')->name('pageEdit');
+                Route::any('/edit','Users@pageEdit')->name('pageEdit');
                 // [admin.user.save]
-                Route::any('/save','MainUser@save')->name('save');
+                Route::any('/save','Users@save')->name('save');
                 // [admin.user.update]
-                Route::any('/update','MainUser@update')->name('update');
+                Route::any('/update','Users@update')->name('update');
             });
         }); // Route::prefix('admin')->name('admin')->namespace('Admin')->group(function(){ ... }
     });
