@@ -4,7 +4,7 @@
 
 @section('body')
 
-    <form action="{{ route('admin.user.update') }}" method="POST" class="card was-validated shadow-sm" autocomplete="off">
+    <div class="card shadow-sm">
         @csrf
         <div class="card-header bg-primary text-white d-flex justify-content-between">
             <div style="min-width: 10vw;">
@@ -12,7 +12,7 @@
                     <i class="fas fa-caret-square-left"></i>
                 </a>
             </div>
-            <span>Edit {{ $user->name }}</span>
+            <span>{{ $user->name }}</span>
             <div style="min-width: 10vw;">
             </div>
         </div>
@@ -29,7 +29,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="id_user_type" class="text-primary">User level</label>
-                                <select id="id_user_type" name="id_user_type" class="form-control form-control-sm" required>
+                                <select id="id_user_type" name="id_user_type" class="form-control form-control-sm" disabled>
                                     @if($user->id_user_type == '' || is_null($user->id_user_type))
                                         <option value="" selected>None</option>
                                     @else
@@ -62,14 +62,14 @@
                         <div class="col-12 col-sm-12 col-md-8">
                             <div class="form-group">
                                 <label for="email" class="text-primary">E-mail</label>
-                                <input type="email" minlength="5" maxlength="250" class="form-control form-control-sm" id="email" name="email" aria-describedby="email" placeholder="E-mail will be used for access" value="{{ $user->email }}" required>
+                                <input type="email" minlength="5" maxlength="250" class="form-control form-control-sm form-control-plaintext" id="email" name="email" aria-describedby="email" placeholder="E-mail will be used for access" value="{{ $user->email }}" disabled>
                             </div>
                         </div>
         
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="password" class="text-primary">Password</label>
-                                <input type="password" minlength="4" maxlength="16" class="form-control form-control-sm" id="password" name="password" aria-describedby="password" placeholder="password">
+                                <input type="password" minlength="4" maxlength="16" class="form-control form-control-sm form-control-plaintext" id="password" name="password" aria-describedby="password" placeholder="password" disabled>
                                 <small id="password" class="form-text text-muted">Keep it blank to stay with the current password</small>
                             </div>
                         </div>
@@ -78,19 +78,19 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="name" class="text-primary">First name</label>
-                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="name" name="name" aria-describedby="name" placeholder="Enter the user name" value="{{ $user->first_name }}" required>
+                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm form-control-plaintext" id="name" name="name" aria-describedby="name" placeholder="Enter the user name" value="{{ $user->first_name }}" disabled>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="second_name" class="text-primary">Middle name</label>
-                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="second_name" name="second_name" aria-describedby="name" placeholder="Enter the second name" value="{{ $user->middle_name }}">
+                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm form-control-plaintext" id="second_name" name="second_name" aria-describedby="name" placeholder="Enter the second name" value="{{ $user->second_name }}" disabled>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="last_name" class="text-primary">Last name</label>
-                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="last_name" name="last_name" aria-describedby="name" placeholder="Enter the last name" value="{{ $user->last_name }}" required>
+                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm form-control-plaintext" id="last_name" name="last_name" aria-describedby="name" placeholder="Enter the last name" value="{{ $user->last_name }}" disabled>
                             </div>
                         </div>
 
@@ -98,26 +98,26 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="license" class="text-primary">License</label>
-                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm" id="license" name="license" aria-describedby="license" placeholder="License"  value="{{ $user->license }}">
+                                <input type="text" minlength="2" maxlength="250" class="form-control form-control-sm form-control-plaintext" id="license" name="license" aria-describedby="license" placeholder="License"  value="{{ $user->license }}" disabled>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="license_expiration" class="text-primary">License expiration</label>
-                                <input type="date" class="form-control form-control-sm" id="license_expiration" name="license_expiration" aria-describedby="license_expiration" placeholder="License expiration date"  value="{{ $user->license_date }}">
+                                <input type="date" class="form-control form-control-sm form-control-plaintext" id="license_expiration" name="license_expiration" aria-describedby="license_expiration" placeholder="License expiration date"  value="{{ $user->license_date }}" disabled>
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="license_due" class="text-primary">Fee due date</label>
-                                <input type="date" class="form-control form-control-sm" id="license_due" name="license_due" aria-describedby="license_due" placeholder="wiser broker fee due date" value="{{ $user->license_due }}">
+                                <input type="date" class="form-control form-control-sm form-control-plaintext" id="license_due" name="license_due" aria-describedby="license_due" placeholder="wiser broker fee due date" value="{{ $user->license_due }}" disabled>
                             </div>
                         </div>
 
                         <div class="col-12 col-sm-12 col-md-8">
                             <div class="form-group">
                                 <label for="id_user_recommend" class="text-primary">Indicated by</label>
-                                <select id="id_user_recommend" name="id_user_recommend" class="form-control form-control-sm">
+                                <select id="id_user_recommend" name="id_user_recommend" class="form-control form-control-sm form-control-plaintext" disabled>
                                     <option value="">No recommendation</option>
                                     @foreach ($users as $item)
                                         @if($user->id_user_recommend == $item->id)
@@ -132,7 +132,7 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="percent" class="text-primary">Percentage indication</label>
-                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right percent" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="{{ number_format($user->percent,2,'.',',') }}" required>
+                                <input type="number" step="0.01" min="0" max="60" class="form-control form-control-sm text-right percent" id="percent" name="percent" aria-describedby="percent" placeholder="Percentage by indication" value="{{ number_format($user->percent,2,'.',',') }}" disabled>
                             </div>
                         </div>
                     </div>
@@ -151,28 +151,6 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6 border-primary">
                             <h6 class="text-center text-white bg-primary"><small>Sale</small></h6>
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="min_sale" class="text-primary">From (US$)</label>
-                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="min_sale" aria-describedby="percent" placeholder="Lowest value" value="0.00">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="max_sale" class="text-primary">To (US$)</label>
-                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="max_sale" aria-describedby="percent" placeholder="Highest value" value="0.00">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="percent_sale" class="text-primary">Split to agent (%)</label>
-                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right percent" id="percent_sale" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
-                                    </div>
-                                </div>
-        
-                                <button type="button" class="btn btn-sm btn-block btn-primary ml-2 mr-2" onclick="addSale();">Add commission for sale</button>
-                                <div class="col-12 text-center text-primary"><small>Only the content below will be taken to the register</small></div>
-
                                 <div class="col-12 mt-4">
                                     <div class="table-responsive">
                                         <table class="table table-sm table-hover" id="tableSale">
@@ -181,7 +159,6 @@
                                                     <th><small>From (US$)</small></th>
                                                     <th><small>To (US$)</small></th>
                                                     <th><small>Split to agent</small></th>
-                                                    <th><small>Action</small></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -190,8 +167,7 @@
                                                         <tr>
                                                             <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="min_sale[]" value="{{ $item->min_value }}"></td>
                                                             <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="max_sale[]" value="{{ $item->max_value }}"></td>
-                                                            <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_sale[]" value="{{ $item->percentual }}"></td>
-                                                            <td><button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button></td>
+                                                            <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_rent[]" value="{{ $item->percentual }}"></td>
                                                         </tr>
                                                     @endif
                                                 @endforeach
@@ -204,28 +180,6 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                             <h6 class="text-center text-white bg-primary"><small>Rent</small></h6>
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="min_rent" class="text-primary">From (US$)</label>
-                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="min_rent" aria-describedby="percent" placeholder="Lowest value" value="0.00">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label for="max_rent" class="text-primary">To (US$)</label>
-                                        <input type="number" step="0.01" min="0" max="99999999999" class="form-control form-control-sm text-right" id="max_rent" aria-describedby="percent" placeholder="Highest value" value="0.00">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="percent_rent" class="text-primary">Split to agent (%)</label>
-                                        <input type="number" step="0.01" min="0" max="100" class="form-control form-control-sm text-right percent" id="percent_rent" aria-describedby="percent" placeholder="Split to agent (%)" value="0.00">
-                                    </div>
-                                </div>
-        
-                                <button type="button" class="btn btn-sm btn-block btn-primary ml-2 mr-2" onclick="addRent();">Add commission for rent</button>
-                                <div class="col-12 text-center text-primary"><small>Only the content below will be taken to the register</small></div>
-
                                 <div class="col-12 mt-4">
                                     <div class="table-responsive">
                                         <table class="table table-sm table-hover" id="tableRent">
@@ -234,7 +188,6 @@
                                                     <th><small>From (US$)</small></th>
                                                     <th><small>To (US$)</small></th>
                                                     <th><small>Split to agent</small></th>
-                                                    <th><small>Action</small></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -244,7 +197,6 @@
                                                             <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="min_rent[]" value="{{ $item->min_value }}"></td>
                                                             <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="max_rent[]" value="{{ $item->max_value }}"></td>
                                                             <td><input type="number" min="0" max="100" step="0.01" readonly class="form-control-plaintext" name="perc_rent[]" value="{{ $item->percentual }}"></td>
-                                                            <td><button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button></td>
                                                         </tr>
                                                     @endif
                                                 @endforeach
@@ -267,37 +219,18 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <label for="id_groupAdd">Group</label>
-                                <select id="id_groupAdd" class="form-control form-control-sm">
-                                <option value="">Choose ...</option>
-                                @foreach ($groups as $item)
-                                <option value="{{ $item->id_group }}">{{ $item->name }}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12">
-                            <button class="btn btn-block btn-sm btn-primary" type="button" onclick="addGroup();">
-                                Add group
-                            </button>
-                        </div>
-
                         <div class="col-12 mt-4">
                             <div class="table-responsive">
                                 <table class="table table-sm table-hover" id="tableGroup">
                                     <thead>
                                         <tr>
                                             <th><small>Group</small></th>
-                                            <th style="width: 10vw;"><small>Action</small></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($group as $item)
                                             <tr>
                                                 <td><small>{{ $item->name }}</small></td>
-                                                <td style="width: 10vw;"><button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -316,40 +249,6 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-8">
-                            <div class="form-group">
-                                <label for="addressAdd" class="text-primary">Address</label>
-                                <input type="text" minlength="5" maxlength="150" class="form-control form-control-sm" id="addressAdd" aria-describedby="addressAdd" placeholder="Enter the user's address">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label for="postal_codeAdd" class="text-primary">Zip Code</label>
-                                <input type="number" min="0" max="99999999" class="form-control form-control-sm" id="postal_codeAdd" aria-describedby="postal_code" placeholder="Zip code">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label for="cityAdd" class="text-primary">City</label>
-                                <input type="text" minlength="3" maxlength="150" class="form-control form-control-sm" id="cityAdd" aria-describedby="city" placeholder="City">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label for="stateAdd" class="text-primary">State</label>
-                                <input type="text" minlength="3" maxlength="150" class="form-control form-control-sm" id="stateAdd" aria-describedby="state" placeholder="State">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label for="countryAdd" class="text-primary">Country</label>
-                                <input type="text" minlength="3" maxlength="150" class="form-control form-control-sm" id="countryAdd" aria-describedby="country" placeholder="Country" value="USA">
-                            </div>
-                        </div>
-
-                        <button type="button" class="btn btn-primary btn-sm btn-block" onclick="addAddress();">Add address</button>
-                        <div class="col-12 text-center text-primary"><small>Only the content below will be taken to the register</small></div>
-
                         <div class="col-12 mt-4">
                             <div class="table-responsive">
                                 <table class="table table-sm table-hover" id="tableAddress">
@@ -360,7 +259,6 @@
                                             <th><small>State</small></th>
                                             <th><small>Country</small></th>
                                             <th><small>Zip Code</small></th>
-                                            <th><small>Action</small></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -371,7 +269,6 @@
                                                 <th><small><input type="text" readonly class="form-control-plaintext" name="state[]" value="{{ $item->state }}"></small></th>
                                                 <th><small><input type="text" readonly class="form-control-plaintext" name="country[]" value="{{ $item->country }}"></small></th>
                                                 <th><small><input type="text" readonly class="form-control-plaintext" name="postal_code[]" value="{{ $item->zip_code }}"></small></th>
-                                                <td style="width: 10vw;"><button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -390,44 +287,20 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-8">
-                            <div class="form-group">
-                                <label for="referenceAdd" class="text-primary">Reference</label>
-                                <input type="text" minlength="0" maxlength="150" class="form-control form-control-sm" id="referenceAdd" aria-describedby="Reference" placeholder="Who will be communicated">
-                            </div>
-                        </div>
-                        <input type="hidden" min="0" max="999" class="form-control form-control-sm" id="ddiAdd"  aria-describedby="DDI" placeholder="DDI" value="1">
-                        <input type="hidden" min="0" max="999" class="form-control form-control-sm" id="dddAdd"  aria-describedby="DDD" placeholder="DDD" value="0">
-                        <div class="col-12 col-sm-12 col-md-4">
-                            <div class="form-group">
-                                <label for="phoneAdd" class="text-primary">Phone</label>
-                                <input type="number" min="0" max="99999999999" class="form-control form-control-sm" id="phoneAdd" aria-describedby="Phone" placeholder="Phone">
-                            </div>
-                        </div>
-
-                        <button type="button" class="btn btn-primary btn-sm btn-block" onclick="addPhone()">Add phone</button>
-                        <div class="col-12 text-center text-primary"><small>Only the content below will be taken to the register</small></div>
-
                         <div class="col-12">
                             <div class="table-responsive">
                                 <table class="table table-sm table-hover" id="tablePhone">
                                     <thead>
                                         <tr>
                                             <th><small>Reference</small></th>
-                                            <th><small></small></th>
-                                            <th><small></small></th>
                                             <th><small>Phone</small></th>
-                                            <th><small>Action</small></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($phone as $item)
                                         <tr>
                                             <th><small><input type="text" readonly class="form-control-plaintext" name="reference[]" value="{{ $item->reference }}"></small></th>
-                                            <th><small><input type="hidden" readonly class="form-control-plaintext" name="ddi[]" value="{{ $item->ddi }}"></small></th>
-                                            <th><small><input type="hidden" readonly class="form-control-plaintext" name="ddd[]" value="{{ $item->ddd }}"></small></th>
                                             <th><small><input type="text" readonly class="form-control-plaintext" name="phone[]" value="{{ $item->phone }}"></small></th>
-                                            <td style="width: 10vw;"><button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -438,56 +311,55 @@
                 </div>
             </div>
 
-        </div>
-        <div class="card-footer bg-primary">
-            <button class="btn btn-block btn-sm btn-outline-light" type="submit">Update {{ $user->name }}</button>
-        </div>
-    </form>
-
-    <div class="mt-3"></div>
-    <div class="card border-primary">
-        <div class="card-header bg-primary text-white">
-            <i class="fas fa-house-user"></i>
-            <small>Files</small>
-        </div>
-        <div class="card-body">
-            <form method="POST" action="{{ route('archive.import') }}" enctype="multipart/form-data" class="dropzone border-primary was-validated" id="dropzone">
-                @csrf
-                <input type="hidden" name="legacy_type" value="4">
-                <input type="hidden" name="idUser" value="{{ $user->id }}">
-                <div class="fallback">
-                    <input name="fileToUpload[]" type="file" multiple />
+            <div class="mt-3"></div>
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-house-user"></i>
+                    <small>Files</small>
                 </div>
-            </form>
-            <div class="row">
-                <ul class="list-group col-12">
-                    @if(count($archive) <= 0)
-                        <li class="list-group-item text-center">
-                            No files
-                        </li>
-                    @else
-                        @foreach ($archive as $item)
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-10 col-sm-10 col-md-10 col-lg-11">
-                                    <a href="{{ Storage::url($item->repository.'/'.$item->name_server) }}">
-                                        <i class="fas fa-file-invoice"></i> - {{ $item->name_file }}
-                                    </a>
-                                </div>
-                                <div class="col-2 col-sm-2 col-md-2 col-lg-1">
-                                    <button class="btn btn-sm btn-primary btn-block">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                        @endforeach
-                    @endif
-                    
-                </ul>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('archive.import') }}" enctype="multipart/form-data" class="dropzone border-primary was-validated" id="dropzone">
+                        @csrf
+                        <input type="hidden" name="legacy_type" value="4">
+                        <input type="hidden" name="idUser" value="{{ $user->id }}">
+                        <div class="fallback">
+                            <input name="fileToUpload[]" type="file" multiple />
+                        </div>
+                    </form>
+                    <div class="row">
+                        <ul class="list-group col-12">
+                            @if(count($archive) <= 0)
+                                <li class="list-group-item text-center">
+                                    No files
+                                </li>
+                            @else
+                                @foreach ($archive as $item)
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-10 col-sm-10 col-md-10 col-lg-11">
+                                            <a href="{{ Storage::url($item->repository.'/'.$item->name_server) }}">
+                                                <i class="fas fa-file-invoice"></i> - {{ $item->name_file }}
+                                            </a>
+                                        </div>
+                                        <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+                                            <button class="btn btn-sm btn-primary btn-block">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                @endforeach
+                            @endif
+                            
+                        </ul>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
+
+    
 
 @endsection
 

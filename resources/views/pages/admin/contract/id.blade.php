@@ -89,7 +89,7 @@
                                         <td><small>{{ $item->city }}</small></td>
                                         <td><small>{{ $item->state }}</small></td>
                                         <td><small>{{ $item->country }}</small></td>
-                                        <td><small>{{ $item->postal_code }}</small></td>
+                                        <td><small>{{ $item->zip_code }}</small></td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -113,23 +113,19 @@
                         <table class="table table-sm table-hover" id="tablePhone">
                             <thead>
                                 <tr class="text-primary">
-                                    <th><small>DDI</small></th>
-                                    <th><small>DDD</small></th>
+                                    <th><small>References</small></th>
                                     <th><small>Phone</small></th>
-                                    <th><small>Final contact</small></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($phone as $item)
                                     <tr class="text-primary">
-                                        <td style="min-width: 5vw;"><small>{{ $item->ddi ?? '01' }}</small></td>
-                                        <td style="min-width: 5vw;"><small>{{ $item->ddd ?? '00'}}</small></td>
+                                        <td><small>{{ $item->reference }}</small></td>
                                         <td style="min-width: 5vw;"><small>{{ $item->phone }}</small></td>
-                                        <td><small>+{{ $item->ddi ?? '01' }}({{ $item->ddd ?? '00' }}) {{ $item->phone }}</small></td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">
+                                        <td colspan="2">
                                             <h6 class="text-primary">No data</h6>
                                         </td>
                                     </tr>

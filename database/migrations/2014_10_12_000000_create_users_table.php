@@ -42,6 +42,7 @@
                 $table->string('license')->nullable();
                 $table->dateTime('license_date')->nullable();
                 $table->dateTime('license_due')->nullable();
+                $table->double('percent',12,2)->default(0);
                 $table->rememberToken();
                 $table->timestamps();
 

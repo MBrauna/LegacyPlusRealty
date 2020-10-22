@@ -9,7 +9,7 @@
         protected $table        =   'user_phone';
         protected $primaryKey   =   'id_user_phone';
         protected $fillable     =   [
-            'references',
+            'reference',
             'phone',
         ];
     }

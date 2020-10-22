@@ -11,8 +11,9 @@
             Schema::create('user_phone', function(Blueprint $table){
                 $table->increments('id_user_phone');
                 $table->integer('id_user');
-                $table->text('references');
+                $table->text('reference');
                 $table->text('phone');
+                $table->timestamps();
 
                 $table->index('phone');
                 $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

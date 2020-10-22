@@ -26,6 +26,17 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="id_user_recommend" class="text-primary">User level</label>
+                                <select id="id_user_recommend" name="id_user_recommend" class="form-control form-control-sm">
+                                    <option value="">None</option>
+                                    @foreach ($type as $item)
+                                        <option value="{{ $item->id_user_type }}">{{ $item->description }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-12 col-sm-12 col-md-12 d-flex justify-content-center">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox" id="admin" name="admin" value="1">
@@ -386,8 +397,6 @@
                                     <thead>
                                         <tr>
                                             <th><small>Reference</small></th>
-                                            <th><small></small></th>
-                                            <th><small></small></th>
                                             <th><small>Phone</small></th>
                                             <th><small>Action</small></th>
                                         </tr>
@@ -459,11 +468,9 @@
 
         function addPhone() {
             var reference   =   document.getElementById('referenceAdd').value;
-            var ddi         =   document.getElementById('ddiAdd').value;
-            var ddd         =   document.getElementById('dddAdd').value;
             var phone       =   document.getElementById('phoneAdd').value;
 
-            if(reference == '' || ddi == '' || ddd == '' || phone == '') {
+            if(reference == '' ||  phone == '') {
                 alert('Fill out the form correctly!');
                 return;
             } // if(reference == '' || ddi == '' || ddd == '' || phone == '') { ... }
@@ -474,8 +481,6 @@
 
             // Clear data form
             document.getElementById('referenceAdd').value   =   null;
-            //document.getElementById('ddiAdd').value         =   null;
-            //document.getElementById('dddAdd').value         =   null;
             document.getElementById('phoneAdd').value       =   null;
 
             var tableRef        =   document.getElementById('tablePhone').getElementsByTagName('tbody')[0];
@@ -483,17 +488,11 @@
 
             var newCell         =   newRow.insertCell(0);
             newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="reference[]" value="' + reference + '">';
-
+            
             var newCell         =   newRow.insertCell(1);
-            newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="ddi[]" value="' + ddi + '">';
-
-            var newCell         =   newRow.insertCell(2);
-            newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="ddd[]" value="' + ddd + '">';
-
-            var newCell         =   newRow.insertCell(3);
             newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="phone[]" value="' + phone + '">';
 
-            var newCell         =   newRow.insertCell(4);
+            var newCell         =   newRow.insertCell(2);
             newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
         } // function addPhone(data) { ... }
 

@@ -116,24 +116,46 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.contract.list') }}">
-                        <i class="fas fa-comments-dollar"></i>
-                        <span>Contract</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.financial.list') }}">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFinancial" aria-expanded="true" aria-controls="collapseFinancial">
                         <i class="fas fa-hand-holding-usd"></i>
-                        <span>Financial</span>
+                        <span>Finance</span>
                     </a>
+                    <div id="collapseFinancial" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-primary py-2 collapse-inner">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.contract.list') }}">
+                                <i class="fas fa-comments-dollar"></i>
+                                <span>Contract</span>
+                            </a>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.list') }}">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                <span>Payment per user</span>
+                            </a>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.list') }}">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                <span>Payment per contract</span>
+                            </a>
+                        </div>
+                    </div>
                 </li>
 
+
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.utilities.link') }}">
-                        <i class="fas fa-link"></i>
-                        <span>Quick access</span>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-cogs"></i>
+                        <span>Utilities</span>
                     </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-primary py-2 collapse-inner">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.list') }}">
+                                <i class="fas fa-link"></i>
+                                <span>Quick links</span>
+                            </a>
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.list') }}">
+                                <i class="fas fa-tools"></i>
+                                <span>Configuration</span>
+                            </a>
+                        </div>
+                    </div>
                 </li>
                 @endif
 

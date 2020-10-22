@@ -51,17 +51,17 @@
             Route::any('/',function(){ return redirect()->route('admin.users.list'); })->name('home');
 
             // [admin.contract]
-            Route::namespace('Contract')->prefix('contract')->name('contract.')->group(function(){
+            Route::prefix('contract')->name('contract.')->group(function(){
                 // [admin.contract.list]
-                Route::any('/','MainContract@list')->name('list');
+                Route::any('/','Contracts@list')->name('list');
                 // [admin.contract.create]
-                Route::any('/create','MainContract@createPage')->name('create');
+                Route::any('/create','Contracts@createPage')->name('create');
                 // [admin.contract.idList]
                 Route::any('/id',function(){ return redirect()->route('admin.contract.list'); })->name('idList');
                 // [admin.contract.id]
-                Route::any('/id/{id_contract}','MainContract@id')->name('id');
+                Route::any('/id/{id_contract}','Contracts@id')->name('id');
                 // [admin.contract.add]
-                Route::post('/add','MainContract@add')->name('add');
+                Route::post('/add','Contracts@add')->name('add');
             }); // Route::namespace('Contract')->prefix('contract')->name('contract.')->group(function(){ ... });
 
             // [admin.financial]
@@ -124,6 +124,8 @@
                 Route::any('/add','Users@pageAdd')->name('pageAdd');
                 // [admin.user.pageEdit]
                 Route::any('/edit','Users@pageEdit')->name('pageEdit');
+                // [admin.user.pageView]
+                Route::any('/view','Users@pageView')->name('pageView');
                 // [admin.user.save]
                 Route::any('/save','Users@save')->name('save');
                 // [admin.user.update]

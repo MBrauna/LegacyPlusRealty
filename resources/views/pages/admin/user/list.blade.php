@@ -27,9 +27,7 @@
                             <th>E-mail</th>
                             <th>License</th>
                             <th>Recommended by</th>
-                            <th>Admin</th>
-                            <th>Broker</th>
-                            <th>Realtor</th>
+                            <th>Type</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -37,14 +35,14 @@
                     @forelse ($users as $user)
                         <tr>
                             <td class="text-white text-center bg-primary" style="min-width: 5vw;"><small>#{{ $user->id }}</small></td>
-                            <td style="min-width: 15vw;" class="text-primary font-weight-bold"><small>{{ $user->name.' '.$user->second_name.' '.$user->last_name }}</small></td>
+                            <td style="min-width: 15vw;" class="text-primary font-weight-bold"><small>{{ $user->name }}</small></td>
                             <td><small>{{$user->email}}</small></td>
                             <td><small>{{$user->license ?? 'without license' }}</small></td>
                             <td><small>{{$user->recommendedBy->name ?? ' - ' }}</small></td>
-                            <td class="font-weight-bold"><small>{{$user->descUserType ?? 'undefined' }}</small></td>
+                            <td class="font-weight-bold"><small>{{$user->descUserType->description ?? 'undefined' }}</small></td>
                             <td style="min-width: 15vw;">
                                 <div class="row d-flex justify-content-center">
-                                    <form class="col-6" method="POST" action="{{ route('admin.user.pageEdit') }}">
+                                    <form class="col-6" method="POST" action="{{ route('admin.user.pageView') }}">
                                         @csrf
                                         <input type="hidden" name="idUser" value="{{ $user->id }}">
                                         <button type="submit" class="btn btn-block btn-outline-primary btn-sm">
@@ -63,7 +61,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9">
+                            <td colspan="7">
                                 <h6 class="text-primary text-center">
                                     No user<br>
                                     <i class="fas fa-frown"></i>

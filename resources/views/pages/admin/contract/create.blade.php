@@ -24,7 +24,7 @@
                         <select class="form-control form-control-sm" id="type" name="type" required>
                             <option value="">Select a type</option>
                             @foreach ($types as $item)
-                            <option value="{{ $item->code }}">{{ $item->name }}</option>
+                            <option value="{{ $item->id_transaction_type }}">{{ $item->description }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -63,7 +63,7 @@
                 <div class="col-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <label for="value">Value:</label>
-                        <input type="number" step="0.01" min="0" max="999999999999" class="form-control form-control-sm" id="value" name="value" required>
+                        <input type="number" step="0.01" min="0" max="999999999999" class="form-control form-control-sm value text-right" id="value" name="value" required>
                     </div>
                 </div>
 
@@ -151,10 +151,16 @@
                                 <input type="hidden" class="form-control form-control-sm" min="0" max="999" minlength="0" maxlength="3" id="ddiAdd" value="0">
                                 <input type="hidden" class="form-control form-control-sm" min="0" max="999" minlength="0" maxlength="3" id="dddAdd" value="1">
 
-                                <div class="col-12 col-sm-12 col-md-12">
+                                <div class="col-12 col-sm-12 col-md-8">
                                     <div class="form-group">
-                                        <label for="phoneAdd">Phone:</label>
-                                        <input type="tel" class="form-control form-control-sm" min="0" max="999999999" minlength="0" maxlength="12" id="phoneAdd">
+                                        <label for="referenceAdd" class="text-primary">Reference</label>
+                                        <input type="text" minlength="0" maxlength="150" class="form-control form-control-sm" id="referenceAdd" aria-describedby="Reference" placeholder="Who will be communicated">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-4">
+                                    <div class="form-group">
+                                        <label for="phoneAdd" class="text-primary">Phone</label>
+                                        <input type="number" min="0" max="99999999999" class="form-control form-control-sm" id="phoneAdd" aria-describedby="Phone" placeholder="Phone">
                                     </div>
                                 </div>
                             </div>
@@ -166,8 +172,7 @@
                                 <table class="table table-sm table-hover" id="tablePhone">
                                     <thead>
                                         <tr>
-                                            <th><small></small></th>
-                                            <th><small></small></th>
+                                            <th><small>References</small></th>
                                             <th><small>Phone</small></th>
                                             <th><small>Action</small></th>
                                         </tr>
@@ -195,6 +200,7 @@
 @endsection
 
 @section('script')
+    <script src="/legacy/vendor/jquery-mask/dist/jquery.mask.min.js"></script>
     <script type="text/javascript">
         function addAddress(data) {
             var address         =   document.getElementById('addressAdd').value;
@@ -263,33 +269,32 @@
         } // function addAddress(data) { ... }
 
         function addPhone() {
-            var ddi     =   document.getElementById('ddiAdd').value;
-            var ddd     =   document.getElementById('dddAdd').value;
-            var phone   =   document.getElementById('phoneAdd').value;
+            var reference   =   document.getElementById('referenceAdd').value;
+            var phone       =   document.getElementById('phoneAdd').value;
 
-            if(phone < 0 || phone > 99999999999999) {
-                alert('Invalid phone number!');
-                return false;
-            } // if(phone < 0 || phone > 99999999999999) { ... }
+            if(reference == '' ||  phone == '') {
+                alert('Fill out the form correctly!');
+                return;
+            } // if(reference == '' || ddi == '' || ddd == '' || phone == '') { ... }
+
+            if(phone > 999999999999) {
+                alert('invalid phone!');
+            } // if(phone > 999999999999) { ... }
 
             // Clear data form
-            //document.getElementById('ddiAdd').value     =   null;
-            //document.getElementById('dddAdd').value     =   null;
-            document.getElementById('phoneAdd').value   =   null;
+            document.getElementById('referenceAdd').value   =   null;
+            document.getElementById('phoneAdd').value       =   null;
 
             var tableRef        =   document.getElementById('tablePhone').getElementsByTagName('tbody')[0];
             var newRow          =   tableRef.insertRow();
 
             var newCell         =   newRow.insertCell(0);
-            newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="ddi[]" value="' + ddi + '">';
-
+            newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="reference[]" value="' + reference + '">';
+            
             var newCell         =   newRow.insertCell(1);
-            newCell.innerHTML   =   '<input type="hidden" readonly class="form-control-plaintext" name="ddd[]" value="' + ddd + '">';
-
-            var newCell         =   newRow.insertCell(2);
             newCell.innerHTML   =   '<input type="text" readonly class="form-control-plaintext" name="phone[]" value="' + phone + '">';
 
-            var newCell         =   newRow.insertCell(3);
+            var newCell         =   newRow.insertCell(2);
             newCell.innerHTML   =   '<button class="btn btn-primary btn-sm" onClick="deleteNode(this);"><i class="fas fa-trash"></i></button>';
         } // function addPhone(data) { ... }
 
@@ -297,5 +302,11 @@
             var row = btn.parentNode.parentNode;
             row.parentNode.removeChild(row);
         } // function deleteNode(btn) { ... }
+
+        $(document).ready(function(){
+            $('.value').mask('000000000000.00', {
+                reverse: true,
+            });
+        });
     </script>
 @endsection

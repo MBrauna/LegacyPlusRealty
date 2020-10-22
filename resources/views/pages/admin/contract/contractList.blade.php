@@ -39,7 +39,7 @@
                                     <td style="min-width: 6vw;"><small>{{ $item->allDesc->start_contract }}</small></td>
                                     <td style="min-width: 6vw;"><small>{{ $item->allDesc->end_contract }}</small></td>
                                     <td style="min-width: 6vw;"><small>{{ $item->allDesc->payment_exec }}</small></td>
-                                    <td style="min-width: 10vw;"><small>{{ $item->allDesc->id_user_seller->name.' '.$item->allDesc->id_user_seller->second_name.' '.$item->allDesc->id_user_seller->last_name ?? 'Not defined' }}</small></td>
+                                    <td style="min-width: 10vw;"><small>{{ $item->allDesc->id_user_seller->name ?? 'Not defined' }}</small></td>
                                     <td style="min-width: 8vw;" class="row d-flex justify-content-center">
                                         <form action="{{ route('admin.contract.id',['id_contract' => $item->id_contract]) }}" method="POST" class="col-12 col-sm-12 col-md-12">
                                             @csrf
@@ -51,7 +51,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="8">
                                         <h6 class="text-primary d-flex justify-content-center">No contracts available</h6>
                                     </td>
                                 </tr>
