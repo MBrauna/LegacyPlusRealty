@@ -19,7 +19,7 @@ class ComissionPayment extends Controller
 {
     public function paymentJob($content){
         try {
-            $listContracts  =   Contract::get();
+            $listContracts  =   Contract::where('payment_exec',false)->get();
             $comissionlevel =   SplitParameter::where('param_name','COMISSION_LEVEL')->first();
 
             /*Contract::where('payment_exec',false)
