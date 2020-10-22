@@ -11,6 +11,7 @@
         protected $fillable     =   [
             'processing_date',
             'payment_date',
+            'id_contract',
             'id_user',
             'id_user_payment',
             'value',

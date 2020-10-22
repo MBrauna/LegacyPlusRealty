@@ -50,7 +50,7 @@
         public function createPage(Request $request) {
             try {
                 $users  =   User::orderBy('name','asc')->get();
-                $minDate=   Carbon::now()->format('Y-m-d');
+                $minDate=   Carbon::now()->subMonths(1)->format('Y-m-d');
 
                 foreach ($users as $key => $value) {
                     $users[$key]->allDesc                       =   (object)[];

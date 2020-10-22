@@ -15,10 +15,9 @@ class Parameters extends Migration
     {
         Schema::create('split_parameter',function(Blueprint $table){
             $table->increments('id_split_parameter');
-            $table->integer('type')->default(0); // [1] - Sales, [2] - Rental
-            $table->double('min_value',20,2);
-            $table->double('max_value',20,2);
-            $table->double('percentual',12,2)->default(0);
+            $table->text('visual_name');
+            $table->text('param_name');
+            $table->double('value',20,2);
             $table->timestamps();
         }); // Schema::create('user_compensation',function(Blueprint $table){ .. });
     }

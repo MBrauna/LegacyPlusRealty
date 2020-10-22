@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\UserType;
 use App\Models\TransactionType;
+use App\Models\SplitParameter;
 use App\User;
 
 class UserSeeder extends Seeder
@@ -14,6 +15,24 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        SplitParameter::create([
+            'visual_name'   =>  'Comission level',
+            'param_name'    =>  'COMISSION_lEVEL',
+            'value'         =>  3,
+        ]);
+
+        SplitParameter::create([
+            'visual_name'   =>  'Broker split - Salle',
+            'param_name'    =>  'BROKER_SALLE',
+            'value'         =>  10,
+        ]);
+
+        SplitParameter::create([
+            'visual_name'   =>  'Broker split - Rent',
+            'param_name'    =>  'BROKER_RENT',
+            'value'         =>  7,
+        ]);
+
         TransactionType::create([
             'id_transaction_type'   =>  1,
             'description'           =>  'Salle',

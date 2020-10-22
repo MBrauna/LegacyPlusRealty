@@ -65,32 +65,39 @@
             }); // Route::namespace('Contract')->prefix('contract')->name('contract.')->group(function(){ ... });
 
             // [admin.financial]
-            Route::namespace('Financial')->prefix('financial')->name('financial.')->group(function(){
+            Route::prefix('financial')->name('financial.')->group(function(){
                 // [admin.financial.home]
-                Route::any('/',function(){ return redirect()->route('admin.financial.list'); });
+                Route::any('/',function(){ return redirect()->route('home'); });
 
-                // [admin.financial.list]
-                Route::any('/list','MainFinancial@list')->name('list');
+                // [admin.financial.perContract]
+                Route::any('/perContract','FinancialContract@list')->name('perContract');
+                // [admin.financial.confirmContract]
+                Route::post('/confirmContract','FinancialContract@confirm')->name('confirmContract');
+
+
                 // [admin.financial.additional]
                 Route::post('/additional','MainFinancial@additional')->name('additional');
-                // [admin.financial.confirm]
-                Route::post('/confirm','MainFinancial@confirm')->name('confirm');
             }); // Route::namespace('Financial')->prefix('financial')->name('financial.')->group(function(){ ... });
 
             // [admin.utilities]
-            Route::namespace('Utilities')->prefix('utilities')->name('utilities.')->group(function(){
+            Route::prefix('utilities')->name('utilities.')->group(function(){
                 // [admin.financial.home]
                 Route::any('/',function(){ return redirect()->route('dashboard.home'); })->name('home');
 
                 // [admin.utilities.file]
-                Route::any('/file','MainArchive@list')->name('file');
+                Route::any('/file','QuickLinks@list')->name('file');
+
+                // [admin.utilities.parameters]
+                Route::any('/parameter','Parameters@index')->name('parameters');
+                // [admin.utilities.paramAdd]
+                Route::post('/parameteradd','Parameters@alter')->name('paramAdd');
 
                 // [admin.utilities.link]
-                Route::any('/link','MainLink@list')->name('link');
+                Route::any('/link','QuickLinks@list')->name('link');
                 // [admin.utilities.linkAdd]
-                Route::post('/linkAdd','MainLink@add')->name('linkAdd');
+                Route::post('/linkAdd','QuickLinks@add')->name('linkAdd');
                 // [admin.utilities.linkRemove]
-                Route::post('/linkRemove','MainLink@remove')->name('linkRemove');
+                Route::post('/linkRemove','QuickLinks@remove')->name('linkRemove');
             }); // Route::namespace('Utilities')->prefix('utilities')->name('utilities.')->group(function(){ ... }
 
             // [admin.group]

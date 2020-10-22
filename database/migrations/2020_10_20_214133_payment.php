@@ -37,6 +37,7 @@
                 $table->increments('id_payment_additional');
                 $table->dateTime('processing_date');
                 $table->dateTime('payment_date');
+                $table->integer('id_contract')->nullable();
                 $table->integer('id_user');
                 $table->integer('id_user_payment');
                 $table->double('value',12,2)->default(0);
@@ -47,6 +48,7 @@
                 $table->index('id_user_payment');
                 $table->index('id_user');
 
+                $table->foreign('id_contract')->references('id_contract')->on('contract')->onUpdate('cascade')->onDelete('cascade');
                 $table->foreign('id_user')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
                 $table->foreign('id_user_payment')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             });

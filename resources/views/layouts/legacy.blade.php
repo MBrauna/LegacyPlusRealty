@@ -26,7 +26,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+            <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
                     <!--<div class="sidebar-brand-icon rotate-n-15">
@@ -126,11 +126,11 @@
                                 <i class="fas fa-comments-dollar"></i>
                                 <span>Contract</span>
                             </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.perContract') }}">
                                 <i class="fas fa-hand-holding-usd"></i>
                                 <span>Payment per user</span>
                             </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.perContract') }}">
                                 <i class="fas fa-file-invoice-dollar"></i>
                                 <span>Payment per contract</span>
                             </a>
@@ -146,11 +146,11 @@
                     </a>
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-primary py-2 collapse-inner">
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.utilities.link') }}">
                                 <i class="fas fa-link"></i>
                                 <span>Quick links</span>
                             </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.list') }}">
+                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.utilities.parameters') }}">
                                 <i class="fas fa-tools"></i>
                                 <span>Configuration</span>
                             </a>

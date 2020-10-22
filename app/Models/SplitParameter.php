@@ -9,9 +9,8 @@
         protected $table        =   'split_parameter';
         protected $primaryKey   =   'id_split_parameter';
         protected $fillable     =   [
-            'type',
-            'min_value',
-            'max_value',
-            'percentual',
+            'visual_name',
+            'param_name',
+            'value',
         ];
     }
