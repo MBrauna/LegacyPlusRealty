@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         SplitParameter::create([
             'visual_name'   =>  'Comission level',
-            'param_name'    =>  'COMISSION_lEVEL',
+            'param_name'    =>  'COMISSION_LEVEL',
             'value'         =>  3,
         ]);
 

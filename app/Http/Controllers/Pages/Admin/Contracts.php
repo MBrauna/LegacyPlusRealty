@@ -5,7 +5,7 @@
     use App\Http\Controllers\Controller;
     use Illuminate\Http\Request;
 
-    use App\Http\Controllers\Job\Payment as PaymentController;
+    use App\Http\Controllers\Job\ComissionPayment;
     use Carbon\Carbon;
     use Validator;
 
@@ -121,8 +121,8 @@
                 } // if(isset($request->ddi) && count($request->ddi) > 0) { ... }
 
 
-                //$jobExec = new PaymentController;
-                //$jobExec->paymentJob();
+                $jobExec    =   new ComissionPayment;
+                $returndata =   $jobExec->paymentJob(null);
 
                 return redirect()->route('admin.contract.id',[
                     'id_contract'   =>  $contract->id_contract,

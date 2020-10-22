@@ -71,12 +71,12 @@
 
                 // [admin.financial.perContract]
                 Route::any('/perContract','FinancialContract@list')->name('perContract');
-                // [admin.financial.confirmContract]
-                Route::post('/confirmContract','FinancialContract@confirm')->name('confirmContract');
-
-
-                // [admin.financial.additional]
-                Route::post('/additional','MainFinancial@additional')->name('additional');
+                // [admin.financial.removeAdditional]
+                Route::post('/removeAdditional','FinancialContract@remove')->name('removeAdditional');
+                // [admin.financial.confirm]
+                Route::post('/confirm', 'FinancialContract@confirm')->name('confirm');
+                // [admin.financial.additionalPayment]
+                Route::post('/additionalPayment','FinancialContract@additional')->name('additionalPayment');
             }); // Route::namespace('Financial')->prefix('financial')->name('financial.')->group(function(){ ... });
 
             // [admin.utilities]

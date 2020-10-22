@@ -1,25 +1,30 @@
 @extends('layouts.legacy')
 
-@section('pageName','Payment')
+@section('pageName','Payment per contract')
 
 @section('body')
 
     <div class="card border-primary">
         <div class="card-header bg-primary text-white d-flex justify-content-between">
             <div style="min-width: 10vw;"></div>
-            <span>Financial - Payment</span>
+            <span>Financial - Payment per contract</span>
             <div style="min-width: 10vw;"></div>
         </div>
         <div class="card-body">
             <div class="accordion" id="listPayments">
                 @forelse ($payments as $item)
-                    <div class="card">
+                    <div class="card {{ ($item->payment_exec) ? 'border-left-success' : 'border-left-primary'}}">
                         <div class="card-header" id="payment-{{ $item->id }}">
                             <div class="mb-0">
                                 <span class="text-left" data-toggle="collapse" data-target="#collapsePayment-{{ $item->id_contract }}" aria-expanded="true" aria-controls="collapsePayment-{{ $item->id_contract }}">
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-6">
-                                            <span class="text-decoration-none text-primary"><a href="{{ route('contract.id',['id_contract' => $item->id_contract]) }}">{{ $item->description }}</a></span><br/>
+                                            <span class="text-decoration-none text-primary">
+                                                <a href="{{ route('admin.contract.id',['id_contract' => $item->id_contract]) }}">{{ $item->description }}</a>
+                                                @if($item->payment_exec)
+                                                    <span class="font-weight-bold text-success">(Already paid)</span>
+                                                @endif
+                                            </span><br/>
                                             <span><small>Between {{ $item->allDesc->start_contract }} and {{ $item->allDesc->end_contract }}</small></span>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6 text-right text-decoration-none">
@@ -36,116 +41,212 @@
                         <div id="collapsePayment-{{ $item->id_contract }}" class="collapse" aria-labelledby="payment-{{ $item->id_contract }}" data-parent="#listPayments">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="contractPrice">Contract purchase price</label>
-                                            <input type="text" class="form-control form-control-sm form-control-plaintext text-primary" id="exampleFormControlInput1" value="{{ $item->allDesc->value }}">
-                                        </div>
-                                    </div>
                                     
                                     <div class="col-12">
-                                        <h6 class="text-center text-primary font-weight-bold">Transaction Comission</h6>
-                                        <div class="table-responsive">
-                                            <table class="table table-sm table-hover table-striped">
-                                                <thead class="bg-primary text-white">
-                                                    <tr>
-                                                        <th style="min-width: 30vw;">Item description</th>
-                                                        <th>% on $ amount</th>
-                                                        <th>Apply % on</th>
-                                                        <th>To receive (+) or contribute(-)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td><small>{{ $item->transactions->realState->title }}</small></td>
-                                                        <td class="text-right"><small>{{ $item->transactions->realState->allDesc->amount }}</small></td>
-                                                        <td class="text-right"><small>{{ $item->transactions->realState->allDesc->apply }}</small></td>
-                                                        <td class="text-right"><small>{{ $item->transactions->realState->allDesc->received }}</small></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><small>{{ $item->transactions->officeFee->title }}</small></td>
-                                                        <td class="text-right"><small>{{ $item->transactions->officeFee->allDesc->amount }}</small></td>
-                                                        <td class="text-right"><small>{{ $item->transactions->officeFee->allDesc->apply }}</small></td>
-                                                        <td class="text-right"><small>{{ $item->transactions->officeFee->allDesc->received }}</small></td>
-                                                    </tr>
-                                                </tbody>
-                                                <tfoot class="bg-primary text-white">
-                                                    <tr>
-                                                        <td class="text-right" colspan="3">Net comission to collect for this transaction</td>
-                                                        <td class="text-right">{{ $item->transactions->total->allDesc->received }}</td>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
+                                        <div class="card border-primary">
+                                            <div class="card-header bg-primary text-white d-flex justify-content-between">
+                                                <div style="min-width: 10vw;">
+                                                </div>
+                                                <span>Distribution to brokerage/agent(s)</span>
+                                                <div style="min-width: 10vw;">
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm table-hover table-striped">
+                                                        <thead class="bg-secondary text-white text-right">
+                                                            <tr>
+                                                                <th class="text-left" style="min-width: 30vw;">Item description</th>
+                                                                <th>Comission</th>
+                                                                <th>Additional</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><small>Real Estate Comission</small></td>
+                                                                <td class="text-right"><small>{{ $item->realtor->split_value_desc }}</small></td>
+                                                                <td class="text-right"><small>{{ $item->realtor->additional_desc }}</small></td>
+                                                                <td class="text-right"><small>{{ $item->realtor->total_desc }}</small></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><small>Office Processing Fee</small></td>
+                                                                <td class="text-right"><small>{{ $item->broker->split_value_desc }}</small></td>
+                                                                <td class="text-right"><small>{{ $item->broker->additional_desc }}</small></td>
+                                                                <td class="text-right"><small>{{ $item->broker->total_desc }}</small></td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot class="bg-secondary text-white text-right">
+                                                            <tr>
+                                                                <th>Total:</th>
+                                                                <th>{{ $item->total->split_value_desc }}</th>
+                                                                <th>{{ $item->total->additional_desc }}</th>
+                                                                <th>{{ $item->total->total_desc }}</th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-12">
-                                        <h6 class="text-center text-primary font-weight-bold">Distribution to brokerage/agent(s)</h6>
-                                        <div class="table-responsive">
-                                            <table class="table table-sm table">
-                                                <thead class="bg-primary text-center text-white">
-                                                    <tr>
-                                                        <th></th>
-                                                        <th>Apply % on</th>
-                                                        <th>% of $ amount</th>
-                                                        <th>Split $</th>
-                                                        <th>Additional $</th>
-                                                        <th>Total $</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($item->allPayments as $itemPayment)
-                                                        <tr>
-                                                            <td style="min-width: 20vw"><small>{{ isset($itemPayment->allDesc->id_user->name) ? $itemPayment->allDesc->id_user->name.' '.$itemPayment->allDesc->id_user->second_name.' '.$itemPayment->allDesc->id_user->last_name : 'Legacy Plus Realty' }}</small></td>
-                                                            <td class="text-right"><small>{{ $itemPayment->allDesc->value }}</small></td>
-                                                            <td class="text-right"><small>{{ $itemPayment->allDesc->percent }}</small></td>
-                                                            <td class="text-right"><small>{{ $itemPayment->allDesc->comission }}</small></td>
-                                                            @if($itemPayment->confirm_payment)
-                                                                <td class="text-right"><small>{{ $itemPayment->allDesc->additional }}</small></td>
-                                                            @else
-                                                                <td style="min-width: 15vw;" class="font-weight-bold text-right"><small>
-                                                                    <form method="POST" action="{{ route('admin.financial.additional') }}" class="was-validated">
+                                    <div class="col-12 pt-3">
+                                        <div class="card border-primary">
+                                            <div class="card-header bg-primary text-white d-flex justify-content-between">
+                                                <div style="min-width: 10vw;">
+                                                </div>
+                                                <span>Distribution to brokerage/agent(s)</span>
+                                                <div style="min-width: 10vw;">
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm table-hover table-striped">
+                                                        <thead class="bg-secondary text-center text-white">
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Processing date</th>
+                                                                <th>Payment date</th>
+                                                                <th>Apply % on</th>
+                                                                <th>% of $ amount</th>
+                                                                <th>Split $</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @forelse ($item->allPayments as $itemPayment)
+                                                            <tr>
+                                                                <td style="min-width: 20vw"><small>{{ isset($itemPayment->id_user_desc->name) ? $itemPayment->id_user_desc->name : 'Legacy Plus Realty' }}</small></td>
+                                                                <td class="text-center"><small>{{ $itemPayment->processing_date_desc }}</small></td>
+                                                                <td class="text-center"><small>{{ $itemPayment->payment_date_desc }}</small></td>
+                                                                <td class="text-right"><small>{{ $itemPayment->split_total_desc }}</small></td>
+                                                                <td class="text-right"><small>{{ $itemPayment->percentual_desc }}</small></td>
+                                                                <td class="text-right"><small>{{ $itemPayment->split_value_desc }}</small></td>
+                                                            </tr>
+                                                            @empty
+                                                                <tr class="text-primary font-weight-bold">
+                                                                    <td colspan="8" class="text-center">No payments</td>
+                                                                </tr>
+                                                            @endforelse
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 pt-3">
+                                        <div class="card border-primary">
+                                            <div class="card-header bg-primary text-white d-flex justify-content-between">
+                                                <div style="min-width: 10vw;">
+                                                </div>
+                                                <span>Additional(manual) comission to brokerage/agent(s)</span>
+                                                <div style="min-width: 10vw;">
+                                                    @if(!$item->payment_exec)
+                                                        <button type="button" class="btn btn-sm btn-block btn-outline-light" data-toggle="modal" data-target="#paymentAdd_id_{{ $item->id_payment }}">
+                                                            <i class="fas fa-plus-square"></i>
+                                                        </button>
+                                                        <form method="POST" action="{{ route('admin.financial.additionalPayment') }}" class="modal fade was-validated" id="paymentAdd_id_{{ $item->id_payment }}" tabindex="-1" role="dialog" aria-labelledby="paymentAdd_id_{{ $item->id_payment }}Label" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header bg-primary">
+                                                                        <h5 class="modal-title" id="paymentAdd_id_{{ $item->id_payment }}Label">Additional payment</h5>
+                                                                        <button type="button" class="close bg-primary text-white" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
                                                                         @csrf
-                                                                        <input type="hidden" name="id_payment" value="{{ $itemPayment->id_payment }}">
-                                    
-                                                                        <div class="input-group mb-2">
-                                                                        <input type="number" step="0.01" min="-{{$itemPayment->value}}" max="{{$itemPayment->value}}" class="form-control form-control-sm text-right value-legacy" name="additional" placeholder="additional value US$" value="{{ is_null($itemPayment->allDesc->additionalVal) ? '0.00' : $itemPayment->allDesc->additionalVal }}">
-                                                                            <div class="input-group-prepend">
-                                                                                <button type="submit" class="btn btn-sm btn-block btn-primary">Apply</button>
+                                                                        <div class="row">
+                                                                            <input type="hidden" name="idContract" value="{{ $item->id_contract }}">
+                                                                            <div class="col-12">
+                                                                                <div class="form-group">
+                                                                                    <label for="idUser" class="text-primary">User</label>
+                                                                                    <select id="idUser" name="idUser" class="form-control form-control-sm" required>
+                                                                                        <option value="" selected>None</option>
+                                                                                        @foreach ($users as $key => $dataUser)
+                                                                                            <option value="{{ $dataUser->id }}">{{ $dataUser->name }}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="value" class="text-primary">Additional value</label>
+                                                                                    <input type="number" step="0.01" min="-{{ $item->realtor->split_value}}" max="{{$item->realtor->split_value}}" class="form-control form-control-sm value-legacy" id="value" name="value" placeholder="Additional value" value="" required>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </form>
-                                                                </small></td>
-                                                            @endif
-                                                            <td class="text-right"><small>{{ $itemPayment->allDesc->total }}</small></td>
-                                                            @if($itemPayment->confirm_payment)
-                                                                <td><button type="button" class="btn btn-sm btn-block btn-success" disabled>Paid out</button></td>
-                                                            @else
-                                                                <td style="min-width: 10vw;">
-                                                                    <form method="POST" action="{{ route('admin.financial.confirm') }}">
-                                                                        @csrf
-                                                                        <input type="hidden" name="id_payment" value="{{ $itemPayment->id_payment }}">
-                                                                        <button type="submit" class="btn btn-sm btn-block btn-primary">Confirm payment</button>
-                                                                    </form>
-                                                                </td>
-                                                            @endif
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                                <tfoot class="bg-primary text-center text-white">
-                                                    <tr>
-                                                        <th colspan="3">Total:</th>
-                                                        <th>{{ $item->allDesc->split_value }}</th>
-                                                        <th>{{ $item->allDesc->additional }}</th>
-                                                        <th>{{ $item->allDesc->total }}</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm table-hover table-striped">
+                                                        <thead class="bg-secondary text-center text-white">
+                                                            <tr>
+                                                                <th>To</th>
+                                                                <th>Processing date</th>
+                                                                <th>Payment date</th>
+                                                                <th>Value</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @forelse ($item->allAdditionals as $itemPayment)
+                                                            <tr>
+                                                                <td><small>{{ isset($itemPayment->id_user_desc->name) ? $itemPayment->id_user_desc->name : 'Legacy Plus Realty' }}</small></td>
+                                                                <td class="text-center"><small>{{ $itemPayment->processing_date_desc }}</small></td>
+                                                                <td class="text-center"><small>{{ $itemPayment->payment_date_desc }}</small></td>
+                                                                <td class="text-right"><small>{{ $itemPayment->value_desc }}</small></td>
+                                                                
+                                                                @if($item->payment_exec)
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-sm btn-block btn-success" disabled>
+                                                                            <i class="fas fa-money-bill-alt"></i>
+                                                                            Already paid
+                                                                        </button>
+                                                                    </td>
+                                                                @else
+                                                                    <td style="min-width: 4vw;">
+                                                                        <form method="POST" action="{{ route('admin.financial.removeAdditional') }}">
+                                                                            @csrf
+                                                                            <input type="hidden" name="idPaymentAdditional" value="{{ $itemPayment->id_payment_additional }}">
+                                                                            <button type="submit" class="btn btn-sm btn-block btn-primary">
+                                                                                <i class="fas fa-trash"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    </td>
+                                                                @endif
+                                                            </tr>
+                                                            @empty
+                                                                <tr class="text-primary font-weight-bold">
+                                                                    <td colspan="6" class="text-center">No payments</td>
+                                                                </tr>
+                                                            @endforelse
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-footer">
+                                @if($item->payment_exec)
+                                    <button type="button" class="btn btn-info btn-block btn-sm font-weight-bold" disabled>Contract #{{ $item->id_contract }} already paid</button>
+                                @else
+                                    <form action="{{ route('admin.financial.confirm') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="idContract" value="{{ $item->id_contract }}">
+                                        <button type="submit" class="btn btn-success btn-block btn-sm font-weight-bold">Confirm payment for contract #{{ $item->id_contract }}</button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>

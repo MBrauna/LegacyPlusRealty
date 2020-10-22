@@ -16,9 +16,9 @@
             Schema::create('payment',function(Blueprint $table){
                 $table->increments('id_payment');
                 $table->dateTime('processing_date');
-                $table->dateTime('payment_date');
+                $table->dateTime('payment_date')->nullable();
                 $table->integer('id_contract');
-                $table->integer('id_user');
+                $table->integer('id_user')->nullable();
                 $table->double('percentual',12,2)->default(0);
                 $table->double('value_total',12,2)->default(0);
                 $table->double('value_split',12,2)->default(0);
@@ -36,7 +36,7 @@
             Schema::create('payment_additional', function(Blueprint $table){
                 $table->increments('id_payment_additional');
                 $table->dateTime('processing_date');
-                $table->dateTime('payment_date');
+                $table->dateTime('payment_date')->nullable();
                 $table->integer('id_contract')->nullable();
                 $table->integer('id_user');
                 $table->integer('id_user_payment');

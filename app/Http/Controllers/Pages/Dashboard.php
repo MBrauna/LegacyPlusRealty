@@ -7,6 +7,7 @@
 
     use Auth;
     use Carbon\Carbon;
+    use App\Models\Contract;
     use DB;
 
     
@@ -14,6 +15,16 @@
     class Dashboard extends Controller {
         public function index(Request $request) {
             try {
+                $listAniversary     =   [];
+
+                foreach (Contract::where('end_contract','<=',Carbon::now())->get() as $key => $value) {
+                    $ehAniversario  =   Carbon::parse($value->start_contract)->isBirthday(Carbon::now());
+                    if($ehAniversario) {
+                        array_push($listAniversary, $value);
+                    } // if($ehAniversario) {
+                } // foreach (Contract::where('end_contract','<=',Carbon::now())->get() as $key => $value) { ... }
+
+
                 $percComission      =   DB::table('user_compensation')
                                         ->where('id_user', Auth::user()->id)
                                         ->orderBy('id_transaction_type','asc')
@@ -107,6 +118,7 @@
                     'yearMin'               =>  Carbon::now()->startOfYear()->format('m/d/Y'),
                     'yearMax'               =>  Carbon::now()->format('m/d/Y'),
                     'dataComission'         =>  $percComission,
+                    'aniversary'            =>  $listAniversary,
                 ]);
             } // try { ... }
             catch(Exception $error) {

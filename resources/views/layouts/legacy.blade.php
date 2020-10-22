@@ -191,29 +191,49 @@
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-bell fa-fw text-primary"></i>
-                            <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter"></span>
-                        </a>
-                        <!-- Dropdown - Alerts -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                            <h6 class="dropdown-header">
-                                Alerts Center
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">You have no alerts</div>
-                                    <span class="font-weight-bold">You have no alerts</span>
-                                </div>
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw text-primary"></i>
+                                <!-- Counter - Alerts -->
+                                @if(isset($aniversary))
+                                    <span class="badge badge-danger badge-counter">{{ count($aniversary) }}</span>
+                                @else
+                                    <span class="badge badge-danger badge-counter"></span>
+                                @endif
                             </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                        </div>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                @if(isset($aniversary))
+                                @foreach ($aniversary as $item)
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-birthday-cake"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">Contrato #{{ $item->id_contract }}</div>
+                                        <span class="font-weight-bold">Está fazendo aniversário.</span>
+                                    </div>
+                                </a>
+                                @endforeach
+                                @else
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">You have no alerts</div>
+                                        <span class="font-weight-bold">You have no alerts</span>
+                                    </div>
+                                </a>
+                                @endif
+                                <a class="dropdown-item text-center small text-gray-500" href="#"></a>
+                            </div>
                         </li>
 
                         <!-- Nav Item - Messages -->
