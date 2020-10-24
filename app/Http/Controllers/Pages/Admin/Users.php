@@ -231,12 +231,12 @@
                 ]);
 
                 if($validator->fails()) {
-                    return redirect()->route('admin.user.list');
+                    return redirect()->route('home');
                 } // if($validator->fails()) { ... }
 
                 $existEmail =   User::where('email',$request->email)->where('id','!=',$request->idUser)->count();
                 if($existEmail > 0) {
-                    return redirect()->route('admin.user.list');
+                    return redirect()->route('home');
                 } // if($existEmail > 0 || strlen($request->password) < 3 || strlen($request->password) > 16) { ... }
 
 
@@ -310,7 +310,7 @@
                     } // foreach ($request->phone as $key => $value) { ... }
                 }
 
-                return redirect()->route('admin.user.list');
+                return redirect()->route('profile');
 
             } // try { ... }
             catch(Exception $error) {

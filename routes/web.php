@@ -14,7 +14,7 @@
         Route::any('/',function(){ return redirect()->route('dashboard.home'); })->name('home');
 
         // [profile]
-        Route::any('/profile','Profile\Profile@profile')->name('profile');
+        Route::any('/profile','Profile@index')->name('profile');
         
         // Dados para dashboard - MainDashboard
         Route::prefix('dashboard')->name('dashboard.')->group(function(){
