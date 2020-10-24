@@ -29,26 +29,12 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="id_user_recommend" class="text-primary">User level</label>
-                                <select id="id_user_recommend" name="id_user_recommend" class="form-control form-control-sm">
+                                <select id="id_user_recommend" name="id_user_recommend" class="form-control form-control-sm" required>
                                     <option value="">None</option>
                                     @foreach ($type as $item)
                                         <option value="{{ $item->id_user_type }}">{{ $item->description }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 d-flex justify-content-center">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="admin" name="admin" value="1">
-                                <label class="form-check-label" for="admin">Admin</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="broker" name="broker" value="1">
-                                <label class="form-check-label" for="broker">Broker</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="realtor" name="realtor" value="1">
-                                <label class="form-check-label" for="realtor">Realtor</label>
                             </div>
                         </div>
                     </div>

@@ -127,10 +127,6 @@
                                 <span>Contract</span>
                             </a>
                             <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.perContract') }}">
-                                <i class="fas fa-hand-holding-usd"></i>
-                                <span>Payment per user</span>
-                            </a>
-                            <a class="collapse-item d-flex justify-content-between" href="{{ route('admin.financial.perContract') }}">
                                 <i class="fas fa-file-invoice-dollar"></i>
                                 <span>Payment per contract</span>
                             </a>
